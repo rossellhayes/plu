@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 [![Travis build
-status](https://travis-ci.com/rossellhayes/plu.svg?branch=master)](https://travis-ci.com/rossellhayes/plu)
+status](https://travis-ci.org/rossellhayes/plu.svg?branch=master)](https://travis-ci.org/rossellhayes/plu)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/rossellhayes/plu?branch=master&svg=true)](https://ci.appveyor.com/project/rossellhayes/plu)
 [![Codecov test
