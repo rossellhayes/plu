@@ -5,10 +5,9 @@
 #' @param ... Additional arguments to `fn`
 #' @param conj A conjunction to place between the last two list items.
 #'     Defaults to `"and"`.
-#' @param conj_all Whether to place the conjunction between all list items.
-#'     If `FALSE`, commas are placed between all list items except for the last
-#'     two.
-#'     Defaults to `FALSE`.
+#' @param syndeton Whether to place the conjunction between the `last` list
+#'     items, between `all` list items, or between `none`.
+#'     Defaults to `last`.
 #' @param oxford A logical value indicating whether to use a serial comma
 #'     (x, y, and z) or not (x, y and z) in lists of length three or more.
 #'     Defaults to `TRUE` if R's locale is set to the United States and `FALSE`
@@ -26,11 +25,14 @@
 #' @example examples/plu_stick.R
 
 plu_stick <- function(
-  vector, fn = NULL, ..., conj = "and", conj_all = FALSE,
+  vector, fn = NULL, ..., conj = "and", syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
 ) {
-  if (conj_all) {
+  if (match.arg(syndeton) == "all") {
     sep  <- paste0(" ", conj, " ")
+    last <- sep
+  } else if (match.arg(syndeton) == "none") {
+    sep  <- ", "
     last <- sep
   } else {
     oxford <- oxford %||% grepl("United States|US", Sys.getlocale("LC_COLLATE"))

@@ -10,7 +10,7 @@ plu_stick(
   fn = NULL,
   ...,
   conj = "and",
-  conj_all = FALSE,
+  syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
 )
 
@@ -19,7 +19,7 @@ stick(
   fn = NULL,
   ...,
   conj = "and",
-  conj_all = FALSE,
+  syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
 )
 }
@@ -33,10 +33,9 @@ stick(
 \item{conj}{A conjunction to place between the last two list items.
 Defaults to \code{"and"}.}
 
-\item{conj_all}{Whether to place the conjunction between all list items.
-If \code{FALSE}, commas are placed between all list items except for the last
-two.
-Defaults to \code{FALSE}.}
+\item{syndeton}{Whether to place the conjunction between the \code{last} list
+items, between \code{all} list items, or between \code{none}.
+Defaults to \code{last}.}
 
 \item{oxford}{A logical value indicating whether to use a serial comma
 (x, y, and z) or not (x, y and z) in lists of length three or more.
