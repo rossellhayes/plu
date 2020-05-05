@@ -59,7 +59,7 @@ plural is more common.
 \code{"none"} attempts to apply regular noun pluralization rules to all words.
 Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
-See examples in \code{\link[=pluralize]{pluralize()}} for more details.}
+See examples in \code{\link[plu:ralize]{plu::ralize()}} for more details.}
 
 \item{max_english}{When using the special character \code{"[n]"}, the number will
 be printed in words when \code{n <= max_english} and numerically when

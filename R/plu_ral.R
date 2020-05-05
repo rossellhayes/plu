@@ -18,7 +18,7 @@
 #'     `"none"` attempts to apply regular noun pluralization rules to all words.
 #'     Defaults to `"moderate"`.
 #'     The default can be changed by setting `options(plu.irregulars)`.
-#'     See examples in [pluralize()] for more details.
+#'     See examples in [plu::ralize()] for more details.
 #' @param max_english When using the special character `"[n]"`, the number will
 #'     be printed in words when `n <= max_english` and numerically when
 #'     `n > max_english` ("two words", "21 words"). Defaults to 20.
