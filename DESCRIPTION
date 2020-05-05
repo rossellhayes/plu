@@ -16,6 +16,8 @@ Description: Pluralizes English phrases based on the length of
     language lists from vectors and to include the length of a vector in
     natural language.
 License: MIT + file LICENSE
+URL: https://github.com/rossellhayes/plu
+BugReports: https://github.com/rossellhayes/plu/issues
 Depends:
     R (>= 2.10)
 Imports: 
@@ -24,12 +26,10 @@ Imports:
     rlang,
     stringr
 Suggests: 
+    covr,
     testthat,
-    usethis,
-    covr
+    usethis
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
-URL: https://github.com/rossellhayes/plu
-BugReports: https://github.com/rossellhayes/plu/issues
