@@ -46,9 +46,9 @@
 #'     (`"[1] word"` to "2 words").
 #'
 #'     - `[one]` will be replaced with `n` printed in words
-#'     (`"[one] word` to "two words", `"[One] word` to "Two words").
+#'     (`"[one] word"` to "two words", `"[One] word"` to "Two words").
 #'
-#'     - `"[n]"` will dynamically choose between printing numerically and in words
+#'     - `[n]` will dynamically choose between printing numerically and in words
 #'     based on `max_english` (`"[n] word"` to "two words", "21 words").
 #'
 #' @return The character vector `x` altered to match the number of `n`

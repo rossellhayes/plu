@@ -94,8 +94,8 @@ and plural form (\code{"{the|both|all} word"} to "the word" (1),
 \item \verb{[1]} will be replaced with \code{n} printed numerically
 (\code{"[1] word"} to "2 words").
 \item \verb{[one]} will be replaced with \code{n} printed in words
-(\verb{"[one] word} to "two words", \verb{"[One] word} to "Two words").
-\item \code{"[n]"} will dynamically choose between printing numerically and in words
+(\code{"[one] word"} to "two words", \code{"[One] word"} to "Two words").
+\item \verb{[n]} will dynamically choose between printing numerically and in words
 based on \code{max_english} (\code{"[n] word"} to "two words", "21 words").
 }
 }
