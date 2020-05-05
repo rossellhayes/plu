@@ -9,6 +9,7 @@ plu_stick(
   vector,
   fn = NULL,
   ...,
+  sep = ", ",
   conj = "and",
   syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
@@ -18,6 +19,7 @@ stick(
   vector,
   fn = NULL,
   ...,
+  sep = ", ",
   conj = "and",
   syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
@@ -30,15 +32,17 @@ stick(
 
 \item{...}{Additional arguments to \code{fn}}
 
-\item{conj}{A conjunction to place between the last two list items.
-Defaults to \code{"and"}.}
+\item{sep}{The mark to place between list items. Defaults to \code{", "}}
 
-\item{syndeton}{Whether to place the conjunction between the \code{last} list
-items, between \code{all} list items, or between \code{none}.
-Defaults to \code{last}.}
+\item{conj}{A conjunction to place between list items. Defaults to \code{"and"}.}
 
-\item{oxford}{A logical value indicating whether to use a serial comma
-(x, y, and z) or not (x, y and z) in lists of length three or more.
+\item{syndeton}{Whether to place the conjunction before the \code{"last"} list
+items, between \code{"all"} list items, or between \code{"none"}.
+Defaults to \code{"last"}.}
+
+\item{oxford}{A logical value indicating whether to place \code{sep} before the
+last list item (x, y, and z) or not (x, y and z) in lists of length three
+or more where \code{syndeton} is \code{"last"}.
 Defaults to \code{TRUE} if R's locale is set to the United States and \code{FALSE}
 otherwise.
 The default can be changed by setting \code{options(plu.oxford_comma)}.}
@@ -61,10 +65,12 @@ plu::stick(arguments, usethis::ui_code)
 
 plu::stick(ingredients, conj = "or")
 
-plu::stick(ingredients, conj_all = TRUE)
+plu::stick(ingredients, syndeton = "all")
+
+plu::stick(ingredients, sep = "/", syndeton = "none")
 
 creed <- c("snow", "rain", "heat", "gloom of night")
-plu::stick(creed, conj = "nor", conj_all = TRUE)
+plu::stick(creed, conj = "nor", syndeton = "all")
 
 dedication <- c("my parents", "Ayn Rand", "God")
 plu::stick(dedication)

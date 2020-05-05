@@ -21,10 +21,19 @@ test_that("plu_stick conj works", {
   )
 })
 
+test_that("plu_stick sep works", {
+  expect_equal(
+    plu::stick(ingredients, sep = "/"), "sugar/spice and everything nice"
+  )
+})
+
 test_that("plu_stick conj_all works", {
   expect_equal(
-    plu::stick(ingredients, conj_all = TRUE),
+    plu::stick(ingredients, syndeton = "all"),
     "sugar and spice and everything nice"
+  )
+  expect_equal(
+    plu::stick(ingredients, syndeton = "none"), "sugar, spice, everything nice"
   )
 })
 
