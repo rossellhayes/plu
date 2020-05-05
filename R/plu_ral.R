@@ -70,7 +70,7 @@ plu_ral <- function(
 ) {
   if (pl) {
     x <- stringr::str_split(
-      x, " (?![^\\[]*\\])(?![^\\{]*\\})", simplify = TRUE
+      x, " (?![^[\\[\\{]]*[\\]\\}])", simplify = TRUE
     )
 
     x[!grepl("\\{|\\}|\\[|\\]", x)] <- plu::ralize(
