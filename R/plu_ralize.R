@@ -1,6 +1,6 @@
 #' Pluralize a word
 #'
-#' @param word A character vector of English words to be pluralized
+#' @param x A character vector of English words to be pluralized
 #' @param irregulars What level of irregularity to use in pluralization.
 #'     `"moderate"` uses the most common pluralization.
 #'     `"conservative"` uses the most common irregular plural if one exists,
@@ -12,7 +12,7 @@
 #'     The default can be changed by setting `options(plu.irregulars)`.
 #'     See examples.
 #'
-#' @return The character vector `word` pluralized
+#' @return The character vector `x` pluralized
 #'
 #' @seealso [plu::ral()] to pluralize an English phrase based on a condition
 #'
@@ -36,11 +36,15 @@
 #' @example examples/plu_ralize.R
 
 plu_ralize <- function(
-  word, irregulars = c("moderate", "conservative", "liberal", "none")
+  x, irregulars = c("moderate", "conservative", "liberal", "none")
 ) {
-  irregulars <- getOption("plu.irregulars") %||% match.arg(irregulars)
+  irregulars <- ifelse(
+    isTRUE(getOption("plu.irregulars") %in% irregulars),
+    getOption("plu.irregulars"),
+    match.arg(irregulars)
+  )
 
-  dictionary <- switch(
+  dict <- switch(
     irregulars,
     moderate     = moderate_list,
     conservative = conservative_list,
@@ -48,31 +52,31 @@ plu_ralize <- function(
     none         = data.frame(singular = character(0), plural = character(0))
   )
 
-  todo <- rep(TRUE, length(word))
+  todo <- rep(TRUE, length(x))
 
-  irreg <- todo & word %in% dictionary$singular
-  word[irreg] <- dictionary$plural[match(word[irreg], dictionary$singular)]
+  irreg <- todo & x %in% dict$singular
+  x[irreg] <- dict$plural[match(x[irreg], dict$singular)]
   todo <- todo & !irreg
 
-  irreg_upper <- todo & stringr::str_to_title(word) == word &
-    tolower(word) %in% dictionary$singular
-  word[irreg_upper] <- stringr::str_to_title(
-    dictionary$plural[match(tolower(word[irreg_upper]), dictionary$singular)]
+  irreg_upper <- todo & stringr::str_to_title(x) == x &
+    tolower(x) %in% dict$singular
+  x[irreg_upper] <- stringr::str_to_title(
+    dict$plural[match(tolower(x[irreg_upper]), dict$singular)]
   )
   todo <- todo & !irreg_upper
 
-  xy <- todo & grepl("y$", word) &
-    !(grepl("[AEIOUaeiou]y$", word) & !grepl("[Qq][Uu]y$", word))
-  word[xy] <- gsub("y$", "ies", word[xy])
+  xy <- todo & grepl("y$", x) &
+    !(grepl("[AEIOUaeiou]y$", x) & !grepl("[Qq][Uu]y$", x))
+  x[xy] <- gsub("y$", "ies", x[xy])
   todo <- todo & !xy
 
-  xs <- todo & grepl("([JSXZjsxz]|[CScs][Hh])$", word)
-  word[xs] <- paste0(word[xs], "es")
+  xs <- todo & grepl("([JSXZjsxz]|[CScs][Hh])$", x)
+  x[xs] <- paste0(x[xs], "es")
   todo <- todo & !xs
 
-  word[todo] <- paste0(word[todo], "s")
+  x[todo] <- paste0(x[todo], "s")
 
-  word
+  x
 }
 
 #' @rdname plu_ralize

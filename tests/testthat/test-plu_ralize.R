@@ -35,11 +35,15 @@ test_that("irregular pluralization options", {
 test_that("options(plu.irregulars)", {
   options(plu.irregulars = "none")
   expect_equal(plu::ralize(irregs), irregs_none)
+  expect_equal(plu::ralize(irregs, "liberal"), irregs_liberal)
   options(plu.irregulars = "liberal")
   expect_equal(plu::ralize(irregs), irregs_liberal)
+  expect_equal(plu::ralize(irregs, "moderate"), irregs_moderate)
   options(plu.irregulars = "moderate")
   expect_equal(plu::ralize(irregs), irregs_moderate)
+  expect_equal(plu::ralize(irregs, "conservative"), irregs_conservative)
   options(plu.irregulars = "conservative")
   expect_equal(plu::ralize(irregs), irregs_conservative)
+  expect_equal(plu::ralize(irregs, "none"), irregs_none)
 })
 

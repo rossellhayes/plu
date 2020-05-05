@@ -19,12 +19,12 @@ about the suitability of this array for any purpose. It is provided
 "as is" without express or implied warranty.
 }
 \usage{
-plu_ralize(word, irregulars = c("moderate", "conservative", "liberal", "none"))
+plu_ralize(x, irregulars = c("moderate", "conservative", "liberal", "none"))
 
-ralize(word, irregulars = c("moderate", "conservative", "liberal", "none"))
+ralize(x, irregulars = c("moderate", "conservative", "liberal", "none"))
 }
 \arguments{
-\item{word}{A character vector of English words to be pluralized}
+\item{x}{A character vector of English words to be pluralized}
 
 \item{irregulars}{What level of irregularity to use in pluralization.
 \code{"moderate"} uses the most common pluralization.
@@ -38,7 +38,7 @@ The default can be changed by setting \code{options(plu.irregulars)}.
 See examples.}
 }
 \value{
-The character vector \code{word} pluralized
+The character vector \code{x} pluralized
 }
 \description{
 Pluralize a word
