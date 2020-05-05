@@ -8,3 +8,6 @@
 ^clang-\.*$
 ^tic\.R$
 ^codecov\.yml$
+^\.travis\.yml$
+^appveyor\.yml$
+^examples
