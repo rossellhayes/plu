@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 # plu <img src="man/figures/logo.png?raw=TRUE" align="right" height="138" />
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
+[![Travis build status](https://travis-ci.com/rossellhayes/plu.svg?branch=master)](https://travis-ci.com/rossellhayes/plu)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rossellhayes/plu?branch=master&svg=true)](https://ci.appveyor.com/project/rossellhayes/plu)
+[![Codecov test coverage](https://codecov.io/gh/rossellhayes/plu/branch/master/graph/badge.svg)](https://codecov.io/gh/rossellhayes/plu?branch=master)
 <!-- badges: end -->
 
 Pluralize phrases in R
