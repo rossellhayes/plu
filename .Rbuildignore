@@ -7,3 +7,4 @@
 ^\.ccache$
 ^clang-\.*$
 ^tic\.R$
+^codecov\.yml$

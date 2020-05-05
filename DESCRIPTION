@@ -25,7 +25,8 @@ Imports:
     stringr
 Suggests: 
     testthat,
-    usethis
+    usethis,
+    covr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
