@@ -21,6 +21,10 @@ Pluralize phrases in R
 
 ## Overview
 
+**plu** provides a simplified way to dynamically generate plain-language
+messages in R when we can’t know beforehand whether a message will be
+singular or plural.
+
 Pluralizes English phrases based on the length of an associated vector.
 Contains helper functions to create natural language lists from vectors
 and to include the length of a vector in natural language.
@@ -32,6 +36,31 @@ You can install the development version of **plu** with:
 ``` r
 # install.packages("remotes")
 remotes::install_github("rossellhayes/fauxnaif")
+```
+
+## Usage
+
+``` r
+formulas1 <- c(x %in% 1:3 ~ "low", x %in% 4:6 ~ "medium", "x %in% 7:9")
+formulas2 <- c(x %in% 1:3 ~ "low", x %in% 4:6 ~ "medium", "x %in% 7:9", "high")
+problems1 <- Filter(function(x) !rlang::is_formula(x), formulas1)
+problems2 <- Filter(function(x) !rlang::is_formula(x), formulas2)
+
+paste(
+  "All arguments must be formulas.",
+  plu::ral("Argument", problems1), 
+  plu::stick(problems1),
+  plu::ral("isn't a formula.", problems1)
+)
+#> [1] "All arguments must be formulas. Argument x %in% 7:9 isn't a formula."
+
+paste(
+  "All arguments must be formulas.",
+  plu::ral("Argument", problems2), 
+  plu::stick(problems2, usethis::ui_code),
+  plu::ral("isn't a formula.", problems2)
+)
+#> [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."
 ```
 
 ## Credits

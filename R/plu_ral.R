@@ -4,11 +4,12 @@
 #'     See details for special handling of certain words.
 #' @param vector A vector whose length determines `n`. Defaults to length 2.
 #' @param n The number which will determine the plurality of `x`.
-#'     Defaults to `length(n)`.
+#'     Defaults to `length(n)`. If specified, overrides `vector`.
 #' @param pl A logical value indicating whether to use the plural form (if
 #'     `TRUE`) or the singular form (if `FALSE`) of `x`.
 #'     Defaults to `FALSE` when `n` is `1` or `-1` and `TRUE` for all other
 #'     values.
+#'     If specified, overrides `n`.
 #' @param irregulars What level of irregularity to use in pluralization.
 #'     `"moderate"` uses the most common pluralization.
 #'     `"conservative"` uses the most common irregular plural if one exists,
@@ -57,55 +58,56 @@
 #'
 #' [english::as.english()] to print a number in English words.
 #'
-#' @importFrom rlang %||%
 #' @export
 #'
 #' @example examples/plu_ral.R
 
 plu_ral <- function(
   x, vector = integer(2), n = length(vector), pl = abs(n) != 1,
-  irregulars  = c("moderate", "conservative", "liberal", "none"),
-  max_english = getOption("plu.max_english"),
-  big.mark    = getOption("plu.big.mark")
+  irregulars  = c("moderate", "conservative", "liberal", "none", "easter"),
+  max_english = getOption("plu.max_english", 20),
+  big.mark    = getOption("plu.big.mark", ",")
 ) {
+  start_space <- substr(x, 1, 1) == " "
+  end_space   <- substr(x, nchar_x <- nchar(x), nchar_x) == " "
+
   if (pl) {
-    x <- stringr::str_split(
-      x, " (?![^[\\[\\{]]*[\\]\\}])", simplify = TRUE
+    x <- unlist(
+      strsplit(x, "(?=[^A-Za-z0-9'-])(?![^\\[{]*[\\]}])", perl = TRUE)
     )
 
     x[!grepl("\\{|\\}|\\[|\\]", x)] <- plu::ralize(
       x[!grepl("\\{|\\}|\\[|\\]", x)], irregulars = irregulars
     )
 
-    x <- paste(x, collapse = " ")
+    x <- paste(x, collapse = "")
   }
 
-  if (any(grepl("\\{|\\[", x))) {
-    num_n <- format(n, big.mark = big.mark %||% ",")
-    eng_n <- ifelse(
-      rlang::is_integerish(n),
-      as.character(english::as.english(n)),
-      num_n
+  if (grepl("\\{", x)) {
+    x <- gsub(
+      "\\{(.*?)\\|(.*?)\\|(.*?)\\}",
+      ifelse(abs(n) == 1, "\\1", ifelse(abs(n) == 2, "\\2", "\\3")),
+      x
     )
-
-    x <- stringr::str_replace_all(
-      x,
-      c(
-        "\\{(.*?)\\|(.*?)\\|(.*?)\\}" = ifelse(
-          abs(n) == 1, "\\1", ifelse(abs(n) == 2, "\\2", "\\3")
-        ),
-        "\\{(.*?)\\|(.*?)\\}" = ifelse(abs(n) == 1, "\\1", "\\2"),
-        "\\{(.*?)\\}"         = "\\1",
-        "\\[n\\]"             = ifelse(n > max_english %||% 20, num_n, eng_n),
-        "\\[1\\]"             = num_n,
-        "\\[one\\]"           = eng_n,
-        "\\[ONE\\]"           = toupper(eng_n),
-        "\\[One\\]"           = stringr::str_to_sentence(eng_n)
-      )
-    )
+    x <- gsub("\\{(.*?)\\|(.*?)\\}", ifelse(abs(n) == 1, "\\1", "\\2"), x)
+    x <- gsub("\\{(.*?)\\}", "\\1", x)
   }
 
-  stringr::str_squish(x)
+  if (grepl("\\[", x)) {
+    num_n <- format(n, big.mark = big.mark)
+    eng_n <- ifelse(as.integer(n) == n, plu_meral(n), num_n)
+
+    x <- gsub("\\[n\\]", ifelse(n > max_english, num_n, eng_n), x)
+    x <- gsub("\\[1\\]", num_n, x)
+    x <- gsub("\\[one\\]", eng_n, x)
+    x <- gsub("\\[ONE\\]", toupper(eng_n), x)
+    x <- gsub("\\[One\\]", tosentence(x), x)
+  }
+
+  if (!start_space) x <- gsub("^ ", "", x)
+  if (!end_space)   x <- gsub(" $", "", x)
+
+  plu_nge(x)
 }
 
 #' @rdname plu_ral

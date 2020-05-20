@@ -1,6 +1,6 @@
 #' Collapse character vectors into natural language strings
 #'
-#' @param vector A character vector (or a vector coercible to character)
+#' @param x A character vector (or a vector coercible to character)
 #' @param fn A function to apply to all items in the list
 #' @param ... Additional arguments to `fn`
 #' @param sep The mark to place between list items. Defaults to `", "`
@@ -20,33 +20,40 @@
 #' @seealso [glue::glue_collapse()] for a generalized way to collapse vectors
 #'     into a single string
 #'
-#' @importFrom rlang %||%
 #' @export
 #'
 #' @example examples/plu_stick.R
 
 plu_stick <- function(
-  vector, fn = NULL, ..., sep = ", ", conj = "and",
+  x, fn = NULL, ..., sep = ", ", conj = " and ",
   syndeton = c("last", "all", "none"),
   oxford   = getOption("plu.oxford_comma")
 ) {
-  if (match.arg(syndeton) == "all") {
-    sep  <- paste0(" ", conj, " ")
-    last <- sep
-  } else if (match.arg(syndeton) == "none") {
-    last <- sep
-  } else {
-    oxford <- oxford %||% grepl("United States|US", Sys.getlocale("LC_COLLATE"))
-    last   <- ifelse(
-      length(vector) > 2 & oxford,
-      paste0(sep, conj, " "),
-      paste0(" ", conj, " ")
+  syndeton <- match.arg(syndeton)
+
+  phrase <- rep("", length(x) * 2 - 1)
+
+  if (!is.null(fn)) x <- lapply(x, fn, ...)
+
+  phrase[seq_along(x) * 2 - 1] <- x
+
+  if (syndeton == "last") {
+    if (is.null(oxford)) {
+      oxford <- grepl("United States|US", Sys.getlocale("LC_COLLATE"))
+    }
+
+    phrase[length(x) * 2 - 2] <- ifelse(
+      length(x) > 2 & oxford, plu_nge(paste0(sep, conj)), conj
     )
+
+    phrase[phrase == ""] <- sep
+  } else if (syndeton == "all") {
+    phrase[phrase == ""] <- conj
+  } else {
+    phrase[phrase == ""] <- sep
   }
 
-  if (!is.null(fn)) vector <- lapply(vector, fn, ...)
-
-  glue::glue_collapse(vector, sep = sep, last = last)
+  paste0(phrase, collapse = "")
 }
 
 #' @rdname plu_stick

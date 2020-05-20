@@ -30,18 +30,19 @@
 #' about the suitability of this array for any purpose. It is provided
 #' "as is" without express or implied warranty.
 #'
-#' @importFrom rlang %||%
 #' @export
 #'
 #' @example examples/plu_ralize.R
 
 plu_ralize <- function(
-  x, irregulars = c("moderate", "conservative", "liberal", "none")
+  x,
+  irregulars = getOption(
+    "plu.irregulars",
+    c("moderate", "conservative", "liberal", "none", "easter")
+  )
 ) {
-  irregulars <- ifelse(
-    isTRUE(getOption("plu.irregulars") %in% irregulars),
-    getOption("plu.irregulars"),
-    match.arg(irregulars)
+  irregulars <- match.arg(
+    irregulars, c("moderate", "conservative", "liberal", "none", "easter")
   )
 
   dict <- switch(
@@ -49,18 +50,19 @@ plu_ralize <- function(
     moderate     = moderate_list,
     conservative = conservative_list,
     liberal      = liberal_list,
-    none         = data.frame(singular = character(0), plural = character(0))
+    none         = data.frame(singular = character(0), plural = character(0)),
+    easter       = easter_list
   )
 
-  todo <- rep(TRUE, length(x))
+  todo <- grepl("[A-Za-z0-9]$", x)
 
   irreg <- todo & x %in% dict$singular
   x[irreg] <- dict$plural[match(x[irreg], dict$singular)]
   todo <- todo & !irreg
 
-  irreg_upper <- todo & stringr::str_to_title(x) == x &
+  irreg_upper <- todo & tosentence(x) == x &
     tolower(x) %in% dict$singular
-  x[irreg_upper] <- stringr::str_to_title(
+  x[irreg_upper] <- tosentence(
     dict$plural[match(tolower(x[irreg_upper]), dict$singular)]
   )
   todo <- todo & !irreg_upper

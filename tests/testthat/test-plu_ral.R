@@ -8,8 +8,8 @@ options(plu.big.mark = NULL)
 options(plu.irregulars = NULL)
 
 test_that("pl", {
-expect_equal(plu::ral("word", pl = FALSE), "word")
-expect_equal(plu::ral("word", pl = TRUE), "words")
+  expect_equal(plu::ral("word", pl = FALSE), "word")
+  expect_equal(plu::ral("word", pl = TRUE), "words")
 })
 
 test_that("n", {
@@ -23,6 +23,25 @@ test_that("n", {
 test_that("vector", {
   expect_equal(plu::ral("word", one), "word")
   expect_equal(plu::ral("word", two), "words")
+})
+
+test_that("spaces", {
+  expect_equal(plu::ral("word "), "words ")
+  expect_equal(plu::ral(" word"), " words")
+  expect_equal(plu::ral(" word "), " words ")
+  expect_equal(plu::ral("a word"), "words")
+  expect_equal(plu::ral("a word "), "words ")
+  expect_equal(plu::ral(" a word"), " words")
+  expect_equal(plu::ral(" a word "), " words ")
+})
+
+test_that("punctuation", {
+  expect_equal(plu::ral("This is a word."), "These are words.")
+  expect_equal(plu::ral("This isn't a word."), "These aren't words.")
+  expect_equal(plu::ral("Is he a low-life?"), "Are they low-lifes?")
+  expect_equal(
+    plu::ral("A Hispanic/Latino is a voter!"), "Hispanics/Latinos are voters!"
+  )
 })
 
 test_that("invariant", {

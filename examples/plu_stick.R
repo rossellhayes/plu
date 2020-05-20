@@ -2,10 +2,9 @@ ingredients <- c("sugar", "spice", "everything nice")
 plu::stick(ingredients)
 
 plu::stick(ingredients, fn = toupper)
-plu::stick(ingredients, fn = sQuote, q = FALSE)
 
 arguments <- names(formals(plu::stick))
-plu::stick(arguments, usethis::ui_code)
+plu::stick(arguments, fn = sQuote, q = rep("`", 4))
 
 plu::stick(ingredients, conj = "or")
 

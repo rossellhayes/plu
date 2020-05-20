@@ -2,6 +2,7 @@ library(dplyr)
 library(readr)
 library(stringr)
 library(tibble)
+library(usethis)
 
 list <- read_lines("data-raw/infl.txt") %>%
   enframe(name = NULL, value = "line") %>%
@@ -15,7 +16,7 @@ list <- read_lines("data-raw/infl.txt") %>%
     line = str_squish(
       str_replace_all(line, c("\\{.*?\\}" = "", ".*?:" = "", "[^A-Za-z ]" = ""))
     ),
-    guessed_plural = pluralize(singular, irregulars = "none")
+    guessed_plural = plu::ralize(singular, irregulars = "none")
   ) %>%
   rowwise() %>%
   mutate(
@@ -25,14 +26,16 @@ list <- read_lines("data-raw/infl.txt") %>%
   bind_rows(
     tribble(
       ~singular, ~line,
+      "black",   c("black people", "blacks"),
       "emoji",   c("emojis", "emoji"),
       "ghoti",   c("ghoti", "ghotis"),
+      "lasagna", c("lasagnas", "lasagne"),
       "octopus", c("octopuses", "octopodes")
     ) %>%
-      mutate(guessed_plural = pluralize(singular, irregulars = "none"))
+      mutate(guessed_plural = plu::ralize(singular, irregulars = "none"))
   ) %>%
   group_by(singular) %>%
-  slice_tail() %>%
+  slice(n()) %>%
   rowwise()
 
 moderate_list <- list %>%
@@ -54,6 +57,7 @@ liberal_list <- list %>%
   ungroup() %>%
   select(singular, plural)
 
+
 verb_list <- read_lines("data-raw/infl.txt") %>%
   enframe(name = NULL, value = "line") %>%
   mutate(
@@ -68,25 +72,60 @@ verb_list <- read_lines("data-raw/infl.txt") %>%
   ) %>%
   filter(!singular %in% list$singular) %>%
   group_by(plural) %>%
-  slice_tail() %>%
-  select(singular, plural) %>%
+  slice(n()) %>%
+  select(singular, plural)
+
+grammar_list <- tribble(
+  ~ singular, ~ plural,
+  "a",        "",
+  "an",       "",
+  "I",        "we",
+  "me",       "us",
+  "myself",   "ourselves",
+  "my",       "our",
+  "mine",     "ours",
+  "thou",     "you",
+  "thee",     "you",
+  "yourself", "yourselves",
+  "thyself",  "yourselves",
+  "thy",      "your",
+  "thine",    "yours",
+  "he",       "they",
+  "she",      "they",
+  "it",       "they",
+  "him",      "them",
+  "her",      "them",
+  "himself",  "themselves",
+  "herself",  "themselves",
+  "itself",   "themselves",
+  "themself", "themselves",
+  "his",      "their",
+  "its",      "their",
+  "hers",     "theirs",
+  "this",     "these",
+  "that",     "those",
+  "is",       "are",
+  "was",      "were",
+  "isn't",    "aren't",
+  "wasn't",   "weren't"
+)
+
+moderate_list     <- bind_rows(moderate_list, verb_list, grammar_list)
+conservative_list <- bind_rows(conservative_list, verb_list, grammar_list)
+liberal_list      <- bind_rows(liberal_list, verb_list, grammar_list)
+
+easter_list <- moderate_list %>%
   bind_rows(
     tribble(
-      ~ singular, ~ plural,
-      "a",        "",
-      "an",       "",
-      "is",       "are",
-      "was",      "were",
-      "isn't",    "aren't",
-      "wasn't",   "weren't"
+      ~singular,  ~line,
+      "anecdote", "data"
     )
-  )
+  ) %>%
+  group_by(singular) %>%
+  slice(n()) %>%
+  ungroup()
 
-moderate_list     <- bind_rows(moderate_list, verb_list)
-conservative_list <- bind_rows(conservative_list, verb_list)
-liberal_list      <- bind_rows(liberal_list, verb_list)
-
-use_data(
-  moderate_list, conservative_list, liberal_list,
+usethis::use_data(
+  moderate_list, conservative_list, liberal_list, easter_list,
   internal = TRUE, overwrite = TRUE
 )

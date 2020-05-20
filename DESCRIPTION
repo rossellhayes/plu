@@ -22,14 +22,13 @@ Depends:
     R (>= 2.10)
 Imports: 
     english,
-    glue,
-    rlang,
-    stringr
+    nombre (>= 0.1.0)
 Suggests: 
     covr,
-    testthat,
-    usethis
+    testthat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+Remotes:  
+    rossellhayes/nombre

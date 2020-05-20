@@ -17,7 +17,7 @@ test_that("plu_stick fn works", {
 
 test_that("plu_stick conj works", {
   expect_equal(
-    plu::stick(ingredients, conj = "or"), "sugar, spice or everything nice"
+    plu::stick(ingredients, conj = " or "), "sugar, spice or everything nice"
   )
 })
 
