@@ -1,8 +1,12 @@
 #' Pluralize a phrase based on the length of a vector
 #'
 #' @param x An English word or phrase to be pluralized.
-#'     See details for special handling of certain words.
+#'     See details for special sequences which are handled differently.
 #' @param vector A vector whose length determines `n`. Defaults to length 2.
+#' @param n_fn A function to apply to the output of the special sequence
+#'     `"n"`. See examples.
+#'     Defaults to `identity`, which returns `n` unchanged.
+#' @param ... Additional arguments passed to the function `n_fn`.
 #' @param n The number which will determine the plurality of `x`.
 #'     Defaults to `length(n)`. If specified, overrides `vector`.
 #' @param pl A logical value indicating whether to use the plural form (if
@@ -20,102 +24,78 @@
 #'     Defaults to `"moderate"`.
 #'     The default can be changed by setting `options(plu.irregulars)`.
 #'     See examples in [plu::ralize()] for more details.
-#' @param max_english When using the special character `"[n]"`, the number will
-#'     be printed in words when `n <= max_english` and numerically when
-#'     `n > max_english` ("two words", "21 words"). Defaults to 20.
-#'     The default can be changed by setting `options(plu.max_english)`.
-#' @param big.mark When using the special characters `"[n]"` and `"[one]"`, a
-#'     "big mark" will be placed between every three digits.
-#'     Defaults to `","`.
-#'     The default can be changed by setting `options(plu.big.mark)`.
 #'
 #' @details Certain strings in `x` are treated specially.
 #'
-#' - A string between braces will be treated as invariant
-#' (`"attorney {general}"` to "attorneys general").
+#' - By default, `"a"` and `"an"` are deleted in the plural
+#' ("a word" to "words").
+#'
+#' - The string `"n"` will be replaced with the length of `vector` or the
+#' number in `n`.
+#'     - This output can be modified with `n_fn`.
 #'
 #' - Strings between braces separated by a pipe will be treated as a custom
 #' plural (`"{a|some} word"` to "a word", "some words").
-#'
 #'     - Three strings separated by pipes will be treated as a singular, dual,
 #'     and plural form (`"{the|both|all} word"` to "the word" (1),
 #'     "both words" (2), "all words" (3+)).
 #'
-#' - The number of `n` can be added to the phrase using strings in braces.
-#'
-#'     - `[1]` will be replaced with `n` printed numerically
-#'     (`"[1] word"` to "2 words").
-#'
-#'     - `[one]` will be replaced with `n` printed in words
-#'     (`"[one] word"` to "two words", `"[One] word"` to "Two words").
-#'
-#'     - `[n]` will dynamically choose between printing numerically and in words
-#'     based on `max_english` (`"[n] word"` to "two words", "21 words").
+#' - Any other string between braces will be treated as invariant
+#' (`"attorney {general}"` to "attorneys general").
 #'
 #' @return The character vector `x` altered to match the number of `n`
 #'
 #' @seealso [plu::ralize()] to convert an English word to its plural form.
-#'
-#' [english::as.english()] to print a number in English words.
 #'
 #' @export
 #'
 #' @example examples/plu_ral.R
 
 plu_ral <- function(
-  x, vector = integer(2), n = length(vector), pl = abs(n) != 1,
-  irregulars  = c("moderate", "conservative", "liberal", "none", "easter"),
-  max_english = getOption("plu.max_english", 20),
-  big.mark    = getOption("plu.big.mark", ",")
+  x, vector = integer(2), n_fn = identity, ...,
+  n = length(vector), pl = abs(n) != 1,
+  irregulars  = c("moderate", "conservative", "liberal", "none", "easter")
 ) {
+  if (!length(x))                  return(character(0))
+  if (!is.character(x))            stop("`x` must be a character vector")
+  if (length(n) != 1)              stop("`n` must be length one")
+  if (!is.numeric(n))              stop("`n` must be numeric")
+  if (length(pl) != 1)             stop("`pl` must be length one")
+  if (!is.logical(pl) | is.na(pl)) stop("`pl` must be TRUE or FALSE")
+  if (!is.function(n_fn)) stop("`n_fn` must be an unquoted function name")
+
   start_space <- substr(x, 1, 1) == " "
   end_space   <- substr(x, nchar_x <- nchar(x), nchar_x) == " "
 
   if (pl) {
-    x <- unlist(
-      strsplit(x, "(?=[^A-Za-z0-9'-])(?![^\\[{]*[\\]}])", perl = TRUE)
-    )
+    x <- unlist(strsplit(x, "(?=[^A-Za-z0-9'-])(?![^{]*})", perl = TRUE))
 
-    x[!grepl("\\{|\\}|\\[|\\]", x)] <- plu::ralize(
-      x[!grepl("\\{|\\}|\\[|\\]", x)], irregulars = irregulars
-    )
-
-    x <- paste(x, collapse = "")
+    braced     <- grepl(paste0("\\{|\\}|\\bn\\b"), x)
+    x[!braced] <- plu::ralize(x[!braced], irregulars = irregulars)
+    x          <- paste(x, collapse = "")
   }
 
-  if (grepl("\\{", x)) {
-    x <- gsub(
-      "\\{(.*?)\\|(.*?)\\|(.*?)\\}",
-      ifelse(abs(n) == 1, "\\1", ifelse(abs(n) == 2, "\\2", "\\3")),
-      x
-    )
-    x <- gsub("\\{(.*?)\\|(.*?)\\}", ifelse(abs(n) == 1, "\\1", "\\2"), x)
-    x <- gsub("\\{(.*?)\\}", "\\1", x)
-  }
+  x <- gsub(
+    "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
+    ifelse(abs(n) == 1, "\\1", ifelse(abs(n) == 2, "\\2", "\\3")),
+    x
+  )
+  x <- gsub(
+    "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
+    ifelse(abs(n) == 1, "\\1", "\\2"),
+    x
+  )
+  x <- gsub("\\bn\\b", n_fn(n, ...), x)
+  x <- gsub("\\{(.*?)\\}", "\\1", x)
+  x <- trimws(plu_nge(x))
 
-  if (grepl("\\[", x)) {
-    num_n <- format(n, big.mark = big.mark)
-    eng_n <- ifelse(as.integer(n) == n, plu_meral(n), num_n)
+  if (start_space) x <- paste0(" ", x)
+  if (end_space)   x <- paste0(x, " ")
 
-    x <- gsub("\\[n\\]", ifelse(n > max_english, num_n, eng_n), x)
-    x <- gsub("\\[1\\]", num_n, x)
-    x <- gsub("\\[one\\]", eng_n, x)
-    x <- gsub("\\[ONE\\]", toupper(eng_n), x)
-    x <- gsub("\\[One\\]", tosentence(x), x)
-  }
-
-  if (!start_space) x <- gsub("^ ", "", x)
-  if (!end_space)   x <- gsub(" $", "", x)
-
-  plu_nge(x)
+  x
 }
 
 #' @rdname plu_ral
 #' @export
 
 ral <- plu_ral
-
-#' @rdname plu_ral
-#' @export
-
-plu <- plu_ral

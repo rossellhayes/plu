@@ -32,12 +32,12 @@ paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", later))
 
-paste("The caterpillar ate", plu::ral("[1] apple", mon))
-paste("The caterpillar ate", plu::ral("[1] delicacy", later))
+paste("The caterpillar ate", plu::ral("n apple", mon))
+paste("The caterpillar ate", plu::ral("n delicacy", later))
 
-paste("The caterpillar ate", plu::ral("[one] apple", mon))
-paste("The caterpillar ate", plu::ral("[one] delicacy", later))
-
-paste("The caterpillar ate", plu::ral("[n] apple", mon))
-paste("The caterpillar ate", plu::ral("[n] delicacy", later))
-paste("The caterpillar ate", plu::ral("[n] delicacy", later, max_english = 100))
+paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
+paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
+paste(
+  "The caterpillar ate",
+  plu::ral("n delicacy", later, nombre::cardinal, max_n = 20)
+)
