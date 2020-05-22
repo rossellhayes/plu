@@ -47,3 +47,11 @@ test_that("options(plu.irregulars)", {
   expect_equal(plu::ralize(irregs, "none"), irregs_none)
 })
 
+test_that("early return", {
+  expect_equal(plu_ralize(character(0)), character(0))
+})
+
+test_that("errors", {
+  expect_error(plu_ralize(integer(1)))
+})
+

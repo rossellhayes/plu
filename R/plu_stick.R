@@ -29,6 +29,19 @@ plu_stick <- function(
   syndeton = c("last", "all", "none"),
   oxford   = getOption("plu.oxford_comma")
 ) {
+  if (!length(x))          return(character(0))
+  if (length(sep) != 1)    stop("`sep` must be length one")
+  if (!is.character(sep))  stop("`sep` must be a character string")
+  if (length(conj) != 1)   stop("`conj` must be length one")
+  if (!is.character(conj)) stop("`conj` must be a character string")
+  if (!is.null(fn) & !is.function(fn))
+    stop("`fn` must be an unquoted function name")
+  if (!is.null(oxford)) {
+    if (length(oxford) != 1) stop("`oxford` must be length one")
+    if (!is.logical(oxford) | is.na(oxford))
+      stop("`oxford` must be TRUE or FALSE")
+  }
+
   syndeton <- match.arg(syndeton)
 
   phrase <- rep("", length(x) * 2 - 1)

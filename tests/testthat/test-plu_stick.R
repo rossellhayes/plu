@@ -64,3 +64,19 @@ test_that("locale-based default oxford works", {
     expect_equal(plu::stick(ingredients), "sugar, spice and everything nice")
   )
 })
+
+test_that("early return", {
+  expect_equal(plu_stick(character(0)), character(0))
+})
+
+test_that("errors", {
+  expect_error(plu_stick("word", fn = "format"))
+  expect_error(plu_stick("word", fn = this_is_not_a_real_function))
+  expect_error(plu_stick("word", sep = numeric(1)))
+  expect_error(plu_stick("word", sep = character(2)))
+  expect_error(plu_stick("word", conj = numeric(1)))
+  expect_error(plu_stick("word", conj = character(2)))
+  expect_error(plu_stick("word", oxford = NA))
+  expect_error(plu_stick("word", oxford = numeric(1)))
+  expect_error(plu_stick("word", oxford = logical(2)))
+})
