@@ -3,52 +3,48 @@
 \name{plu_ral}
 \alias{plu_ral}
 \alias{ral}
-\alias{plu}
 \title{Pluralize a phrase based on the length of a vector}
 \usage{
 plu_ral(
   x,
   vector = integer(2),
+  n_fn = identity,
+  ...,
   n = length(vector),
   pl = abs(n) != 1,
-  irregulars = c("moderate", "conservative", "liberal", "none"),
-  max_english = getOption("plu.max_english"),
-  big.mark = getOption("plu.big.mark")
+  irregulars = c("moderate", "conservative", "liberal", "none", "easter")
 )
 
 ral(
   x,
   vector = integer(2),
+  n_fn = identity,
+  ...,
   n = length(vector),
   pl = abs(n) != 1,
-  irregulars = c("moderate", "conservative", "liberal", "none"),
-  max_english = getOption("plu.max_english"),
-  big.mark = getOption("plu.big.mark")
-)
-
-plu(
-  x,
-  vector = integer(2),
-  n = length(vector),
-  pl = abs(n) != 1,
-  irregulars = c("moderate", "conservative", "liberal", "none"),
-  max_english = getOption("plu.max_english"),
-  big.mark = getOption("plu.big.mark")
+  irregulars = c("moderate", "conservative", "liberal", "none", "easter")
 )
 }
 \arguments{
 \item{x}{An English word or phrase to be pluralized.
-See details for special handling of certain words.}
+See details for special sequences which are handled differently.}
 
 \item{vector}{A vector whose length determines \code{n}. Defaults to length 2.}
 
+\item{n_fn}{A function to apply to the output of the special sequence
+\code{"n"}. See examples.
+Defaults to \code{identity}, which returns \code{n} unchanged.}
+
+\item{...}{Additional arguments passed to the function \code{n_fn}.}
+
 \item{n}{The number which will determine the plurality of \code{x}.
-Defaults to \code{length(n)}.}
+Defaults to \code{length(n)}. If specified, overrides \code{vector}.}
 
 \item{pl}{A logical value indicating whether to use the plural form (if
 \code{TRUE}) or the singular form (if \code{FALSE}) of \code{x}.
 Defaults to \code{FALSE} when \code{n} is \code{1} or \code{-1} and \code{TRUE} for all other
-values.}
+values.
+If specified, overrides \code{n}.}
 
 \item{irregulars}{What level of irregularity to use in pluralization.
 \code{"moderate"} uses the most common pluralization.
@@ -60,16 +56,6 @@ plural is more common.
 Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
 See examples in \code{\link[plu:ralize]{plu::ralize()}} for more details.}
-
-\item{max_english}{When using the special character \code{"[n]"}, the number will
-be printed in words when \code{n <= max_english} and numerically when
-\code{n > max_english} ("two words", "21 words"). Defaults to 20.
-The default can be changed by setting \code{options(plu.max_english)}.}
-
-\item{big.mark}{When using the special characters \code{"[n]"} and \code{"[one]"}, a
-"big mark" will be placed between every three digits.
-Defaults to \code{","}.
-The default can be changed by setting \code{options(plu.big.mark)}.}
 }
 \value{
 The character vector \code{x} altered to match the number of \code{n}
@@ -80,8 +66,13 @@ Pluralize a phrase based on the length of a vector
 \details{
 Certain strings in \code{x} are treated specially.
 \itemize{
-\item A string between braces will be treated as invariant
-(\code{"attorney {general}"} to "attorneys general").
+\item By default, \code{"a"} and \code{"an"} are deleted in the plural
+("a word" to "words").
+\item The string \code{"n"} will be replaced with the length of \code{vector} or the
+number in \code{n}.
+\itemize{
+\item This output can be modified with \code{n_fn}.
+}
 \item Strings between braces separated by a pipe will be treated as a custom
 plural (\code{"{a|some} word"} to "a word", "some words").
 \itemize{
@@ -89,15 +80,8 @@ plural (\code{"{a|some} word"} to "a word", "some words").
 and plural form (\code{"{the|both|all} word"} to "the word" (1),
 "both words" (2), "all words" (3+)).
 }
-\item The number of \code{n} can be added to the phrase using strings in braces.
-\itemize{
-\item \verb{[1]} will be replaced with \code{n} printed numerically
-(\code{"[1] word"} to "2 words").
-\item \verb{[one]} will be replaced with \code{n} printed in words
-(\code{"[one] word"} to "two words", \code{"[One] word"} to "Two words").
-\item \verb{[n]} will dynamically choose between printing numerically and in words
-based on \code{max_english} (\code{"[n] word"} to "two words", "21 words").
-}
+\item Any other string between braces will be treated as invariant
+(\code{"attorney {general}"} to "attorneys general").
 }
 }
 \examples{
@@ -135,18 +119,16 @@ paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", later))
 
-paste("The caterpillar ate", plu::ral("[1] apple", mon))
-paste("The caterpillar ate", plu::ral("[1] delicacy", later))
+paste("The caterpillar ate", plu::ral("n apple", mon))
+paste("The caterpillar ate", plu::ral("n delicacy", later))
 
-paste("The caterpillar ate", plu::ral("[one] apple", mon))
-paste("The caterpillar ate", plu::ral("[one] delicacy", later))
-
-paste("The caterpillar ate", plu::ral("[n] apple", mon))
-paste("The caterpillar ate", plu::ral("[n] delicacy", later))
-paste("The caterpillar ate", plu::ral("[n] delicacy", later, max_english = 100))
+paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
+paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
+paste(
+  "The caterpillar ate",
+  plu::ral("n delicacy", later, nombre::cardinal, max_n = 20)
+)
 }
 \seealso{
 \code{\link[plu:ralize]{plu::ralize()}} to convert an English word to its plural form.
-
-\code{\link[english:as.english]{english::as.english()}} to print a number in English words.
 }

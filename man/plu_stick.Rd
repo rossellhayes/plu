@@ -6,27 +6,27 @@
 \title{Collapse character vectors into natural language strings}
 \usage{
 plu_stick(
-  vector,
+  x,
   fn = NULL,
   ...,
   sep = ", ",
-  conj = "and",
+  conj = " and ",
   syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
 )
 
 stick(
-  vector,
+  x,
   fn = NULL,
   ...,
   sep = ", ",
-  conj = "and",
+  conj = " and ",
   syndeton = c("last", "all", "none"),
   oxford = getOption("plu.oxford_comma")
 )
 }
 \arguments{
-\item{vector}{A character vector (or a vector coercible to character)}
+\item{x}{A character vector (or a vector coercible to character)}
 
 \item{fn}{A function to apply to all items in the list}
 
@@ -58,10 +58,9 @@ ingredients <- c("sugar", "spice", "everything nice")
 plu::stick(ingredients)
 
 plu::stick(ingredients, fn = toupper)
-plu::stick(ingredients, fn = sQuote, q = FALSE)
 
 arguments <- names(formals(plu::stick))
-plu::stick(arguments, usethis::ui_code)
+plu::stick(arguments, fn = sQuote, q = rep("`", 4))
 
 plu::stick(ingredients, conj = "or")
 

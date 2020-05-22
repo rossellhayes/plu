@@ -19,9 +19,17 @@ about the suitability of this array for any purpose. It is provided
 "as is" without express or implied warranty.
 }
 \usage{
-plu_ralize(x, irregulars = c("moderate", "conservative", "liberal", "none"))
+plu_ralize(
+  x,
+  irregulars = getOption("plu.irregulars", c("moderate", "conservative", "liberal",
+    "none", "easter"))
+)
 
-ralize(x, irregulars = c("moderate", "conservative", "liberal", "none"))
+ralize(
+  x,
+  irregulars = getOption("plu.irregulars", c("moderate", "conservative", "liberal",
+    "none", "easter"))
+)
 }
 \arguments{
 \item{x}{A character vector of English words to be pluralized}
