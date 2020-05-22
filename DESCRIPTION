@@ -20,11 +20,9 @@ URL: https://github.com/rossellhayes/plu
 BugReports: https://github.com/rossellhayes/plu/issues
 Depends:
     R (>= 2.10)
-Imports: 
-    english,
-    nombre (>= 0.1.0)
 Suggests: 
     covr,
+    nombre (>= 0.1.0),
     testthat
 Encoding: UTF-8
 LazyData: true
