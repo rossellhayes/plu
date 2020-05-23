@@ -9,10 +9,6 @@ test_that("plu_stick fn works", {
   expect_equal(
     plu::stick(ingredients, toupper), "SUGAR, SPICE and EVERYTHING NICE"
   )
-  expect_equal(
-    plu::stick(ingredients, sQuote, FALSE),
-    "'sugar', 'spice' and 'everything nice'"
-  )
 })
 
 test_that("plu_stick conj works", {
