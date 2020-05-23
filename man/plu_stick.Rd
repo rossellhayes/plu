@@ -58,7 +58,7 @@ ingredients <- c("sugar", "spice", "everything nice")
 plu::stick(ingredients)
 
 plu::stick(ingredients, fn = toupper)
-message(plu::stick(names(formals(plu::stick)), fn = usethis::ui_code))
+plu::stick(names(formals(plu::stick)), fn = glue::backtick)
 
 plu::stick(ingredients, conj = "or")
 

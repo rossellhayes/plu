@@ -22,9 +22,9 @@ Depends:
     R (>= 2.10)
 Suggests: 
     covr,
+    glue,
     nombre (>= 0.1.0),
-    testthat,
-    usethis
+    testthat
 Remotes: 
     rossellhayes/nombre
 Encoding: UTF-8
