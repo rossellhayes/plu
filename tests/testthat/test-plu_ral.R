@@ -67,6 +67,8 @@ test_that("pipe works", {
 test_that("number", {
   expect_equal(plu_ral("n number", one), "1 number")
   expect_equal(plu_ral("n number", fifty), "50 numbers")
+  expect_equal(plu_ral("n number", one, replace_n = FALSE), "n number")
+  expect_equal(plu_ral("n number", fifty, replace_n = FALSE), "ns numbers")
   expect_equal(
     plu_ral("n number", integer(10000), n_fn = format, big.mark = ","),
     "10,000 numbers"
@@ -85,6 +87,9 @@ test_that("errors", {
   expect_error(plu_ral("word", pl = NA))
   expect_error(plu_ral("word", pl = numeric(1)))
   expect_error(plu_ral("word", pl = logical(2)))
+  expect_error(plu_ral("word", replace_n = NA))
+  expect_error(plu_ral("word", replace_n = numeric(1)))
+  expect_error(plu_ral("word", replace_n = logical(2)))
   expect_error(plu_ral("word", n_fn = "format"))
   expect_error(plu_ral("word", n_fn = this_is_not_a_real_function))
 })

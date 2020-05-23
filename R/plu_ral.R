@@ -24,6 +24,10 @@
 #'     Defaults to `"moderate"`.
 #'     The default can be changed by setting `options(plu.irregulars)`.
 #'     See examples in [plu::ralize()] for more details.
+#' @param replace_n A logical indicating whether to use special handling for
+#'     `"n"`.
+#'     See details.
+#'     Defaults to `TRUE`.
 #'
 #' @details Certain strings in `x` are treated specially.
 #'
@@ -52,9 +56,10 @@
 #' @example examples/plu_ral.R
 
 plu_ral <- function(
-  x, vector = integer(2), n_fn = identity, ...,
+  x, vector = integer(2), n_fn = NULL, ...,
   n = length(vector), pl = abs(n) != 1,
-  irregulars  = c("moderate", "conservative", "liberal", "none", "easter")
+  irregulars = c("moderate", "conservative", "liberal", "none", "easter"),
+  replace_n = TRUE
 ) {
   if (!length(x))                  return(character(0))
   if (!is.character(x))            stop("`x` must be a character vector")
@@ -62,7 +67,11 @@ plu_ral <- function(
   if (!is.numeric(n))              stop("`n` must be numeric")
   if (length(pl) != 1)             stop("`pl` must be length one")
   if (!is.logical(pl) | is.na(pl)) stop("`pl` must be TRUE or FALSE")
-  if (!is.function(n_fn)) stop("`n_fn` must be an unquoted function name")
+  if (length(replace_n) != 1)      stop("`replace_n` must be length one")
+  if (!is.logical(replace_n) | is.na(replace_n))
+    stop("`replace_n` must be TRUE or FALSE")
+  if (!is.null(n_fn) & !is.function(n_fn))
+    stop("`n_fn` must be an unquoted function name")
 
   start_space <- substr(x, 1, 1) == " "
   end_space   <- substr(x, nchar_x <- nchar(x), nchar_x) == " "
@@ -70,8 +79,8 @@ plu_ral <- function(
   if (pl) {
     x <- unlist(strsplit(x, "(?=[^A-Za-z0-9'-])(?![^{]*})", perl = TRUE))
 
-    braced     <- grepl(paste0("\\{|\\}|\\bn\\b"), x)
-    x[!braced] <- plu::ralize(x[!braced], irregulars = irregulars)
+    braced     <- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", "")), x)
+    x[!braced] <- plu_ralize(x[!braced], irregulars = irregulars)
     x          <- paste(x, collapse = "")
   }
 
@@ -85,8 +94,11 @@ plu_ral <- function(
     ifelse(abs(n) == 1, "\\1", "\\2"),
     x
   )
-  x <- gsub("\\bn\\b", n_fn(n, ...), x)
-  x <- gsub("\\{(.*?)\\}", "\\1", x)
+
+  if (!is.null(n_fn)) n <- n_fn(n, ...)
+  if (replace_n)      x <- gsub("\\bn\\b", n, x)
+
+  x <- gsub("\\{(.*)\\}", "\\1", x)
   x <- trimws(plu_nge(x))
 
   if (start_space) x <- paste0(" ", x)

@@ -8,21 +8,23 @@
 plu_ral(
   x,
   vector = integer(2),
-  n_fn = identity,
+  n_fn = NULL,
   ...,
   n = length(vector),
   pl = abs(n) != 1,
-  irregulars = c("moderate", "conservative", "liberal", "none", "easter")
+  irregulars = c("moderate", "conservative", "liberal", "none", "easter"),
+  replace_n = TRUE
 )
 
 ral(
   x,
   vector = integer(2),
-  n_fn = identity,
+  n_fn = NULL,
   ...,
   n = length(vector),
   pl = abs(n) != 1,
-  irregulars = c("moderate", "conservative", "liberal", "none", "easter")
+  irregulars = c("moderate", "conservative", "liberal", "none", "easter"),
+  replace_n = TRUE
 )
 }
 \arguments{
@@ -56,6 +58,11 @@ plural is more common.
 Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
 See examples in \code{\link[plu:ralize]{plu::ralize()}} for more details.}
+
+\item{replace_n}{A logical indicating whether to use special handling for
+\code{"n"}.
+See details.
+Defaults to \code{TRUE}.}
 }
 \value{
 The character vector \code{x} altered to match the number of \code{n}
