@@ -23,10 +23,8 @@ Depends:
 Suggests: 
     covr,
     glue,
-    nombre (>= 0.1.0),
+    nombre,
     testthat
-Remotes: 
-    rossellhayes/nombre
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
