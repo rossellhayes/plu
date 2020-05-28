@@ -40,7 +40,7 @@ You can install the development version of **plu** with:
 
 ```{r eval = FALSE}
 # install.packages("remotes")
-remotes::install_github("rossellhayes/fauxnaif")
+remotes::install_github("rossellhayes/plu")
 ```
 
 ## Usage

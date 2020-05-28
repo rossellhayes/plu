@@ -33,7 +33,7 @@ You can install the development version of **plu** with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("rossellhayes/fauxnaif")
+remotes::install_github("rossellhayes/plu")
 ```
 
 ## Usage
