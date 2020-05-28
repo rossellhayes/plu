@@ -99,7 +99,7 @@ plu_ral <- function(
   if (replace_n)      x <- gsub("\\bn\\b", n, x)
 
   x <- gsub("\\{([^{}]*)\\}", "\\1", x)
-  x <- trimws(plu_nge(x))
+  x <- plu_nge(x, ends = TRUE)
 
   if (start_space) x <- paste0(" ", x)
   if (end_space)   x <- paste0(x, " ")
