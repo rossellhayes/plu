@@ -9,6 +9,8 @@ plu_stick(
   x,
   fn = NULL,
   ...,
+  max = Inf,
+  fn_overflow = FALSE,
   sep = ", ",
   conj = " and ",
   syndeton = c("last", "all", "none"),
@@ -19,6 +21,8 @@ stick(
   x,
   fn = NULL,
   ...,
+  max = Inf,
+  fn_overflow = FALSE,
   sep = ", ",
   conj = " and ",
   syndeton = c("last", "all", "none"),
@@ -31,6 +35,14 @@ stick(
 \item{fn}{A function to apply to all items in the list}
 
 \item{...}{Additional arguments to \code{fn}}
+
+\item{max}{The maximum number of items to list.
+Additional arguments are replaced with "{n} more".
+Defaults to \code{Inf}, which prints all items.}
+
+\item{fn_overflow}{Whether to apply \code{fn} to the overflow message when \code{x}
+contains more items than \code{max}.
+Defaults to \code{FALSE}.}
 
 \item{sep}{The mark to place between list items. Defaults to \code{", "}}
 
