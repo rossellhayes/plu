@@ -131,10 +131,6 @@ paste("The caterpillar ate", plu::ral("n delicacy", later))
 
 paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
 paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
-paste(
-  "The caterpillar ate",
-  plu::ral("n delicacy", later, nombre::cardinal, max_n = 20)
-)
 }
 \seealso{
 \code{\link[plu:ralize]{plu::ralize()}} to convert an English word to its plural form.
