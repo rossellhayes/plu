@@ -3,6 +3,12 @@
 #' @param x A character vector (or a vector coercible to character)
 #' @param fn A function to apply to all items in the list
 #' @param ... Additional arguments to `fn`
+#' @param max The maximum number of items to list.
+#'     Additional arguments are replaced with "{n} more".
+#'     Defaults to `Inf`, which prints all items.
+#' @param fn_overflow Whether to apply `fn` to the overflow message when `x`
+#'     contains more items than `max`.
+#'     Defaults to `FALSE`.
 #' @param sep The mark to place between list items. Defaults to `", "`
 #' @param conj A conjunction to place between list items. Defaults to `"and"`.
 #' @param syndeton Whether to place the conjunction before the `"last"` list
@@ -25,15 +31,20 @@
 #' @example examples/plu_stick.R
 
 plu_stick <- function(
-  x, fn = NULL, ..., sep = ", ", conj = " and ",
+  x, fn = NULL, ..., max = Inf, fn_overflow = FALSE, sep = ", ", conj = " and ",
   syndeton = c("last", "all", "none"),
   oxford   = getOption("plu.oxford_comma")
 ) {
-  if (!length(x))          return(character(0))
-  if (length(sep) != 1)    stop("`sep` must be length one")
-  if (!is.character(sep))  stop("`sep` must be a character string")
-  if (length(conj) != 1)   stop("`conj` must be length one")
-  if (!is.character(conj)) stop("`conj` must be a character string")
+  if (!length(x))                  return(character(0))
+  if (length(max) != 1)            stop("`max` must be length one")
+  if (floor(max) != max | max < 1) stop("`max` must be a positive integer")
+  if (length(sep) != 1)            stop("`sep` must be length one")
+  if (!is.character(sep))          stop("`sep` must be a character string")
+  if (length(conj) != 1)           stop("`conj` must be length one")
+  if (!is.character(conj))         stop("`conj` must be a character string")
+  if (length(fn_overflow) != 1)    stop("`fn_overflow` must be length one")
+  if (!is.logical(fn_overflow) | is.na(fn_overflow))
+    stop("`fn_overflow` must be `TRUE` or `FALSE`")
   if (!is.null(fn) & !is.function(fn))
     stop("`fn` must be an unquoted function name")
   if (!is.null(oxford)) {
@@ -42,13 +53,27 @@ plu_stick <- function(
       stop("`oxford` must be TRUE or FALSE")
   }
 
-  syndeton <- match.arg(syndeton)
+  overflow <- length(x) - max
 
-  phrase <- rep("", length(x) * 2 - 1)
+  if (overflow <= 0) {
+    overflow <- 0
+  } else {
+    x <- c(x[seq_len(max)], paste(overflow, "more"))
+  }
 
-  if (!is.null(fn)) x <- lapply(x, fn, ...)
+  if (!is.null(fn)) {
+    if (fn_overflow | overflow == 0) {
+      x <- lapply(x, fn, ...)
+    } else {
+      x <- as.list(x)
+      x[-length(x)] <- lapply(x[-length(x)], fn, ...)
+    }
+  }
 
+  phrase                       <- character(length(x) * 2 - 1)
   phrase[seq_along(x) * 2 - 1] <- x
+
+  syndeton <- match.arg(syndeton)
 
   if (syndeton == "last") {
     if (is.null(oxford)) {
