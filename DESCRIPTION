@@ -11,10 +11,10 @@ Authors@R:
              family = "Atkinson",
              role = "dtc",
              email = "kevina@gnu.org"))
-Description: Pluralizes English phrases based on the length of
-    an associated vector.  Contains helper functions to create natural
-    language lists from vectors and to include the length of a vector in
-    natural language.
+Description: Converts English phrases to singular or plural form
+    based on the length of an associated vector.  Contains helper
+    functions to create natural language lists from vectors and to include
+    the length of a vector in natural language.
 License: MIT + file LICENSE
 URL: https://github.com/rossellhayes/plu
 BugReports: https://github.com/rossellhayes/plu/issues
