@@ -12,3 +12,4 @@
 ^appveyor\.yml$
 ^examples
 ^examples$
+^cran-comments\.md$
