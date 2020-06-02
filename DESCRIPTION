@@ -22,7 +22,6 @@ Depends:
     R (>= 2.10)
 Suggests: 
     covr,
-    glue,
     nombre,
     testthat
 Encoding: UTF-8
