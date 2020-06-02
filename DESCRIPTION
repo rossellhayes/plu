@@ -1,6 +1,6 @@
 Type: Package
 Package: plu
-Title: Pluralize phrases
+Title: Pluralize Phrases
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Alexander",
