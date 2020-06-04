@@ -1,3 +1,9 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Restored user options after changing them in tests.
+* Identified myself as copyright holder in DESCRIPTION.
+
 ## Test environments
 * Local R installation, Windows 10, R 4.0.0
 * GitHub Actions
