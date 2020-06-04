@@ -1,4 +1,4 @@
-options(plu.oxford_comma = FALSE)
+plu.oxford_comma <- options(plu.oxford_comma = FALSE)
 ingredients <- c("sugar", "spice", "everything nice")
 
 test_that("simple plu_stick works", {
@@ -95,3 +95,6 @@ test_that("errors", {
   expect_error(plu_stick("word", oxford = numeric(1)))
   expect_error(plu_stick("word", oxford = logical(2)))
 })
+
+options(plu.oxford_comma)
+
