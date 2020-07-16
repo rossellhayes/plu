@@ -16,10 +16,12 @@ knitr::opts_chunk$set(
 # plu <img src="man/figures/logo.png?raw=TRUE" align="right" height="138" />
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
+`r badger::badge_cran_release(color = "brightgreen")`
+`r badger::badge_lifecycle("maturing")`
+`r badger::badge_custom("license", "MIT", "blueviolet", url = "https://opensource.org/licenses/MIT")`
 [![R build status](https://github.com/rossellhayes/plu/workflows/R-CMD-check/badge.svg)](https://github.com/rossellhayes/plu/actions)
-[![Codecov test coverage](https://codecov.io/gh/rossellhayes/plu/branch/master/graph/badge.svg)](https://codecov.io/gh/rossellhayes/plu?branch=master)
+`r badger::badge_codecov()`
+`r badger::badge_dependencies()`
 <!-- badges: end -->
 
 Pluralize phrases in R
@@ -36,7 +38,13 @@ include the length of a vector in natural language.
 
 ## Installation
 
-You can install the development version of **plu** with:
+You can install the stable release of **plu** from [CRAN](https://cran.r-project.org/package=plu) with:
+
+```{r eval = FALSE}
+install.packages("plu")
+```
+
+You can install the development version of **plu** from [GitHub](https://github.com/rossellhayes/plu) with:
 
 ```{r eval = FALSE}
 # install.packages("remotes")
