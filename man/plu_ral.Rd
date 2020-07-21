@@ -57,7 +57,7 @@ plural is more common.
 \code{"none"} attempts to apply regular noun pluralization rules to all words.
 Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
-See examples in \code{\link[plu:ralize]{plu::ralize()}} for more details.}
+See examples in \code{\link[=ralize]{ralize()}} for more details.}
 
 \item{replace_n}{A logical indicating whether to use special handling for
 \code{"n"}.
@@ -133,5 +133,5 @@ paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
 paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
 }
 \seealso{
-\code{\link[plu:ralize]{plu::ralize()}} to convert an English word to its plural form.
+\code{\link[=ralize]{ralize()}} to convert an English word to its plural form.
 }

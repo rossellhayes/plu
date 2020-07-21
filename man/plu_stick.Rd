@@ -86,7 +86,3 @@ plu::stick(dedication)
 plu::stick(dedication, oxford = TRUE)
 plu::stick(dedication, oxford = FALSE)
 }
-\seealso{
-\code{\link[glue:glue_collapse]{glue::glue_collapse()}} for a generalized way to collapse vectors
-into a single string
-}

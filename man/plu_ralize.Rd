@@ -61,5 +61,5 @@ plu::ralize(c("formula", "person", "child"), irregulars = "liberal")
 plu::ralize(c("formula", "person", "child"), irregulars = "none")
 }
 \seealso{
-\code{\link[plu:ral]{plu::ral()}} to pluralize an English phrase based on a condition
+\code{\link[=ral]{ral()}} to pluralize an English phrase based on a condition
 }

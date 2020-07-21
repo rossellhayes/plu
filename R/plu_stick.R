@@ -23,9 +23,6 @@
 #'
 #' @return A character vector of length 1
 #'
-#' @seealso [glue::glue_collapse()] for a generalized way to collapse vectors
-#'     into a single string
-#'
 #' @export
 #'
 #' @example examples/plu_stick.R
