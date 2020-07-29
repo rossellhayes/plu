@@ -7,28 +7,19 @@
 \source{
 Irregular plurals list adapted from \href{https://github.com/en-wl/wordlist/tree/master/agid}{Automatically Generated Inflection Database (AGID)}
 
-Copyright 2000-2014 by Kevin Atkinson
-
-Permission to use, copy, modify, distribute and sell this database,
-the associated scripts, the output created form the scripts and its
-documentation for any purpose is hereby granted without fee,
-provided that the above copyright notice appears in all copies and
-that both that copyright notice and this permission notice appear in
-supporting documentation. Kevin Atkinson makes no representations
-about the suitability of this array for any purpose. It is provided
-"as is" without express or implied warranty.
+See \code{system.file("COPYRIGHTS", package = "plu")} for more details.
 }
 \usage{
 plu_ralize(
   x,
   irregulars = getOption("plu.irregulars", c("moderate", "conservative", "liberal",
-    "none", "easter"))
+    "none"))
 )
 
 ralize(
   x,
   irregulars = getOption("plu.irregulars", c("moderate", "conservative", "liberal",
-    "none", "easter"))
+    "none"))
 )
 }
 \arguments{
