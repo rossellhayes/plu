@@ -26,7 +26,6 @@ list <- read_lines("data-raw/infl.txt") %>%
   bind_rows(
     tribble(
       ~singular, ~line,
-      "black",   c("black people", "blacks"),
       "emoji",   c("emojis", "emoji"),
       "ghoti",   c("ghoti", "ghotis"),
       "lasagna", c("lasagnas", "lasagne"),
@@ -114,18 +113,7 @@ moderate_list     <- bind_rows(moderate_list, verb_list, grammar_list)
 conservative_list <- bind_rows(conservative_list, verb_list, grammar_list)
 liberal_list      <- bind_rows(liberal_list, verb_list, grammar_list)
 
-easter_list <- moderate_list %>%
-  bind_rows(
-    tribble(
-      ~singular,  ~line,
-      "anecdote", "data"
-    )
-  ) %>%
-  group_by(singular) %>%
-  slice(n()) %>%
-  ungroup()
-
 usethis::use_data(
-  moderate_list, conservative_list, liberal_list, easter_list,
+  moderate_list, conservative_list, liberal_list,
   internal = TRUE, overwrite = TRUE
 )

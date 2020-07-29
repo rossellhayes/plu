@@ -37,15 +37,14 @@
 plu_ralize <- function(
   x,
   irregulars = getOption(
-    "plu.irregulars",
-    c("moderate", "conservative", "liberal", "none", "easter")
+    "plu.irregulars", c("moderate", "conservative", "liberal", "none")
   )
 ) {
   if (!length(x))       return(character(0))
   if (!is.character(x)) stop("`x` must be a character vector")
 
   irregulars <- match.arg(
-    irregulars, c("moderate", "conservative", "liberal", "none", "easter")
+    irregulars, c("moderate", "conservative", "liberal", "none")
   )
 
   dict <- switch(
@@ -53,8 +52,7 @@ plu_ralize <- function(
     moderate     = moderate_list,
     conservative = conservative_list,
     liberal      = liberal_list,
-    none         = data.frame(singular = character(0), plural = character(0)),
-    easter       = easter_list
+    none         = data.frame(singular = character(0), plural = character(0))
   )
 
   todo <- grepl("[A-Za-z0-9]$", x)
