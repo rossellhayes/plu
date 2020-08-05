@@ -58,14 +58,13 @@ plu_ralize <- function(
   )
   todo <- todo & !irreg_upper
 
-  xy <- todo & grepl("y$", x) &
-    !(grepl("[AEIOUaeiou]y$", x) & !grepl("[Qq][Uu]y$", x))
+  xy    <- todo & grepl("[^AaEeIiOoUu]y$|[Qq][Uu]y$", x)
   x[xy] <- gsub("y$", "ies", x[xy])
-  todo <- todo & !xy
+  todo  <- todo & !xy
 
-  xs <- todo & grepl("([JSXZjsxz]|[CScs][Hh])$", x)
+  xs    <- todo & grepl("[JSXZjsxz]$|[CScs][Hh]$", x)
   x[xs] <- paste0(x[xs], "es")
-  todo <- todo & !xs
+  todo  <- todo & !xs
 
   x[todo] <- paste0(x[todo], "s")
 
