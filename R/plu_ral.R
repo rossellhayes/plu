@@ -58,7 +58,7 @@
 plu_ral <- function(
   x, vector = integer(2), n_fn = NULL, ...,
   n = length(vector), pl = abs(n) != 1,
-  irregulars = c("moderate", "conservative", "liberal", "none", "easter"),
+  irregulars = c("moderate", "conservative", "liberal", "none"),
   replace_n = TRUE
 ) {
   if (!length(x))                  return(character(0))
