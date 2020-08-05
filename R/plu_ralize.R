@@ -46,7 +46,7 @@ plu_ralize <- function(
     none         = data.frame(singular = character(0), plural = character(0))
   )
 
-  todo <- rep(TRUE, length(x))
+  todo <- grepl("[A-Za-z0-9]$", x)
 
   irreg    <- todo & x %in% dict$singular
   x[irreg] <- dict$plural[match(x[irreg], dict$singular)]
