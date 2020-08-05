@@ -46,13 +46,13 @@ plu_ralize <- function(
     none         = data.frame(singular = character(0), plural = character(0))
   )
 
-  todo <- grepl("[A-Za-z0-9]$", x)
+  todo <- rep(TRUE, length(x))
 
-  irreg <- todo & x %in% dict$singular
+  irreg    <- todo & x %in% dict$singular
   x[irreg] <- dict$plural[match(x[irreg], dict$singular)]
-  todo <- todo & !irreg
+  todo     <- todo & !irreg
 
-  irreg_upper <- todo & tosentence(x) == x & tolower(x) %in% dict$singular
+  irreg_upper    <- todo & tosentence(x) == x & tolower(x) %in% dict$singular
   x[irreg_upper] <- tosentence(
     dict$plural[match(tolower(x[irreg_upper]), dict$singular)]
   )
