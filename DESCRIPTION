@@ -3,14 +3,10 @@ Package: plu
 Title: Pluralize Phrases
 Version: 0.1.0.9000
 Authors@R: 
-    c(person(given = "Alexander",
-             family = "Rossell Hayes",
-             role = c("aut", "cre", "cph"),
-             email = "alexander@rossellhayes.com"),
-      person(given = "Kevin",
-             family = "Atkinson",
-             role = "dtc",
-             email = "kevina@gnu.org"))
+    person(given = "Alexander",
+           family = "Rossell Hayes",
+           role = c("aut", "cre", "cph"),
+           email = "alexander@rossellhayes.com")
 Description: Converts English phrases to singular or plural form
     based on the length of an associated vector.  Contains helper
     functions to create natural language lists from vectors and to include

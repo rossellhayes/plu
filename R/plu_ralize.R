@@ -16,10 +16,10 @@
 #'
 #' @seealso [plu::ral()] to pluralize an English phrase based on a condition
 #'
-#' @source Irregular plurals list adapted from [Automatically Generated
-#' Inflection Database (AGID)](https://github.com/en-wl/wordlist/tree/master/agid)
+#' @source Irregular plurals list adapted from the [Automatically Generated
+#' Inflection Database (AGID)]
 #'
-#'   See `system.file("COPYRIGHTS", package = "plu")` for more details.
+#'   See [plu-package] for more details.
 #'
 #' @export
 #'
