@@ -4,6 +4,9 @@ test_that("simple pluralization", {
 
 test_that("character vector pluralization", {
   expect_equal(plu_ralize(c("word", "group")), c("words", "groups"))
+  expect_equal(
+    plu_ralize(c("word", "worry", "fox")), c("words", "worries", "foxes")
+  )
 })
 
 irregs              <- c("formula", "person", "child")
