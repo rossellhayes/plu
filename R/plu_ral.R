@@ -77,7 +77,7 @@ plu_ral <- function(
   end_space   <- substr(x, nchar_x <- nchar(x), nchar_x) == " "
 
   if (pl) {
-    x <- unlist(strsplit(x, "(?=[^A-Za-z0-9'-])(?![^{]*})", perl = TRUE))
+    x <- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", perl = TRUE))
 
     braced     <- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", "")), x)
     x[!braced] <- plu_ralize(x[!braced], irregulars = irregulars)
