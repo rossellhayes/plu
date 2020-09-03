@@ -1,4 +1,4 @@
-# plu (development version)
+# plu 0.1.1
 
 * Remove cross-reference to **glue** to avoid CRAN NOTE.
 * Add AGID copyright information to package documentation (`?plu`).
