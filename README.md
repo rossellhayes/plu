@@ -4,6 +4,7 @@
 # plu <img src="man/figures/logo.png?raw=TRUE" align="right" height="138" />
 
 <!-- badges: start -->
+
 [![](https://www.r-pkg.org/badges/version/plu?color=brightgreen)](https://cran.r-project.org/package=plu)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![License:
@@ -74,7 +75,7 @@ Hex sticker font is
 [Bodoni\*](https://github.com/indestructible-type/Bodoni) by
 [indestructible type\*](https://indestructibletype.com/Home.html).
 
-Image adapted from icon made by [Freepik](https://freepik.com) from
+Image adapted from icon made by [Freepik](https://www.freepik.com) from
 [flaticon.com](https://www.flaticon.com/free-icon/umbrella_2357382).
 
 -----

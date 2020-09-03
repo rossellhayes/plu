@@ -88,7 +88,7 @@ paste(
 Hex sticker font is [Bodoni*](https://github.com/indestructible-type/Bodoni)
 by [indestructible type*](https://indestructibletype.com/Home.html).
 
-Image adapted from icon made by [Freepik](https://freepik.com) from
+Image adapted from icon made by [Freepik](https://www.freepik.com) from
 [flaticon.com](https://www.flaticon.com/free-icon/umbrella_2357382).
 
 ---
