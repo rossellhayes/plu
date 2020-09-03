@@ -62,6 +62,11 @@ test_that("pipe works", {
   expect_equal(plu_ral("{single|dual|plural} number", one), "single number")
   expect_equal(plu_ral("{single|dual|plural} number", two), "dual numbers")
   expect_equal(plu_ral("{single|dual|plural} number", fifty), "plural numbers")
+
+  expect_equal(plu_ral("number{1|2}",   one),   "number1")
+  expect_equal(plu_ral("number{|2}",    one),   "number")
+  expect_equal(plu_ral("number{1|2}",   two),   "number2")
+  expect_equal(plu_ral("number{1|2|3}", fifty), "number3")
 })
 
 test_that("number", {
