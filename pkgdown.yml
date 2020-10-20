@@ -1,0 +1,9 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles: {}
+last_built: 2020-10-20T00:22Z
+urls:
+  reference: https://plu.rossellhayes.com/reference
+  article: https://plu.rossellhayes.com/articles
+
