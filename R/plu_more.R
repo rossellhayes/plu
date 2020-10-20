@@ -5,6 +5,8 @@
 #' @param max The maximum number of items to list.
 #'     Additional arguments are replaced with "{n} more".
 #'     Defaults to `5`.
+#'     If `max` if [`Inf`], [`NULL`], [`FALSE`], or [`NA`], all elements are
+#'     preserved.
 #' @param type A [logical] or [character].
 #'   * If a character, `type` is pasted after the number of elements.
 #'   * If `TRUE`, the default, the first [class] of `x` is pasted after the
@@ -31,6 +33,10 @@ plu_more <- function(
     stop("`max` must be length one or NULL.")
   }
 
+  if (is.null(max) || isFALSE(max) || is.na(max)) {max <- Inf}
+
+  if (!is.numeric(max)) {stop("`max` must be a numeric or NULL.")}
+
   if (!is.null(type) && length(type) != 1) {
     stop("`type` must be length one or NULL.")
   }
@@ -40,8 +46,6 @@ plu_more <- function(
   }
 
   n <- length(x)
-
-  if (is.null(max)) {max <- Inf}
 
   if (isTRUE(type)) {
     if (is.atomic(x)) {
