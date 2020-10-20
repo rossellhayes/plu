@@ -8,12 +8,12 @@
 #'     If `max` if [`Inf`], [`NULL`], [`FALSE`], or [`NA`], all elements are
 #'     preserved.
 #' @param type A [logical] or [character].
-#'   * If a character, `type` is pasted after the number of elements.
-#'   * If `TRUE`, the default, the first [class] of `x` is pasted after the
+#'   * If a character, `type` is passed to `plu::ral()` and pasted after the
 #'   number of elements.
+#'   * If [`TRUE`], the default, the first [class] of `x` is used as the type.
 #'   * If `x` is not [atomic] (e.g. a [list]), "element" is used in place of a
 #'   class name.
-#'   * If `FALSE` or `NA`, nothing is pasted after the number of elements.
+#'   * If [`FALSE`] or [`NA`], nothing is pasted after the number of elements.
 #' @param fn A function to apply to the number of additional elements.
 #'   Default to [`NULL`], which applies no function.
 #' @param ... Additional arguments to `fn`.

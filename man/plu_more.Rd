@@ -41,12 +41,12 @@ preserved.}
 
 \item{type}{A \link{logical} or \link{character}.
 \itemize{
-\item If a character, \code{type} is pasted after the number of elements.
-\item If \code{TRUE}, the default, the first \link{class} of \code{x} is pasted after the
+\item If a character, \code{type} is passed to \code{plu::ral()} and pasted after the
 number of elements.
+\item If \code{\link{TRUE}}, the default, the first \link{class} of \code{x} is used as the type.
 \item If \code{x} is not \link{atomic} (e.g. a \link{list}), "element" is used in place of a
 class name.
-\item If \code{FALSE} or \code{NA}, nothing is pasted after the number of elements.
+\item If \code{\link{FALSE}} or \code{\link{NA}}, nothing is pasted after the number of elements.
 }}
 
 \item{fn}{A function to apply to the number of additional elements.
