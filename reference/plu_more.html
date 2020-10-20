@@ -168,7 +168,9 @@ of elements</p>
       <th>max</th>
       <td><p>The maximum number of items to list.
 Additional arguments are replaced with "n more".
-Defaults to <code>5</code>.</p></td>
+Defaults to <code>5</code>.
+If <code>max</code> if <code><a href='https://rdrr.io/r/base/is.finite.html'>Inf</a></code>, <code><a href='https://rdrr.io/r/base/NULL.html'>NULL</a></code>, <code><a href='https://rdrr.io/r/base/logical.html'>FALSE</a></code>, or <code><a href='https://rdrr.io/r/base/NA.html'>NA</a></code>, all elements are
+preserved.</p></td>
     </tr>
     <tr>
       <th>type</th>
