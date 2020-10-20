@@ -5,8 +5,8 @@
 \alias{ralize}
 \title{Pluralize a word}
 \source{
-Irregular plurals list adapted from the \link[=Automatically Generated
-Inflection Database (AGID)]{Automatically Generated Inflection Database (AGID)}
+Irregular plurals list adapted from the Automatically Generated
+Inflection Database (AGID).
 
 See \link{plu-package} for more details.
 }

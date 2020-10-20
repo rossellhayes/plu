@@ -16,8 +16,8 @@
 #'
 #' @seealso [plu::ral()] to pluralize an English phrase based on a condition
 #'
-#' @source Irregular plurals list adapted from the [Automatically Generated
-#' Inflection Database (AGID)]
+#' @source Irregular plurals list adapted from the Automatically Generated
+#' Inflection Database (AGID).
 #'
 #'   See [plu-package] for more details.
 #'

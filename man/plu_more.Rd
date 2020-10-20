@@ -35,7 +35,9 @@ more(
 
 \item{max}{The maximum number of items to list.
 Additional arguments are replaced with "{n} more".
-Defaults to \code{5}.}
+Defaults to \code{5}.
+If \code{max} if \code{\link{Inf}}, \code{\link{NULL}}, \code{\link{FALSE}}, or \code{\link{NA}}, all elements are
+preserved.}
 
 \item{type}{A \link{logical} or \link{character}.
 \itemize{

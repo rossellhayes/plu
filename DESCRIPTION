@@ -13,7 +13,7 @@ Description: Converts English phrases to singular or plural form
     functions to create natural language lists from vectors and to include
     the length of a vector in natural language.
 License: MIT + file LICENSE
-URL: https://github.com/rossellhayes/plu
+URL: https://plu.rossellhayes.com, https://github.com/rossellhayes/plu
 BugReports: https://github.com/rossellhayes/plu/issues
 Depends:
     R (>= 2.10)
