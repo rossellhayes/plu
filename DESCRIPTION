@@ -24,7 +24,8 @@ Suggests:
     crayon,
     fracture,
     nombre,
-    testthat
+    testthat,
+    withr
 RdMacros: 
     lifecycle
 Encoding: UTF-8
