@@ -3,86 +3,83 @@
 \name{plu_stick}
 \alias{plu_stick}
 \alias{stick}
-\title{Collapse character vectors into natural language strings}
+\title{Collapse a vector into a natural language string}
 \usage{
 plu_stick(
   x,
-  fn = NULL,
-  ...,
-  max = Inf,
-  fn_overflow = FALSE,
   sep = ", ",
   conj = " and ",
-  syndeton = c("last", "all", "none"),
-  oxford = getOption("plu.oxford_comma")
+  oxford = getOption("plu.oxford_comma", FALSE),
+  syndeton = lifecycle::deprecated(),
+  fn = lifecycle::deprecated(),
+  ...
 )
 
 stick(
   x,
-  fn = NULL,
-  ...,
-  max = Inf,
-  fn_overflow = FALSE,
   sep = ", ",
   conj = " and ",
-  syndeton = c("last", "all", "none"),
-  oxford = getOption("plu.oxford_comma")
+  oxford = getOption("plu.oxford_comma", FALSE),
+  syndeton = lifecycle::deprecated(),
+  fn = lifecycle::deprecated(),
+  ...
 )
 }
 \arguments{
-\item{x}{A character vector (or a vector coercible to character)}
+\item{x}{A \link{character} vector (or a vector coercible to character).}
 
-\item{fn}{A function to apply to all items in the list}
+\item{sep}{A \link{character} to place between list items. Defaults to \code{", "}}
 
-\item{...}{Additional arguments to \code{fn}}
+\item{conj}{A \link{character} to place between the penultimate and last
+list items.
+Defaults to \code{" and "}.
+If \code{\link{NULL}}, \code{sep} is used.}
 
-\item{max}{The maximum number of items to list.
-Additional arguments are replaced with "{n} more".
-Defaults to \code{Inf}, which prints all items.}
-
-\item{fn_overflow}{Whether to apply \code{fn} to the overflow message when \code{x}
-contains more items than \code{max}.
-Defaults to \code{FALSE}.}
-
-\item{sep}{The mark to place between list items. Defaults to \code{", "}}
-
-\item{conj}{A conjunction to place between list items. Defaults to \code{"and"}.}
-
-\item{syndeton}{Whether to place the conjunction before the \code{"last"} list
-items, between \code{"all"} list items, or between \code{"none"}.
-Defaults to \code{"last"}.}
-
-\item{oxford}{A logical value indicating whether to place \code{sep} before the
-last list item (x, y, and z) or not (x, y and z) in lists of length three
-or more where \code{syndeton} is \code{"last"}.
-Defaults to \code{TRUE} if R's locale is set to the United States and \code{FALSE}
-otherwise.
+\item{oxford}{A \link{logical} indicating whether to place \code{sep} before \code{conj}
+(x, y, and z) or not (x, y and z) in lists of length three or more.
+Defaults to \code{FALSE}.
 The default can be changed by setting \code{options(plu.oxford_comma)}.}
+
+\item{syndeton}{\lifecycle{deprecated} Whether to place the conjunction
+before the \code{"last"} list items, between \code{"all"} list items, or
+between \code{"none"}.
+Defaults to \code{"last"}.\preformatted{This argument is deprecated. You should set `sep` and `conj` explicitly
+instead of using `syndeton`.
+}}
+
+\item{fn}{\lifecycle{deprecated} A function to apply to all items in
+the list.}
+
+\item{...}{\lifecycle{deprecated} Additional arguments to \code{fn}.}
 }
 \value{
-A character vector of length 1
+A character vector of length 1.
 }
 \description{
-Collapse character vectors into natural language strings
+Collapse a vector into a natural language string
 }
 \examples{
 ingredients <- c("sugar", "spice", "everything nice")
 plu::stick(ingredients)
+plu::stick(ingredients, conj = " or ")
 
+# `fn` applies a function to each element
 plu::stick(ingredients, fn = toupper)
 plu::stick(names(formals(plu::stick)), fn = encodeString, quote = "`")
 
-plu::stick(ingredients, conj = "or")
+# When `conj` is `NULL`, `sep` is used between all elements
+plu::stick(ingredients, sep = " and ", conj = NULL)
+plu::stick(ingredients, sep = "/",     conj = NULL)
 
-plu::stick(ingredients, syndeton = "all")
+# `oxford` is optional for English, but should be `FALSE` for most languages
+ingredientes <- c("azÃºcar", "flores", "muchos colores")
+plu::stick(ingredientes, conj = " y ", oxford = FALSE)
 
-plu::stick(ingredients, sep = "/", syndeton = "none")
-
+# When `conj` is `NULL`, `sep` is used between all elements
 creed <- c("snow", "rain", "heat", "gloom of night")
-plu::stick(creed, conj = "nor", syndeton = "all")
+plu::stick(creed, sep = " nor ", conj = NULL)
 
-dedication <- c("my parents", "Ayn Rand", "God")
-plu::stick(dedication)
-plu::stick(dedication, oxford = TRUE)
-plu::stick(dedication, oxford = FALSE)
+# Oxford commas are only added when there are three or more elements
+plu::stick(letters[1:3], oxford = TRUE)
+plu::stick(letters[1:2], oxford = TRUE)
 }

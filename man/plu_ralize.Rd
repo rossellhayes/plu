@@ -5,9 +5,10 @@
 \alias{ralize}
 \title{Pluralize a word}
 \source{
-Irregular plurals list adapted from \href{https://github.com/en-wl/wordlist/tree/master/agid}{Automatically Generated Inflection Database (AGID)}
+Irregular plurals list adapted from the \link[=Automatically Generated
+Inflection Database (AGID)]{Automatically Generated Inflection Database (AGID)}
 
-See \code{system.file("COPYRIGHTS", package = "plu")} for more details.
+See \link{plu-package} for more details.
 }
 \usage{
 plu_ralize(

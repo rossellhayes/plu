@@ -1,19 +1,23 @@
 ingredients <- c("sugar", "spice", "everything nice")
 plu::stick(ingredients)
+plu::stick(ingredients, conj = " or ")
 
+# `fn` applies a function to each element
 plu::stick(ingredients, fn = toupper)
 plu::stick(names(formals(plu::stick)), fn = encodeString, quote = "`")
 
-plu::stick(ingredients, conj = "or")
+# When `conj` is `NULL`, `sep` is used between all elements
+plu::stick(ingredients, sep = " and ", conj = NULL)
+plu::stick(ingredients, sep = "/",     conj = NULL)
 
-plu::stick(ingredients, syndeton = "all")
+# `oxford` is optional for English, but should be `FALSE` for most languages
+ingredientes <- c("azúcar", "flores", "muchos colores")
+plu::stick(ingredientes, conj = " y ", oxford = FALSE)
 
-plu::stick(ingredients, sep = "/", syndeton = "none")
-
+# When `conj` is `NULL`, `sep` is used between all elements
 creed <- c("snow", "rain", "heat", "gloom of night")
-plu::stick(creed, conj = "nor", syndeton = "all")
+plu::stick(creed, sep = " nor ", conj = NULL)
 
-dedication <- c("my parents", "Ayn Rand", "God")
-plu::stick(dedication)
-plu::stick(dedication, oxford = TRUE)
-plu::stick(dedication, oxford = FALSE)
+# Oxford commas are only added when there are three or more elements
+plu::stick(letters[1:3], oxford = TRUE)
+plu::stick(letters[1:2], oxford = TRUE)
