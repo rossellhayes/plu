@@ -1,8 +1,11 @@
 # plu (development version)
 
 ## New features
-* `plu::more()` is a wrapper for `plu::stick()` that only prints the first `n` elements with an informative message.
-  * `plu::more(letters, max = 2)` prints `"a, b and 24 more characters"`.
+* `plu::more()` limits a vector to the first `n` elements with a message for remaining elements.
+  * This can be useful for providing messages to users without an overwhelming amount of detail.
+  * `plu::more(letters, max = 2)` yields `c("a", "b", "24 more characters")`.
+  
+* The convenience function `get_fun()` finds a function using a character string or unquoted function name, with or without colons.
 
 ## Patches
 * `plu::stick()`'s `oxford` now defaults to `FALSE` rather than depending on the user's environment.

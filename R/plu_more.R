@@ -1,7 +1,6 @@
-#' Collapse a vector into a natural language string with a maximum number
-#' of elements
+#' Informatively display a maximum number of elements
 #'
-#' @inheritParams plu_stick
+#' @param x A vector or list.
 #' @param max The maximum number of items to list.
 #'     Additional arguments are replaced with "{n} more".
 #'     Defaults to `5`.
@@ -20,61 +19,53 @@
 #' @param det A determiner to place before the number of additional elements.
 #'   Defaults to "more".
 #'
-#' @return A character vector of length 1.
+#' @return If `x` is a vector, a character vector with a length of `max` + 1
+#'   or less.
+#'   If `x` is a list, a list with `max + 1` or fewer elements.
 #' @export
 #'
 #' @example examples/plu_more.R
 
-plu_more <- function(
-  x, max = 5, type = TRUE, fn = NULL, ..., det = "more",
-  sep = ", ", conj = " and ", oxford = getOption("plu.oxford_comma", FALSE)
-) {
+plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
   if (!is.null(max) && length(max) != 1) {
-    stop("`max` must be length one or NULL.")
+    stop("`max` must be length one or NULL.", call. = FALSE)
   }
 
   if (is.null(max) || isFALSE(max) || is.na(max)) {max <- Inf}
 
-  if (!is.numeric(max)) {stop("`max` must be a numeric or NULL.")}
-
-  if (!is.null(type) && length(type) != 1) {
-    stop("`type` must be length one or NULL.")
+  if (!is.numeric(max)) {
+    stop("`max` must be a numeric or NULL.", call. = FALSE)
   }
 
-  if (!is.null(fn) && !is.function(fn)) {
-    stop("`fn` must be an unquoted function name or `NULL`")
+  if (!is.null(type) && length(type) != 1) {
+    stop("`type` must be length one or NULL.", call. = FALSE)
   }
 
   n <- length(x)
 
   if (isTRUE(type)) {
     if (is.atomic(x)) {
-      type <- paste0(" ", class(x)[[1]])
+      type <- class(x)[[1]]
     } else {
-      type <- " element"
+      type <- "element"
     }
   } else if (is.null(type) || isFALSE(type) || is.na(type)) {
-    type <- NULL
-  } else {
-    type <- paste0(" ", type)
+    type <- ""
   }
 
-  if (is.null(fn)) {fn <- identity}
+  fn <- get_fun(fn)
 
-  if (max < 1 || n < 1) {return(paste0(fn(n, ...), plu_ral(type, n = n)))}
+  if (max < 1 || n < 1) {
+    return(plu_nge(paste(fn(n, ...), plu_ral(type, n = n)), ends = TRUE))
+  }
 
   n <- min(ceiling(n - max), n)
 
-  if (n <= 0) {return(plu_stick(x, sep = sep, conj = conj, oxford = oxford))}
+  if (n <= 0) {return(x)}
 
-  if (oxford && length(x) > 1) {conj <- plu_nge(paste0(sep, conj))}
+  n_more <- plu_nge(paste(fn(n, ...), det, plu_ral(type, n = n)), ends = TRUE)
 
-  if (!is.null(det)) {paste0(" ", det)}
-
-  paste0(
-    plu_stick(x[seq_len(max)], sep = sep, conj = NULL),
-    conj, fn(n, ...), paste0(" ", det), plu_ral(type, n = n)
-  )
+  c(x[seq_len(max)], n_more)
 }
 
 #' @rdname plu_more
