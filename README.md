@@ -13,6 +13,7 @@ MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://cran.r-pr
 status](https://github.com/rossellhayes/plu/workflows/R-CMD-check/badge.svg)](https://github.com/rossellhayes/plu/actions)
 [![](https://codecov.io/gh/rossellhayes/plu/branch/master/graph/badge.svg)](https://codecov.io/gh/rossellhayes/plu)
 [![Dependencies](https://tinyverse.netlify.com/badge/plu)](https://cran.r-project.org/package=plu)
+[![CodeFactor](https://www.codefactor.io/repository/github/rossellhayes/plu/badge)](https://www.codefactor.io/repository/github/rossellhayes/plu)
 <!-- badges: end -->
 
 Pluralize phrases in R
@@ -63,10 +64,22 @@ paste(
 paste(
   "All arguments must be formulas.",
   plu::ral("Argument", problems2), 
-  plu::stick(problems2, usethis::ui_code),
+  plu::stick(sapply(problems2, encodeString, quote = "`")),
   plu::ral("isn't a formula.", problems2)
 )
 #> [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."
+
+ints <- as.integer(runif(20, -10, 10))
+paste(
+  "All inputs must be non-negative.",
+  plu::stick(
+    plu::more(
+      sapply(ints[ints < 0], encodeString, quote = "`"), type = "integer"
+    )
+  ),
+  plu::ral("is {negative}.", ints[ints < 0])
+)
+#> [1] "All inputs must be non-negative. `-4`, `-7`, `-4`, `-7`, `-1` and 2 more integers are negative."
 ```
 
 ## Credits

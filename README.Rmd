@@ -25,6 +25,7 @@ library(badger)
 `r badge_github_actions()`
 `r badge_codecov()`
 `r badge_dependencies()`
+`r badge_codefactor()`
 <!-- badges: end -->
 
 Pluralize phrases in R
@@ -77,8 +78,19 @@ paste(
 paste(
   "All arguments must be formulas.",
   plu::ral("Argument", problems2), 
-  plu::stick(problems2, usethis::ui_code),
+  plu::stick(sapply(problems2, encodeString, quote = "`")),
   plu::ral("isn't a formula.", problems2)
+)
+
+ints <- as.integer(runif(20, -10, 10))
+paste(
+  "All inputs must be non-negative.",
+  plu::stick(
+    plu::more(
+      sapply(ints[ints < 0], encodeString, quote = "`"), type = "integer"
+    )
+  ),
+  plu::ral("is {negative}.", ints[ints < 0])
 )
 ```
 
