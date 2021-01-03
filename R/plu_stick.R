@@ -43,13 +43,13 @@ plu_stick <- function(
   }
 
   if (lifecycle::is_present(fn)) {
-    lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[[1]], "(fn = )"))
+    lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[1], "(fn = )"))
 
     x <- lapply(x, get_fun(fn), ...)
   }
 
   if (lifecycle::is_present(syndeton)) {
-    lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[[1]], "(syndeton = )"))
+    lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[1], "(syndeton = )"))
 
     if (!syndeton %in% c("last", "all", "none")) {
       stop('`syndeton` must be `NULL` or one of "last", "all", or "none".')
