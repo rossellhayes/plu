@@ -7,11 +7,11 @@
 #'     If `max` if [`Inf`], [`NULL`], [`FALSE`], or [`NA`], all elements are
 #'     preserved.
 #' @param type A [logical] or [character].
-#'   * If a character, `type` is passed to `plu::ral()` and pasted after the
+#'   * If a character, `type` is passed to [plu::ral()] and pasted after the
 #'   number of elements.
 #'   * If [`TRUE`], the default, the first [class] of `x` is used as the type.
-#'   * If `x` is not [atomic] (e.g. a [list]), "element" is used in place of a
-#'   class name.
+#'     - If `x` is a [list] with different classes of element, "element" is used
+#'     in place of a class name.
 #'   * If [`FALSE`] or [`NA`], nothing is pasted after the number of elements.
 #' @param fn A function to apply to the number of additional elements.
 #'   Default to [`NULL`], which applies no function.
@@ -37,21 +37,9 @@ plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
     stop("`max` must be a numeric or NULL.", call. = FALSE)
   }
 
-  if (!is.null(type) && length(type) != 1) {
-    stop("`type` must be length one or NULL.", call. = FALSE)
-  }
-
   n <- length(x)
 
-  if (isTRUE(type)) {
-    if (is.atomic(x)) {
-      type <- class(x)[[1]]
-    } else {
-      type <- "element"
-    }
-  } else if (is.null(type) || isFALSE(type) || is.na(type)) {
-    type <- ""
-  }
+  type <- format_type(type, x)
 
   fn <- get_fun(fn)
 
@@ -72,3 +60,23 @@ plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
 #' @export
 
 more <- plu_more
+
+format_type <- function(type, x) {
+  if (is.character(type) && length(type) == 1) {return(type)}
+
+  if (isTRUE(type)) {
+    class <- unique(lapply(x, class))
+
+    if (length(class) == 1) {
+      return(class[[1]][[1]])
+    }
+
+    return("element")
+  }
+
+  if (is.null(type) || isFALSE(type) || is.na(type)) {
+    return("")
+  }
+
+  stop("`type` must be a character string, a logical, or NULL", call. = FALSE)
+}

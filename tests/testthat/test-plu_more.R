@@ -66,9 +66,16 @@ test_that("automatic type", {
   )
 
   expect_equal(
-    plu_more(as.list(1:3), max = 2), list(1, 2, "1 more element")
+    plu_more(as.list(1:3), max = 2), list(1, 2, "1 more integer")
   )
-  expect_equal(plu_more(as.list(1:3), max = 1), list(1, "2 more elements"))
+  expect_equal(plu_more(as.list(1:3), max = 1), list(1, "2 more integers"))
+
+  expect_equal(
+    plu_more(list("a", 2, TRUE), max = 2), list("a", 2, "1 more element")
+  )
+  expect_equal(
+    plu_more(list("a", 2, TRUE), max = 1), list("a", "2 more elements")
+  )
 })
 
 test_that("pluralization", {
@@ -124,6 +131,7 @@ test_that("errors", {
   expect_error(plu_more(letters, max = "1"))
 
   expect_error(plu_more(letters, type = c("type1", "type2")))
+  expect_error(plu_more(letters, type = 1))
 
   expect_error(plu_more(letters, fn = "this_is_not_a_real_function"))
   expect_error(plu_more(letters, fn = this_is_not_a_real_function))

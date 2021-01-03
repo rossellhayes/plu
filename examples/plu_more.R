@@ -19,6 +19,7 @@ plu::more(letters, type = FALSE)
 # Automatically generating type
 plu::more(1:100)
 plu::more(as.list(1:100))
+plu::more(c(as.list(1:2), as.list(letters)))
 plu::more(fracture::fracture((1:9) / (9:1)))
 
 # Setting a determiner other than "more"

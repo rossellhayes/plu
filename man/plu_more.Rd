@@ -20,11 +20,13 @@ preserved.}
 
 \item{type}{A \link{logical} or \link{character}.
 \itemize{
-\item If a character, \code{type} is passed to \code{plu::ral()} and pasted after the
+\item If a character, \code{type} is passed to \code{\link[=ral]{ral()}} and pasted after the
 number of elements.
 \item If \code{\link{TRUE}}, the default, the first \link{class} of \code{x} is used as the type.
-\item If \code{x} is not \link{atomic} (e.g. a \link{list}), "element" is used in place of a
-class name.
+\itemize{
+\item If \code{x} is a \link{list} with different classes of element, "element" is used
+in place of a class name.
+}
 \item If \code{\link{FALSE}} or \code{\link{NA}}, nothing is pasted after the number of elements.
 }}
 
@@ -66,6 +68,7 @@ plu::more(letters, type = FALSE)
 # Automatically generating type
 plu::more(1:100)
 plu::more(as.list(1:100))
+plu::more(c(as.list(1:2), as.list(letters)))
 plu::more(fracture::fracture((1:9) / (9:1)))
 
 # Setting a determiner other than "more"
