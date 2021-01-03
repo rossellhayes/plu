@@ -1,8 +1,6 @@
-one      <- integer(1)
-two      <- integer(2)
-fifty    <- integer(50)
-
-plu.irregulars <- options(plu.irregulars = NULL)
+one   <- integer(1)
+two   <- integer(2)
+fifty <- integer(50)
 
 test_that("pl", {
   expect_equal(plu_ral("word", pl = FALSE), "word")
@@ -98,5 +96,3 @@ test_that("errors", {
   expect_error(plu_ral("word", n_fn = "format"))
   expect_error(plu_ral("word", n_fn = this_is_not_a_real_function))
 })
-
-options(plu.irregulars)

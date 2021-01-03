@@ -16,18 +16,16 @@ irregs_moderate     <- c("formulas", "people", "children")
 irregs_conservative <- c("formulae", "people", "children")
 
 test_that("default irregular pluralization", {
-  plu.irregulars <- options(plu.irregulars = NULL)
+  withr::local_options(plu.irregulars = NULL)
   expect_equal(plu_ralize(irregs), irregs_moderate)
-  options(plu.irregulars)
 })
 
 test_that("capitalized irregular pluralization", {
-  plu.irregulars <- options(plu.irregulars = NULL)
+  withr::local_options(plu.irregulars = NULL)
   expect_equal(
     plu_ralize(c("Formula", "Person", "Child")),
     c("Formulas", "People", "Children")
   )
-  options(plu.irregulars)
 })
 
 test_that("irregular pluralization options", {
@@ -38,19 +36,21 @@ test_that("irregular pluralization options", {
 })
 
 test_that("options(plu.irregulars)", {
-  plu.irregulars <- options(plu.irregulars = "none")
+  withr::local_options(plu.irregulars = "none")
   expect_equal(plu_ralize(irregs), irregs_none)
   expect_equal(plu_ralize(irregs, "liberal"), irregs_liberal)
-  options(plu.irregulars = "liberal")
+
+  withr::local_options(plu.irregulars = "liberal")
   expect_equal(plu_ralize(irregs), irregs_liberal)
   expect_equal(plu_ralize(irregs, "moderate"), irregs_moderate)
-  options(plu.irregulars = "moderate")
+
+  withr::local_options(plu.irregulars = "moderate")
   expect_equal(plu_ralize(irregs), irregs_moderate)
   expect_equal(plu_ralize(irregs, "conservative"), irregs_conservative)
-  options(plu.irregulars = "conservative")
+
+  withr::local_options(plu.irregulars = "conservative")
   expect_equal(plu_ralize(irregs), irregs_conservative)
   expect_equal(plu_ralize(irregs, "none"), irregs_none)
-  options(plu.irregulars)
 })
 
 test_that("early return", {
