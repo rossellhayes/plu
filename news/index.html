@@ -87,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -101,7 +101,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rossellhayes/plu/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -131,12 +131,14 @@
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li>
-<code><a href="../reference/plu_more.html">plu::more()</a></code> is a wrapper for <code><a href="../reference/plu_stick.html">plu::stick()</a></code> that only prints the first <code>n</code> elements with an informative message.
+<code><a href="../reference/plu_more.html">plu::more()</a></code> limits a vector to the first <code>n</code> elements with a message for remaining elements.
 <ul>
+<li>This can be useful for providing messages to users without an overwhelming amount of detail.</li>
 <li>
-<code><a href="../reference/plu_more.html">plu::more(letters, max = 2)</a></code> prints <code>"a, b and 24 more characters"</code>.</li>
+<code><a href="../reference/plu_more.html">plu::more(letters, max = 2)</a></code> yields <code><a href="https://rdrr.io/r/base/c.html">c("a", "b", "24 more characters")</a></code>.</li>
 </ul>
 </li>
+<li>The convenience function <code><a href="../reference/get_fun.html">get_fun()</a></code> finds a function using a character string or unquoted function name, with or without colons.</li>
 </ul>
 </div>
 <div id="patches" class="section level2">

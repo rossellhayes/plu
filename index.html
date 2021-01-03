@@ -49,7 +49,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -63,7 +63,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rossellhayes/plu/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -96,18 +96,18 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the stable release of <strong>plu</strong> from <a href="https://cran.r-project.org/package=plu">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"plu"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"plu"</span><span class="op">)</span></code></pre></div>
 <p>You can install the development version of <strong>plu</strong> from <a href="https://github.com/rossellhayes/plu">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"rossellhayes/plu"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"rossellhayes/plu"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">formulas1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%in%</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op">%in%</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">formulas1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%in%</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op">%in%</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span><span class="op">)</span>
 <span class="va">formulas2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%in%</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op">%in%</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span>, <span class="st">"high"</span><span class="op">)</span>
 <span class="va">problems1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_formula.html">is_formula</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">formulas1</span><span class="op">)</span>
 <span class="va">problems2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_formula.html">is_formula</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">formulas2</span><span class="op">)</span>
@@ -126,7 +126,7 @@
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span><span class="va">problems2</span>, <span class="fu">usethis</span><span class="fu">::</span><span class="va">ui_code</span><span class="op">)</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"isn't a formula."</span>, <span class="va">problems2</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."</span></pre></div>
+<span class="co">#&gt; [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."</span></code></pre></div>
 </div>
 <div id="credits" class="section level2">
 <h2 class="hasAnchor">
