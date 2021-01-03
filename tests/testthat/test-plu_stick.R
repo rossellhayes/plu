@@ -38,13 +38,13 @@ test_that("early return", {
 })
 
 test_that("errors", {
-  expect_error(plu_stick("word", sep = numeric(1)))
-  expect_error(plu_stick("word", sep = character(2)))
-  expect_error(plu_stick("word", conj = numeric(1)))
-  expect_error(plu_stick("word", conj = character(2)))
-  expect_error(plu_stick("word", oxford = NA))
-  expect_error(plu_stick("word", oxford = numeric(1)))
-  expect_error(plu_stick("word", oxford = logical(2)))
+  expect_error(plu_stick(letters, sep    = numeric(1)),   "sep")
+  expect_error(plu_stick(letters, sep    = character(2)), "sep")
+  expect_error(plu_stick(letters, conj   = numeric(1)),   "conj")
+  expect_error(plu_stick(letters, conj   = character(2)), "conj")
+  expect_error(plu_stick(letters, oxford = NA))
+  expect_error(plu_stick(letters, oxford = numeric(1)))
+  expect_error(plu_stick(letters, oxford = logical(2)))
 })
 
 test_that("plu_stick fn works", {
@@ -53,11 +53,13 @@ test_that("plu_stick fn works", {
   expect_equal(
     plu_stick(ingredients, fn = toupper), "SUGAR, SPICE and EVERYTHING NICE"
   )
+  expect_equal(
+    plu_stick(ingredients, fn = "toupper"), "SUGAR, SPICE and EVERYTHING NICE"
+  )
 
   lifecycle::expect_deprecated(plu_stick(ingredients, fn = toupper))
 
-  expect_error(plu_stick("word", fn = "format"))
-  expect_error(plu_stick("word", fn = this_is_not_a_real_function))
+  expect_error(plu_stick(letters, fn = this_is_not_a_real_function))
 })
 
 test_that("plu_stick syndeton works", {

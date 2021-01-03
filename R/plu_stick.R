@@ -34,13 +34,8 @@ plu_stick <- function(
 ) {
   if (!length(x)) {return(character(0))}
 
-  if (length(sep) != 1)   {stop("`sep` must be length one")}
-  if (!is.character(sep)) {stop("`sep` must be a character string")}
-
-  if (!is.null(conj)) {
-    if (length(conj) != 1)   {stop("`conj` must be length one")}
-    if (!is.character(conj)) {stop("`conj` must be a character string")}
-  }
+  sep  <- validate_sep(sep)
+  conj <- validate_sep(conj)
 
   if (length(oxford) != 1) {stop("`oxford` must be length one")}
   if (!is.logical(oxford) || is.na(oxford)) {
@@ -50,15 +45,8 @@ plu_stick <- function(
   if (lifecycle::is_present(fn)) {
     lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[[1]], "(fn = )"))
 
-    if (!is.null(fn) && !is.function(fn)) {
-      stop("`fn` must be an unquoted function name or `NULL`")
-    }
-
-    x <- lapply(x, fn, ...)
+    x <- lapply(x, get_fun(fn), ...)
   }
-
-  phrase                       <- character(length(x) * 2 - 1)
-  phrase[seq_along(x) * 2 - 1] <- x
 
   if (lifecycle::is_present(syndeton)) {
     lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[[1]], "(syndeton = )"))
@@ -68,15 +56,16 @@ plu_stick <- function(
     }
 
     if (syndeton == "all")              {sep  <- conj}
-    if (syndeton %in% c("all", "none")) {conj <- NULL}
+    if (syndeton %in% c("all", "none")) {conj <- ""}
   }
 
-  if (!is.null(conj) && sep != conj) {
-    if (oxford && length(x) > 2) {
-      phrase[length(x) * 2 - 2] <- plu_nge(paste0(sep, conj))
-    } else {
-      phrase[length(x) * 2 - 2] <- conj
-    }
+  phrase                       <- character(length(x) * 2 - 1)
+  phrase[seq_along(x) * 2 - 1] <- x
+
+  if (oxford && length(x) > 2 && !identical(sep, conj)) {
+    phrase[length(x) * 2 - 2] <- plu_nge(paste0(sep, conj))
+  } else {
+    phrase[length(x) * 2 - 2] <- conj
   }
 
   phrase[phrase == "" & seq_along(phrase) %% 2 == 0] <- sep
@@ -88,3 +77,17 @@ plu_stick <- function(
 #' @export
 
 stick <- plu_stick
+
+validate_sep <- function(sep) {
+  if (is.null(sep)) {return("")}
+
+  if (length(sep) > 1)    {
+    stop("`", deparse(substitute(sep)), "` must be length one")
+  }
+
+  if (!is.character(sep)) {
+    stop("`", deparse(substitute(sep)), "` must be a character string")
+  }
+
+  sep
+}
