@@ -123,10 +123,22 @@
 <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
   <span class="st">"All arguments must be formulas."</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"Argument"</span>, <span class="va">problems2</span><span class="op">)</span>, 
-  <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span><span class="va">problems2</span>, <span class="fu">usethis</span><span class="fu">::</span><span class="va">ui_code</span><span class="op">)</span>,
+  <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">problems2</span>, <span class="va">encodeString</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"isn't a formula."</span>, <span class="va">problems2</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."</span></code></pre></div>
+<span class="co">#&gt; [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."</span>
+
+<span class="va">ints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+  <span class="st">"All inputs must be non-negative."</span>,
+  <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span>
+    <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_more.html">more</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ints</span><span class="op">[</span><span class="va">ints</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span>, <span class="va">encodeString</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"integer"</span>
+    <span class="op">)</span>
+  <span class="op">)</span>,
+  <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"is {negative}."</span>, <span class="va">ints</span><span class="op">[</span><span class="va">ints</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] "All inputs must be non-negative. `-4`, `-7`, `-4`, `-7`, `-1` and 2 more integers are negative."</span></code></pre></div>
 </div>
 <div id="credits" class="section level2">
 <h2 class="hasAnchor">
@@ -180,6 +192,7 @@
 <li><a href="https://github.com/rossellhayes/plu/actions"><img src="https://github.com/rossellhayes/plu/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/gh/rossellhayes/plu"><img src="https://codecov.io/gh/rossellhayes/plu/branch/master/graph/badge.svg"></a></li>
 <li><a href="https://cran.r-project.org/package=plu"><img src="https://tinyverse.netlify.com/badge/plu" alt="Dependencies"></a></li>
+<li><a href="https://www.codefactor.io/repository/github/rossellhayes/plu"><img src="https://www.codefactor.io/repository/github/rossellhayes/plu/badge" alt="CodeFactor"></a></li>
 </ul>
 </div>
 </div>
