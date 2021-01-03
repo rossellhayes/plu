@@ -1,4 +1,3 @@
-plu.oxford_comma <- options(plu.oxford_comma = FALSE)
 ingredients <- c("sugar", "spice", "everything nice")
 
 test_that("simple plu_stick works", {
@@ -27,10 +26,10 @@ test_that("plu_stick oxford works", {
 })
 
 test_that("options(plu.oxford_comma) works", {
-  withr::local_options(list(plu.oxford_comma = TRUE))
+  withr::local_options(plu.oxford_comma = TRUE)
   expect_equal(plu_stick(ingredients), "sugar, spice, and everything nice")
 
-  withr::local_options(list(plu.oxford_comma = FALSE))
+  withr::local_options(plu.oxford_comma = FALSE)
   expect_equal(plu_stick(ingredients), "sugar, spice and everything nice")
 })
 
@@ -49,7 +48,7 @@ test_that("errors", {
 })
 
 test_that("plu_stick fn works", {
-  withr::local_options(list(lifecycle_verbosity = "quiet"))
+  withr::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
     plu_stick(ingredients, fn = toupper), "SUGAR, SPICE and EVERYTHING NICE"
@@ -62,7 +61,7 @@ test_that("plu_stick fn works", {
 })
 
 test_that("plu_stick syndeton works", {
-  withr::local_options(list(lifecycle_verbosity = "quiet"))
+  withr::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
     plu_stick(ingredients, syndeton = "all"),
@@ -77,5 +76,3 @@ test_that("plu_stick syndeton works", {
 
   expect_error(plu_stick(ingredients, syndeton = "error"))
 })
-
-options(plu.oxford_comma)

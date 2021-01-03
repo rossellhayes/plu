@@ -60,4 +60,3 @@ test_that("early return", {
 test_that("errors", {
   expect_error(plu_ralize(integer(1)))
 })
-
