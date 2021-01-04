@@ -1,7 +1,7 @@
 Type: Package
 Package: plu
 Title: Pluralize Phrases
-Version: 0.1.1.9000
+Version: 0.2.0
 Authors@R: 
     person(given = "Alexander",
            family = "Rossell Hayes",

@@ -1,4 +1,4 @@
-# plu (development version)
+# plu 0.2.0
 
 ## New features
 * `plu::more()` limits a vector to the first `n` elements with a message for remaining elements.
