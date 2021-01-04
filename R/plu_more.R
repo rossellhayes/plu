@@ -62,20 +62,17 @@ plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
 more <- plu_more
 
 format_type <- function(type, x) {
-  if (is.character(type) && length(type) == 1) {return(type)}
+  if (length(type) > 1) {stop("`type` must be length one", call. = FALSE)}
+
+  if (is.character(type) && length(type) == 1)       {return(type)}
+  if (is.null(type) || isFALSE(type) || is.na(type)) {return("")}
 
   if (isTRUE(type)) {
     class <- unique(lapply(x, class))
 
-    if (length(class) == 1) {
-      return(class[[1]][[1]])
-    }
+    if (length(class) == 1) {return(class[[1]][[1]])}
 
     return("element")
-  }
-
-  if (is.null(type) || isFALSE(type) || is.na(type)) {
-    return("")
   }
 
   stop("`type` must be a character string, a logical, or NULL", call. = FALSE)
