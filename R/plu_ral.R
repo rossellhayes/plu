@@ -75,6 +75,7 @@ plu_ral <- function(
 
   start_space <- substr(x, 1, 1) == " "
   end_space   <- substr(x, nchar_x <- nchar(x), nchar_x) == " "
+  start_caps  <- is_capital(substr(x, 1, 1))
 
   if (pl) {
     x <- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", perl = TRUE))
@@ -103,6 +104,7 @@ plu_ral <- function(
 
   if (start_space) x <- paste0(" ", x)
   if (end_space)   x <- paste0(x, " ")
+  if (start_caps)  x <- paste0(toupper(substr(x, 1, 1)), substr(x, 2, nchar(x)))
 
   x
 }
