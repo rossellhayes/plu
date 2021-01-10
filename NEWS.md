@@ -7,6 +7,15 @@
   
 * The convenience function `get_fun()` finds a function using a character string or unquoted function name, with or without colons.
 
+* `plu::ral()` now ensures that the capitalization of a phrase stays the same after pluralizing.
+  * `plu::ral("A sentence.")` now results in "Sentences." rather than "sentences."
+
+* Convenience functions around capitalization have been added:
+  * `is_capital()` tests if a character (or string of characters) is capital or lowercase.
+  * `is_capitalized()` tests if the first alphabetic character in a string is capital.
+  * `capitalize()` converts the first alphabetic character in a string to capital.
+    * Unlike `tools::toTitleCase()` or `stringr::str_to_sentence()`, this does not change the capitalization of any subsequent characters.
+
 ## Patches
 * `plu::stick()`'s `oxford` now defaults to `FALSE` rather than depending on the user's environment.
   
