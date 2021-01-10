@@ -10,7 +10,9 @@ test_that("vectorized is_capital", {
   expect_equal(is_capital(letters), rep(FALSE, 26))
   expect_equal(is_capital(1:26),    rep(NA,    26))
   expect_equal(
-    is_capital(sapply(as.raw(c(1:64, 91:96, 123:126)), rawToChar)),
+    is_capital(
+      vapply(as.raw(c(1:64, 91:96, 123:126)), rawToChar, character(1))
+    ),
     rep(NA, 74)
   )
 })
