@@ -1,3 +1,5 @@
+# TODO: Capitalization after space or multiple sentences.
+
 #' Pluralize a phrase based on the length of a vector
 #'
 #' @param x An English word or phrase to be pluralized.
@@ -61,21 +63,32 @@ plu_ral <- function(
   irregulars = c("moderate", "conservative", "liberal", "none"),
   replace_n = TRUE
 ) {
-  if (!length(x))                  return(character(0))
-  if (!is.character(x))            stop("`x` must be a character vector")
-  if (length(n) != 1)              stop("`n` must be length one")
-  if (!is.numeric(n))              stop("`n` must be numeric")
-  if (length(pl) != 1)             stop("`pl` must be length one")
-  if (!is.logical(pl) | is.na(pl)) stop("`pl` must be TRUE or FALSE")
-  if (length(replace_n) != 1)      stop("`replace_n` must be length one")
-  if (!is.logical(replace_n) | is.na(replace_n))
-    stop("`replace_n` must be TRUE or FALSE")
-  if (!is.null(n_fn) & !is.function(n_fn))
-    stop("`n_fn` must be an unquoted function name")
+  if (!length(x))       {return(character(0))}
+  if (!is.character(x)) {rlang::abort("`x` must be a character vector")}
+  if (length(x) > 1) {
+    return(
+      vapply(
+        x, plu_ral, character(1), USE.NAMES = !is.null(names(x)),
+        vector = vector, n_fn = n_fn, ..., n = n, pl = pl,
+        irregulars = irregulars, replace_n = replace_n
+      )
+    )
+  }
+
+  if (length(n) != 1) {rlang::abort("`n` must be length one")}
+  if (!is.numeric(n)) {rlang::abort("`n` must be numeric")}
+
+  if (length(pl) != 1)             {rlang::abort("`pl` must be length one")}
+  if (!is.logical(pl) | is.na(pl)) {rlang::abort("`pl` must be TRUE or FALSE")}
+
+  if (length(replace_n) != 1) {rlang::abort("`replace_n` must be length one")}
+  if (!is.logical(replace_n) | is.na(replace_n)) {
+    rlang::abort("`replace_n` must be TRUE or FALSE")
+  }
 
   start_space <- substr(x, 1, 1) == " "
   end_space   <- substr(x, nchar_x <- nchar(x), nchar_x) == " "
-  start_caps  <- is_capital(substr(x, 1, 1))
+  start_caps  <- isTRUE(is_capitalized(x))
 
   if (pl) {
     x <- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", perl = TRUE))
@@ -96,15 +109,17 @@ plu_ral <- function(
     x
   )
 
-  if (!is.null(n_fn)) n <- n_fn(n, ...)
-  if (replace_n)      x <- gsub("\\bn\\b", n, x)
+  if (replace_n) {
+    n_fn <- get_fun(n_fn)
+    x    <- gsub("\\bn\\b", n_fn(n, ...), x)
+  }
 
   x <- gsub("\\{([^{}]*)\\}", "\\1", x)
   x <- plu_nge(x, ends = TRUE)
 
   if (start_space) x <- paste0(" ", x)
   if (end_space)   x <- paste0(x, " ")
-  if (start_caps)  x <- paste0(toupper(substr(x, 1, 1)), substr(x, 2, nchar(x)))
+  if (start_caps)  x <- capitalize(x)
 
   x
 }

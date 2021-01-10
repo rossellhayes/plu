@@ -30,6 +30,17 @@ test_that("spaces", {
   expect_equal(plu_ral(" a word "), " words ")
 })
 
+test_that("vector", {
+  expect_equal(
+    plu_ral(c("word", "phrase", "sentence")),
+    c("words", "phrases", "sentences")
+  )
+  expect_equal(
+    plu_ral(c(w = "word", p = "phrase", "sentence")),
+    c(w = "words", p = "phrases", "sentences")
+  )
+})
+
 test_that("punctuation", {
   expect_equal(plu_ral("This is a word."), "These are words.")
   expect_equal(plu_ral("This isn't a word."), "These aren't words.")
@@ -79,6 +90,15 @@ test_that("number", {
   expect_equal(plu_ral("{the|both|all n} number", fifty), "all 50 numbers")
 })
 
+test_that("capitalization", {
+  expect_equal(plu_ral("A word"), "Words")
+  expect_equal(plu_ral("! A word"), "! Words")
+})
+
+test_that("non-words", {
+  expect_equal(plu_ral(c("", "-", "...", "?!")), c("", "-", "...", "?!"))
+})
+
 test_that("early return", {
   expect_equal(plu_ral(character(0)), character(0))
 })
@@ -93,6 +113,9 @@ test_that("errors", {
   expect_error(plu_ral("word", replace_n = NA))
   expect_error(plu_ral("word", replace_n = numeric(1)))
   expect_error(plu_ral("word", replace_n = logical(2)))
-  expect_error(plu_ral("word", n_fn = "format"))
-  expect_error(plu_ral("word", n_fn = this_is_not_a_real_function))
+
+  expect_error(plu_ral("word", n_fn = plu_not_real_fun),    "plu_not_real_fun")
+  expect_error(plu_ral("word", n_fn = "plu_not_real_fun"),  "plu_not_real_fun")
+  expect_error(plu_ral("word", n_fn = plu::not_real_fun),   "plu::not_real_fun")
+  expect_error(plu_ral("word", n_fn = "plu::not_real_fun"), "plu::not_real_fun")
 })
