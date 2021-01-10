@@ -1,3 +1,5 @@
+#' Pluralize a phrase based on the length of a vector
+#'
 #' @param x An English word or phrase to be pluralized.
 #'     See details for special sequences which are handled differently.
 #' @param vector A vector whose length determines `n`. Defaults to length 2.
@@ -83,18 +85,24 @@ plu_ral <- function(
     )
   }
 
-  x <- c(stringi::stri_split_boundaries(x, type = "sentence"), recursive = TRUE)
-  if (length(x) > 1) {
-    return(
-      paste(
-        vapply(
-          x, plu_ral, character(1), USE.NAMES = FALSE,
-          vector = vector, n_fn = n_fn, ..., n = n, pl = pl,
-          irregulars = irregulars, replace_n = replace_n
-        ),
-        collapse = ""
-      )
+  if (nchar(x) > 1) {
+    x <- c(
+      stringi::stri_split_boundaries(x, type = "sentence"),
+      recursive = TRUE
     )
+
+    if (length(x) > 1) {
+      return(
+        paste(
+          vapply(
+            x, plu_ral, character(1), USE.NAMES = FALSE,
+            vector = vector, n_fn = n_fn, ..., n = n, pl = pl,
+            irregulars = irregulars, replace_n = replace_n
+          ),
+          collapse = ""
+        )
+      )
+    }
   }
 
   start_space <- substr(x, 1, 1) == " "
