@@ -99,8 +99,8 @@ test_that("vectorized is_capitalized", {
 })
 
 test_that("multilingual is_capitalized", {
-  expect_equal(is_capitalized("πληθυντικός"), FALSE)
-  expect_equal(is_capitalized("Πληθυντικός"), TRUE)
+  expect_equal(is_capitalized("множественный"), FALSE)
+  expect_equal(is_capitalized("Множественный"), TRUE)
   expect_equal(is_capitalized("複数"),        NA)
   expect_equal(is_capitalized("複数 plural"), NA)
 })
