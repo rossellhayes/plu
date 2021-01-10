@@ -38,29 +38,15 @@ capitalize <- function(x) {
 is_capital <- function(x) {
   if (!is.character(x)) {return(rep(NA, length(x)))}
 
-  res           <- logical(length(x))
-  res[is.na(x)] <- NA
+  x     <- suppressWarnings(do.call(rbind, strsplit(x, "")))
+  caps  <- stringi::stri_trans_toupper(x)
+  lower <- stringi::stri_trans_tolower(x)
 
-  if (all(is.na(res))) {return(res)}
+  result                <- matrix(nrow = nrow(x), ncol = ncol(x))
+  result[]              <- x == caps
+  result[caps == lower] <- NA
 
-  x <- x[!is.na(res)]
-
-  if (any(nchar(x) > 1)) {
-    x                <- strsplit(x, "")
-    res[!is.na(res)] <- vapply(
-      x, function(x) lgl_collapse(is_capital(x)), logical(1)
-    )
-    return(res)
-  }
-
-  capital   <- stringi::stri_trans_toupper(x)
-  lowercase <- stringi::stri_trans_tolower(x)
-
-  res[!is.na(res)][capital == lowercase] <- NA
-
-  res[!is.na(res)] <- x[!is.na(res)] == capital[!is.na(res)]
-
-  res
+  apply(result, 1, lgl_collapse)
 }
 
 #' @rdname capitalize
@@ -72,7 +58,8 @@ is_capitalized <- function(x) {
 }
 
 lgl_collapse <- function(x) {
-  if (isTRUE(all(x)))  {return(TRUE)}
-  if (isTRUE(all(!x))) {return(FALSE)}
+  if (any(is.na(x)))  {return(NA)}
+  if (all(x))         {return(TRUE)}
+  if (all(!x))        {return(FALSE)}
   NA
 }
