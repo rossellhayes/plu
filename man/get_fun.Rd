@@ -11,9 +11,7 @@ get_fun(fn, default = identity)
 function name, with or without \link[base:ns-dblcolon]{colons}.}
 
 \item{default}{If \code{fn} is \code{\link{NULL}}, the \code{default} function is returned.
-Defaults to \code{\link[=identity]{identity()}}.
-If \code{default} is not the name of a function (e.g. \code{\link{FALSE}} or \code{\link{NULL}}),
-an error will be produced when \code{fn} is \code{\link{NULL}}.}
+Defaults to \code{\link[=identity]{identity()}}.}
 }
 \value{
 A function

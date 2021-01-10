@@ -3,7 +3,7 @@
 #' `capitalize()` returns a character vector `x` with the first
 #' alphabetic character replaced with a capital form (if one exists).
 #'
-#' `is_capital()` returns [`TRUE`] if all characters are capitals, [`FALSE`] if
+#' `is_capital()` returns [`TRUE`] if all characters are capital, [`FALSE`] if
 #' all characters are lowercase, and [`NA`] if characters are mixed case or any
 #' characters are caseless (e.g. numbers, punctuation marks, characters from a
 #' unicase language like Arabic, Chinese or Hindi).
