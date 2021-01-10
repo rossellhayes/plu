@@ -1,7 +1,3 @@
-# TODO: Capitalization after space or multiple sentences.
-
-#' Pluralize a phrase based on the length of a vector
-#'
 #' @param x An English word or phrase to be pluralized.
 #'     See details for special sequences which are handled differently.
 #' @param vector A vector whose length determines `n`. Defaults to length 2.
@@ -65,15 +61,6 @@ plu_ral <- function(
 ) {
   if (!length(x))       {return(character(0))}
   if (!is.character(x)) {rlang::abort("`x` must be a character vector")}
-  if (length(x) > 1) {
-    return(
-      vapply(
-        x, plu_ral, character(1), USE.NAMES = !is.null(names(x)),
-        vector = vector, n_fn = n_fn, ..., n = n, pl = pl,
-        irregulars = irregulars, replace_n = replace_n
-      )
-    )
-  }
 
   if (length(n) != 1) {rlang::abort("`n` must be length one")}
   if (!is.numeric(n)) {rlang::abort("`n` must be numeric")}
@@ -84,6 +71,30 @@ plu_ral <- function(
   if (length(replace_n) != 1) {rlang::abort("`replace_n` must be length one")}
   if (!is.logical(replace_n) | is.na(replace_n)) {
     rlang::abort("`replace_n` must be TRUE or FALSE")
+  }
+
+  if (length(x) > 1) {
+    return(
+      vapply(
+        x, plu_ral, character(1), USE.NAMES = !is.null(names(x)),
+        vector = vector, n_fn = n_fn, ..., n = n, pl = pl,
+        irregulars = irregulars, replace_n = replace_n
+      )
+    )
+  }
+
+  x <- c(stringi::stri_split_boundaries(x, type = "sentence"), recursive = TRUE)
+  if (length(x) > 1) {
+    return(
+      paste(
+        vapply(
+          x, plu_ral, character(1), USE.NAMES = FALSE,
+          vector = vector, n_fn = n_fn, ..., n = n, pl = pl,
+          irregulars = irregulars, replace_n = replace_n
+        ),
+        collapse = ""
+      )
+    )
   }
 
   start_space <- substr(x, 1, 1) == " "

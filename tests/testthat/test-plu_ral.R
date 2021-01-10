@@ -93,6 +93,7 @@ test_that("number", {
 test_that("capitalization", {
   expect_equal(plu_ral("A word"), "Words")
   expect_equal(plu_ral("! A word"), "! Words")
+  expect_equal(plu_ral("A test! A test! A test!"), "Tests! Tests! Tests!")
 })
 
 test_that("non-words", {
