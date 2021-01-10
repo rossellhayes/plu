@@ -15,16 +15,15 @@ test_that("get_fun with NULL", {
 })
 
 test_that("errors", {
-  expect_error(get_fun(NULL, NULL))
   expect_error(get_fun(NULL, FALSE))
 
-  expect_error(get_fun(plu_not_a_real_function))
-  expect_error(get_fun("plu_not_a_real_function"))
-  expect_error(get_fun(plu::not_a_real_function))
-  expect_error(get_fun("plu::not_a_real_function"))
+  expect_error(get_fun(plu_not_real_fun),    "plu_not_real_fun")
+  expect_error(get_fun("plu_not_real_fun"),  "plu_not_real_fun")
+  expect_error(get_fun(plu::not_real_fun),   "plu::not_real_fun")
+  expect_error(get_fun("plu::not_real_fun"), "plu::not_real_fun")
 
-  expect_error(get_fun(NULL, plu_not_a_real_function))
-  expect_error(get_fun(NULL, "plu_not_a_real_function"))
-  expect_error(get_fun(NULL, plu::not_a_real_function))
-  expect_error(get_fun(NULL, "plu::not_a_real_function"))
+  expect_error(get_fun(NULL, plu_not_real_fun),    "plu_not_real_fun")
+  expect_error(get_fun(NULL, "plu_not_real_fun"),  "plu_not_real_fun")
+  expect_error(get_fun(NULL, plu::not_real_fun),   "plu::not_real_fun")
+  expect_error(get_fun(NULL, "plu::not_real_fun"), "plu::not_real_fun")
 })

@@ -4,8 +4,6 @@
 #'   function name, with or without \link[base:ns-dblcolon]{colons}.
 #' @param default If `fn` is [`NULL`], the `default` function is returned.
 #'   Defaults to [identity()].
-#'   If `default` is not the name of a function (e.g. [`FALSE`] or [`NULL`]),
-#'   an error will be produced when `fn` is [`NULL`].
 #'
 #' @return A function
 #' @export
@@ -13,30 +11,38 @@
 #' @example examples/get_fun.R
 
 get_fun <- function(fn, default = identity) {
-  fn_input <- substitute(fn, env = sys.frame(-1))
+  fn_input <- format(rlang::enexpr(fn))
 
-  if (deparse(fn_input) == "fn") {fn_input <- substitute(fn)}
-
-  if (try_true(is.null(eval(fn_input)))) {
-    fn       <- default
-    fn_input <- default
+  if (fn_input == "default") {
+    fn_input <- deparse(substitute(default, env = sys.frame(-1)))
+  } else if (fn_input == "n_fn") {
+    fn_input <- deparse(substitute(n_fn,    env = sys.frame(-1)))
   }
 
-  if (try_true(is.character(eval(fn_input)))) {
+  env <- rlang::current_env()
+
+  if (try_true(is.null(fn))) {return(get_fun(default))}
+
+  if (try_true(is.character(fn))) {
+    fn_input <- fn
+
     if (grepl("::", fn)) {
-      package <- gsub("::.*$", "", fn)
-      fn      <- gsub("^.*::", "", fn)
-      fn      <- try(get(fn, envir = getNamespace(package)), silent = TRUE)
-    } else {
-      fn      <- try(get(fn), silent = TRUE)
+      package  <- gsub("::.*$", "", fn)
+      fn       <- gsub("^.*::", "", fn)
+      env      <- getNamespace(package)
     }
   }
 
-  if (try_true(is.function(fn))) {return(fn)}
-
-  stop("Couldn't find a function named ", deparse(fn_input), call. = FALSE)
+  tryCatch(
+    suppressWarnings(rlang::as_function(fn, env = env)),
+    error = function(e) {
+      rlang::abort(
+        paste0("Could not find the function `", fn_input, "`")
+      )
+    }
+  )
 }
 
 try_true <- function(expr) {
-  isTRUE(try(expr, silent = TRUE))
+  suppressWarnings(isTRUE(try(expr, silent = TRUE)))
 }
