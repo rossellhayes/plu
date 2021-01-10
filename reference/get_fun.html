@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -141,9 +141,7 @@ function name, with or without colons.</p></td>
     <tr>
       <th>default</th>
       <td><p>If <code>fn</code> is <code><a href='https://rdrr.io/r/base/NULL.html'>NULL</a></code>, the <code>default</code> function is returned.
-Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a></code>.
-If <code>default</code> is not the name of a function (e.g. <code><a href='https://rdrr.io/r/base/logical.html'>FALSE</a></code> or <code><a href='https://rdrr.io/r/base/NULL.html'>NULL</a></code>),
-an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io/r/base/NULL.html'>NULL</a></code>.</p></td>
+Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -157,26 +155,38 @@ an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io
 #&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
 #&gt;         "liberal", "none"), replace_n = TRUE) 
 #&gt; {
-#&gt;     if (!length(x)) 
+#&gt;     if (!length(x)) {
 #&gt;         return(character(0))
-#&gt;     if (!is.character(x)) 
-#&gt;         stop("`x` must be a character vector")
-#&gt;     if (length(n) != 1) 
-#&gt;         stop("`n` must be length one")
-#&gt;     if (!is.numeric(n)) 
-#&gt;         stop("`n` must be numeric")
-#&gt;     if (length(pl) != 1) 
-#&gt;         stop("`pl` must be length one")
-#&gt;     if (!is.logical(pl) | is.na(pl)) 
-#&gt;         stop("`pl` must be TRUE or FALSE")
-#&gt;     if (length(replace_n) != 1) 
-#&gt;         stop("`replace_n` must be length one")
-#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) 
-#&gt;         stop("`replace_n` must be TRUE or FALSE")
-#&gt;     if (!is.null(n_fn) &amp; !is.function(n_fn)) 
-#&gt;         stop("`n_fn` must be an unquoted function name")
+#&gt;     }
+#&gt;     if (!is.character(x)) {
+#&gt;         rlang::abort("`x` must be a character vector")
+#&gt;     }
+#&gt;     if (length(x) &gt; 1) {
+#&gt;         return(vapply(x, plu_ral, character(1), USE.NAMES = !is.null(names(x)), 
+#&gt;             vector = vector, n_fn = n_fn, ..., n = n, pl = pl, 
+#&gt;             irregulars = irregulars, replace_n = replace_n))
+#&gt;     }
+#&gt;     if (length(n) != 1) {
+#&gt;         rlang::abort("`n` must be length one")
+#&gt;     }
+#&gt;     if (!is.numeric(n)) {
+#&gt;         rlang::abort("`n` must be numeric")
+#&gt;     }
+#&gt;     if (length(pl) != 1) {
+#&gt;         rlang::abort("`pl` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(pl) | is.na(pl)) {
+#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
+#&gt;     }
+#&gt;     if (length(replace_n) != 1) {
+#&gt;         rlang::abort("`replace_n` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
+#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
+#&gt;     }
 #&gt;     start_space &lt;- substr(x, 1, 1) == " "
 #&gt;     end_space &lt;- substr(x, nchar_x &lt;- nchar(x), nchar_x) == " "
+#&gt;     start_caps &lt;- isTRUE(is_capitalized(x))
 #&gt;     if (pl) {
 #&gt;         x &lt;- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", 
 #&gt;             perl = TRUE))
@@ -190,44 +200,58 @@ an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io
 #&gt;             "\\3")), x)
 #&gt;     x &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
 #&gt;         1, "\\1", "\\2"), x)
-#&gt;     if (!is.null(n_fn)) 
-#&gt;         n &lt;- n_fn(n, ...)
-#&gt;     if (replace_n) 
-#&gt;         x &lt;- gsub("\\bn\\b", n, x)
+#&gt;     if (replace_n) {
+#&gt;         n_fn &lt;- get_fun(n_fn)
+#&gt;         x &lt;- gsub("\\bn\\b", n_fn(n, ...), x)
+#&gt;     }
 #&gt;     x &lt;- gsub("\\{([^{}]*)\\}", "\\1", x)
 #&gt;     x &lt;- plu_nge(x, ends = TRUE)
 #&gt;     if (start_space) 
 #&gt;         x &lt;- paste0(" ", x)
 #&gt;     if (end_space) 
 #&gt;         x &lt;- paste0(x, " ")
+#&gt;     if (start_caps) 
+#&gt;         x &lt;- capitalize(x)
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdeb8a880b0&gt;
+#&gt; &lt;bytecode: 0x7facb81da508&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='fu'>plu</span><span class='fu'>::</span><span class='va'><a href='plu_ral.html'>ral</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
 #&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
 #&gt;         "liberal", "none"), replace_n = TRUE) 
 #&gt; {
-#&gt;     if (!length(x)) 
+#&gt;     if (!length(x)) {
 #&gt;         return(character(0))
-#&gt;     if (!is.character(x)) 
-#&gt;         stop("`x` must be a character vector")
-#&gt;     if (length(n) != 1) 
-#&gt;         stop("`n` must be length one")
-#&gt;     if (!is.numeric(n)) 
-#&gt;         stop("`n` must be numeric")
-#&gt;     if (length(pl) != 1) 
-#&gt;         stop("`pl` must be length one")
-#&gt;     if (!is.logical(pl) | is.na(pl)) 
-#&gt;         stop("`pl` must be TRUE or FALSE")
-#&gt;     if (length(replace_n) != 1) 
-#&gt;         stop("`replace_n` must be length one")
-#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) 
-#&gt;         stop("`replace_n` must be TRUE or FALSE")
-#&gt;     if (!is.null(n_fn) &amp; !is.function(n_fn)) 
-#&gt;         stop("`n_fn` must be an unquoted function name")
+#&gt;     }
+#&gt;     if (!is.character(x)) {
+#&gt;         rlang::abort("`x` must be a character vector")
+#&gt;     }
+#&gt;     if (length(x) &gt; 1) {
+#&gt;         return(vapply(x, plu_ral, character(1), USE.NAMES = !is.null(names(x)), 
+#&gt;             vector = vector, n_fn = n_fn, ..., n = n, pl = pl, 
+#&gt;             irregulars = irregulars, replace_n = replace_n))
+#&gt;     }
+#&gt;     if (length(n) != 1) {
+#&gt;         rlang::abort("`n` must be length one")
+#&gt;     }
+#&gt;     if (!is.numeric(n)) {
+#&gt;         rlang::abort("`n` must be numeric")
+#&gt;     }
+#&gt;     if (length(pl) != 1) {
+#&gt;         rlang::abort("`pl` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(pl) | is.na(pl)) {
+#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
+#&gt;     }
+#&gt;     if (length(replace_n) != 1) {
+#&gt;         rlang::abort("`replace_n` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
+#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
+#&gt;     }
 #&gt;     start_space &lt;- substr(x, 1, 1) == " "
 #&gt;     end_space &lt;- substr(x, nchar_x &lt;- nchar(x), nchar_x) == " "
+#&gt;     start_caps &lt;- isTRUE(is_capitalized(x))
 #&gt;     if (pl) {
 #&gt;         x &lt;- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", 
 #&gt;             perl = TRUE))
@@ -241,44 +265,58 @@ an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io
 #&gt;             "\\3")), x)
 #&gt;     x &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
 #&gt;         1, "\\1", "\\2"), x)
-#&gt;     if (!is.null(n_fn)) 
-#&gt;         n &lt;- n_fn(n, ...)
-#&gt;     if (replace_n) 
-#&gt;         x &lt;- gsub("\\bn\\b", n, x)
+#&gt;     if (replace_n) {
+#&gt;         n_fn &lt;- get_fun(n_fn)
+#&gt;         x &lt;- gsub("\\bn\\b", n_fn(n, ...), x)
+#&gt;     }
 #&gt;     x &lt;- gsub("\\{([^{}]*)\\}", "\\1", x)
 #&gt;     x &lt;- plu_nge(x, ends = TRUE)
 #&gt;     if (start_space) 
 #&gt;         x &lt;- paste0(" ", x)
 #&gt;     if (end_space) 
 #&gt;         x &lt;- paste0(x, " ")
+#&gt;     if (start_caps) 
+#&gt;         x &lt;- capitalize(x)
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdeb7d562b0&gt;
+#&gt; &lt;bytecode: 0x7facb8260618&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu_ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
 #&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
 #&gt;         "liberal", "none"), replace_n = TRUE) 
 #&gt; {
-#&gt;     if (!length(x)) 
+#&gt;     if (!length(x)) {
 #&gt;         return(character(0))
-#&gt;     if (!is.character(x)) 
-#&gt;         stop("`x` must be a character vector")
-#&gt;     if (length(n) != 1) 
-#&gt;         stop("`n` must be length one")
-#&gt;     if (!is.numeric(n)) 
-#&gt;         stop("`n` must be numeric")
-#&gt;     if (length(pl) != 1) 
-#&gt;         stop("`pl` must be length one")
-#&gt;     if (!is.logical(pl) | is.na(pl)) 
-#&gt;         stop("`pl` must be TRUE or FALSE")
-#&gt;     if (length(replace_n) != 1) 
-#&gt;         stop("`replace_n` must be length one")
-#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) 
-#&gt;         stop("`replace_n` must be TRUE or FALSE")
-#&gt;     if (!is.null(n_fn) &amp; !is.function(n_fn)) 
-#&gt;         stop("`n_fn` must be an unquoted function name")
+#&gt;     }
+#&gt;     if (!is.character(x)) {
+#&gt;         rlang::abort("`x` must be a character vector")
+#&gt;     }
+#&gt;     if (length(x) &gt; 1) {
+#&gt;         return(vapply(x, plu_ral, character(1), USE.NAMES = !is.null(names(x)), 
+#&gt;             vector = vector, n_fn = n_fn, ..., n = n, pl = pl, 
+#&gt;             irregulars = irregulars, replace_n = replace_n))
+#&gt;     }
+#&gt;     if (length(n) != 1) {
+#&gt;         rlang::abort("`n` must be length one")
+#&gt;     }
+#&gt;     if (!is.numeric(n)) {
+#&gt;         rlang::abort("`n` must be numeric")
+#&gt;     }
+#&gt;     if (length(pl) != 1) {
+#&gt;         rlang::abort("`pl` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(pl) | is.na(pl)) {
+#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
+#&gt;     }
+#&gt;     if (length(replace_n) != 1) {
+#&gt;         rlang::abort("`replace_n` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
+#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
+#&gt;     }
 #&gt;     start_space &lt;- substr(x, 1, 1) == " "
 #&gt;     end_space &lt;- substr(x, nchar_x &lt;- nchar(x), nchar_x) == " "
+#&gt;     start_caps &lt;- isTRUE(is_capitalized(x))
 #&gt;     if (pl) {
 #&gt;         x &lt;- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", 
 #&gt;             perl = TRUE))
@@ -292,44 +330,58 @@ an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io
 #&gt;             "\\3")), x)
 #&gt;     x &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
 #&gt;         1, "\\1", "\\2"), x)
-#&gt;     if (!is.null(n_fn)) 
-#&gt;         n &lt;- n_fn(n, ...)
-#&gt;     if (replace_n) 
-#&gt;         x &lt;- gsub("\\bn\\b", n, x)
+#&gt;     if (replace_n) {
+#&gt;         n_fn &lt;- get_fun(n_fn)
+#&gt;         x &lt;- gsub("\\bn\\b", n_fn(n, ...), x)
+#&gt;     }
 #&gt;     x &lt;- gsub("\\{([^{}]*)\\}", "\\1", x)
 #&gt;     x &lt;- plu_nge(x, ends = TRUE)
 #&gt;     if (start_space) 
 #&gt;         x &lt;- paste0(" ", x)
 #&gt;     if (end_space) 
 #&gt;         x &lt;- paste0(x, " ")
+#&gt;     if (start_caps) 
+#&gt;         x &lt;- capitalize(x)
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdeb8a880b0&gt;
+#&gt; &lt;bytecode: 0x7facb81da508&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu::ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
 #&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
 #&gt;         "liberal", "none"), replace_n = TRUE) 
 #&gt; {
-#&gt;     if (!length(x)) 
+#&gt;     if (!length(x)) {
 #&gt;         return(character(0))
-#&gt;     if (!is.character(x)) 
-#&gt;         stop("`x` must be a character vector")
-#&gt;     if (length(n) != 1) 
-#&gt;         stop("`n` must be length one")
-#&gt;     if (!is.numeric(n)) 
-#&gt;         stop("`n` must be numeric")
-#&gt;     if (length(pl) != 1) 
-#&gt;         stop("`pl` must be length one")
-#&gt;     if (!is.logical(pl) | is.na(pl)) 
-#&gt;         stop("`pl` must be TRUE or FALSE")
-#&gt;     if (length(replace_n) != 1) 
-#&gt;         stop("`replace_n` must be length one")
-#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) 
-#&gt;         stop("`replace_n` must be TRUE or FALSE")
-#&gt;     if (!is.null(n_fn) &amp; !is.function(n_fn)) 
-#&gt;         stop("`n_fn` must be an unquoted function name")
+#&gt;     }
+#&gt;     if (!is.character(x)) {
+#&gt;         rlang::abort("`x` must be a character vector")
+#&gt;     }
+#&gt;     if (length(x) &gt; 1) {
+#&gt;         return(vapply(x, plu_ral, character(1), USE.NAMES = !is.null(names(x)), 
+#&gt;             vector = vector, n_fn = n_fn, ..., n = n, pl = pl, 
+#&gt;             irregulars = irregulars, replace_n = replace_n))
+#&gt;     }
+#&gt;     if (length(n) != 1) {
+#&gt;         rlang::abort("`n` must be length one")
+#&gt;     }
+#&gt;     if (!is.numeric(n)) {
+#&gt;         rlang::abort("`n` must be numeric")
+#&gt;     }
+#&gt;     if (length(pl) != 1) {
+#&gt;         rlang::abort("`pl` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(pl) | is.na(pl)) {
+#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
+#&gt;     }
+#&gt;     if (length(replace_n) != 1) {
+#&gt;         rlang::abort("`replace_n` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
+#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
+#&gt;     }
 #&gt;     start_space &lt;- substr(x, 1, 1) == " "
 #&gt;     end_space &lt;- substr(x, nchar_x &lt;- nchar(x), nchar_x) == " "
+#&gt;     start_caps &lt;- isTRUE(is_capitalized(x))
 #&gt;     if (pl) {
 #&gt;         x &lt;- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", 
 #&gt;             perl = TRUE))
@@ -343,49 +395,63 @@ an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io
 #&gt;             "\\3")), x)
 #&gt;     x &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
 #&gt;         1, "\\1", "\\2"), x)
-#&gt;     if (!is.null(n_fn)) 
-#&gt;         n &lt;- n_fn(n, ...)
-#&gt;     if (replace_n) 
-#&gt;         x &lt;- gsub("\\bn\\b", n, x)
+#&gt;     if (replace_n) {
+#&gt;         n_fn &lt;- get_fun(n_fn)
+#&gt;         x &lt;- gsub("\\bn\\b", n_fn(n, ...), x)
+#&gt;     }
 #&gt;     x &lt;- gsub("\\{([^{}]*)\\}", "\\1", x)
 #&gt;     x &lt;- plu_nge(x, ends = TRUE)
 #&gt;     if (start_space) 
 #&gt;         x &lt;- paste0(" ", x)
 #&gt;     if (end_space) 
 #&gt;         x &lt;- paste0(x, " ")
+#&gt;     if (start_caps) 
+#&gt;         x &lt;- capitalize(x)
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdeb7d562b0&gt;
+#&gt; &lt;bytecode: 0x7facb8260618&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'>
 <span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x) 
 #&gt; x
-#&gt; &lt;bytecode: 0x7fdeb3a70990&gt;
+#&gt; &lt;bytecode: 0x7facb3942f90&gt;
 #&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span>, default <span class='op'>=</span> <span class='va'>plu_ral</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
 #&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
 #&gt;         "liberal", "none"), replace_n = TRUE) 
 #&gt; {
-#&gt;     if (!length(x)) 
+#&gt;     if (!length(x)) {
 #&gt;         return(character(0))
-#&gt;     if (!is.character(x)) 
-#&gt;         stop("`x` must be a character vector")
-#&gt;     if (length(n) != 1) 
-#&gt;         stop("`n` must be length one")
-#&gt;     if (!is.numeric(n)) 
-#&gt;         stop("`n` must be numeric")
-#&gt;     if (length(pl) != 1) 
-#&gt;         stop("`pl` must be length one")
-#&gt;     if (!is.logical(pl) | is.na(pl)) 
-#&gt;         stop("`pl` must be TRUE or FALSE")
-#&gt;     if (length(replace_n) != 1) 
-#&gt;         stop("`replace_n` must be length one")
-#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) 
-#&gt;         stop("`replace_n` must be TRUE or FALSE")
-#&gt;     if (!is.null(n_fn) &amp; !is.function(n_fn)) 
-#&gt;         stop("`n_fn` must be an unquoted function name")
+#&gt;     }
+#&gt;     if (!is.character(x)) {
+#&gt;         rlang::abort("`x` must be a character vector")
+#&gt;     }
+#&gt;     if (length(x) &gt; 1) {
+#&gt;         return(vapply(x, plu_ral, character(1), USE.NAMES = !is.null(names(x)), 
+#&gt;             vector = vector, n_fn = n_fn, ..., n = n, pl = pl, 
+#&gt;             irregulars = irregulars, replace_n = replace_n))
+#&gt;     }
+#&gt;     if (length(n) != 1) {
+#&gt;         rlang::abort("`n` must be length one")
+#&gt;     }
+#&gt;     if (!is.numeric(n)) {
+#&gt;         rlang::abort("`n` must be numeric")
+#&gt;     }
+#&gt;     if (length(pl) != 1) {
+#&gt;         rlang::abort("`pl` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(pl) | is.na(pl)) {
+#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
+#&gt;     }
+#&gt;     if (length(replace_n) != 1) {
+#&gt;         rlang::abort("`replace_n` must be length one")
+#&gt;     }
+#&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
+#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
+#&gt;     }
 #&gt;     start_space &lt;- substr(x, 1, 1) == " "
 #&gt;     end_space &lt;- substr(x, nchar_x &lt;- nchar(x), nchar_x) == " "
+#&gt;     start_caps &lt;- isTRUE(is_capitalized(x))
 #&gt;     if (pl) {
 #&gt;         x &lt;- unlist(strsplit(x, "(?=[^A-Za-z0-9'\\-{])(?![^{]*})", 
 #&gt;             perl = TRUE))
@@ -399,19 +465,21 @@ an error will be produced when <code>fn</code> is <code><a href='https://rdrr.io
 #&gt;             "\\3")), x)
 #&gt;     x &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
 #&gt;         1, "\\1", "\\2"), x)
-#&gt;     if (!is.null(n_fn)) 
-#&gt;         n &lt;- n_fn(n, ...)
-#&gt;     if (replace_n) 
-#&gt;         x &lt;- gsub("\\bn\\b", n, x)
+#&gt;     if (replace_n) {
+#&gt;         n_fn &lt;- get_fun(n_fn)
+#&gt;         x &lt;- gsub("\\bn\\b", n_fn(n, ...), x)
+#&gt;     }
 #&gt;     x &lt;- gsub("\\{([^{}]*)\\}", "\\1", x)
 #&gt;     x &lt;- plu_nge(x, ends = TRUE)
 #&gt;     if (start_space) 
 #&gt;         x &lt;- paste0(" ", x)
 #&gt;     if (end_space) 
 #&gt;         x &lt;- paste0(x, " ")
+#&gt;     if (start_caps) 
+#&gt;         x &lt;- capitalize(x)
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdeb8a880b0&gt;
+#&gt; &lt;bytecode: 0x7facb81da508&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

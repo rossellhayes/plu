@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -122,23 +122,45 @@
       <small>Source: <a href='https://github.com/rossellhayes/plu/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="plu-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#plu-development-version" class="anchor"></a>plu (development version)<small> Unreleased </small>
+    <div id="plu-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#plu-020" class="anchor"></a>plu 0.2.0<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li>
-<code><a href="../reference/plu_more.html">plu::more()</a></code> limits a vector to the first <code>n</code> elements with a message for remaining elements.
+<p><code><a href="../reference/plu_more.html">plu::more()</a></code> limits a vector to the first <code>n</code> elements with a message for remaining elements.</p>
 <ul>
 <li>This can be useful for providing messages to users without an overwhelming amount of detail.</li>
 <li>
 <code><a href="../reference/plu_more.html">plu::more(letters, max = 2)</a></code> yields <code><a href="https://rdrr.io/r/base/c.html">c("a", "b", "24 more characters")</a></code>.</li>
 </ul>
 </li>
-<li>The convenience function <code><a href="../reference/get_fun.html">get_fun()</a></code> finds a function using a character string or unquoted function name, with or without colons.</li>
+<li><p>The convenience function <code><a href="../reference/get_fun.html">get_fun()</a></code> finds a function using a character string or unquoted function name, with or without colons.</p></li>
+<li>
+<p><code><a href="../reference/plu_ral.html">plu::ral()</a></code> now ensures that the capitalization of a phrase stays the same after pluralizing.</p>
+<ul>
+<li>
+<code><a href="../reference/plu_ral.html">plu::ral("A sentence.")</a></code> now results in “Sentences.” rather than “sentences.”</li>
+</ul>
+</li>
+<li>
+<p>Convenience functions around capitalization have been added:</p>
+<ul>
+<li>
+<code><a href="../reference/capitalize.html">is_capital()</a></code> tests if a character (or string of characters) is capital or lowercase.</li>
+<li>
+<code><a href="../reference/capitalize.html">is_capitalized()</a></code> tests if the first alphabetic character in a string is capital.</li>
+<li>
+<code><a href="../reference/capitalize.html">capitalize()</a></code> converts the first alphabetic character in a string to capital.
+<ul>
+<li>Unlike <code><a href="https://rdrr.io/r/tools/toTitleCase.html">tools::toTitleCase()</a></code> or <code><a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_sentence()</a></code>, this does not change the capitalization of any subsequent characters.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="patches" class="section level2">
