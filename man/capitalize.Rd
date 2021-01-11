@@ -8,12 +8,17 @@
 \usage{
 capitalize(x)
 
-is_capital(x)
+is_capital(x, strict = FALSE)
 
-is_capitalized(x)
+is_capitalized(x, strict = FALSE)
 }
 \arguments{
-\item{x}{A character vector}
+\item{x}{A character vector.}
+
+\item{strict}{If strict is \code{TRUE}, \code{is_capital()} and \code{is_capitalized()}
+return \code{FALSE} instead of \code{NA} when characters are neither capital nor
+lowercase.
+Defualts to \code{FALSE}.}
 }
 \value{
 \code{capitalize()} returns a character vector of the same length as \code{x}.

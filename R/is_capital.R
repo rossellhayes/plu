@@ -14,7 +14,11 @@
 #' character is caseless (i.e. from a unicase language like Arabic, Chinese
 #' or Hindi).
 #'
-#' @param x A character vector
+#' @param x A character vector.
+#' @param strict If strict is `TRUE`, `is_capital()` and `is_capitalized()`
+#'   return `FALSE` instead of `NA` when characters are neither capital nor
+#'   lowercase.
+#'   Defualts to `FALSE`.
 #'
 #' @return `capitalize()` returns a character vector of the same length as `x`.
 #'
@@ -35,7 +39,7 @@ capitalize <- function(x) {
 #' @rdname capitalize
 #' @export
 
-is_capital <- function(x) {
+is_capital <- function(x, strict = FALSE) {
   if (!is.character(x)) {return(rep(NA, length(x)))}
 
   x     <- suppressWarnings(do.call(rbind, strsplit(x, "")))
@@ -46,15 +50,19 @@ is_capital <- function(x) {
   result[]              <- x == caps
   result[caps == lower] <- NA
 
+  if (strict) {
+    return(apply(result, 1, lgl_collapse_strict))
+  }
+
   apply(result, 1, lgl_collapse)
 }
 
 #' @rdname capitalize
 #' @export
 
-is_capitalized <- function(x) {
+is_capitalized <- function(x, strict = FALSE) {
   first_letter <- stringi::stri_extract_first_regex(x, "[:alpha:]")
-  is_capital(first_letter)
+  is_capital(first_letter, strict = strict)
 }
 
 lgl_collapse <- function(x) {
@@ -62,4 +70,9 @@ lgl_collapse <- function(x) {
   if (all(x))         {return(TRUE)}
   if (all(!x))        {return(FALSE)}
   NA
+}
+
+lgl_collapse_strict <- function(x) {
+  if (any(is.na(x))) {return(FALSE)}
+  all(x)
 }
