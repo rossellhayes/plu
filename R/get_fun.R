@@ -11,7 +11,7 @@
 #' @example examples/get_fun.R
 
 get_fun <- function(fn, default = identity) {
-  fn_input <- format(rlang::enexpr(fn))
+  fn_input <- rlang::as_label(rlang::enexpr(fn))
 
   if (fn_input == "default") {
     fn_input <- deparse(substitute(default, env = sys.frame(-1)))
