@@ -23,6 +23,9 @@ test_that("multicharacter is_capital", {
 })
 
 test_that("multilingual is_capital", {
+  skip_on_cran()
+  skip_on_os("linux")
+
   # Non-ASCII Latin
   expect_equal(is_capital("É"), TRUE)
   expect_equal(is_capital("é"), FALSE)
@@ -101,6 +104,9 @@ test_that("vectorized is_capitalized", {
 })
 
 test_that("multilingual is_capitalized", {
+  skip_on_cran()
+  skip_on_os("linux")
+
   expect_equal(is_capitalized("множественный"), FALSE)
   expect_equal(is_capitalized("Множественный"), TRUE)
   expect_equal(is_capitalized("複数"),        NA)
@@ -139,6 +145,9 @@ test_that("vectorized capitalize", {
 })
 
 test_that("multilingual capitalize", {
+  skip_on_cran()
+  skip_on_os("linux")
+
   expect_equal(capitalize("множественный"), "Множественный")
   expect_equal(capitalize("Множественный"), "Множественный")
   expect_equal(capitalize("複数"),        "複数")
