@@ -14,8 +14,11 @@
 #' character is caseless (i.e. from a unicase language like Arabic, Chinese
 #' or Hindi).
 #'
-#' @param x A character vector
-#' @param strict If `TRUE`, return `FALSE` instead of `NA`.
+#' @param x A character vector.
+#' @param strict If strict is `TRUE`, `is_capital()` and `is_capitalized()`
+#'   return `FALSE` instead of `NA` when characters are neither capital nor
+#'   lowercase.
+#'   Defualts to `FALSE`.
 #'
 #' @return `capitalize()` returns a character vector of the same length as `x`.
 #'
