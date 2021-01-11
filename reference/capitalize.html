@@ -132,16 +132,23 @@ alphabetic character replaced with a capital form (if one exists).</p>
 
     <pre class="usage"><span class='fu'>capitalize</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>is_capital</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>is_capital</span><span class='op'>(</span><span class='va'>x</span>, strict <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>is_capitalized</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+<span class='fu'>is_capitalized</span><span class='op'>(</span><span class='va'>x</span>, strict <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A character vector</p></td>
+      <td><p>A character vector.</p></td>
+    </tr>
+    <tr>
+      <th>strict</th>
+      <td><p>If strict is <code>TRUE</code>, <code>is_capital()</code> and <code>is_capitalized()</code>
+return <code>FALSE</code> instead of <code>NA</code> when characters are neither capital nor
+lowercase.
+Defualts to <code>FALSE</code>.</p></td>
     </tr>
     </table>
 
