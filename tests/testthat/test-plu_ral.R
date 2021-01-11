@@ -35,6 +35,17 @@ test_that("vector", {
     plu_ral(c("word", "phrase", "sentence")),
     c("words", "phrases", "sentences")
   )
+
+  expect_equal(
+    plu_ral(c("person", "cactus", "attorney {general}")),
+    c("people", "cacti", "attorneys general")
+  )
+
+  expect_equal(
+    plu_ral(c("A sentence.", "A sentence? A sentence. A sentence!")),
+    c("Sentences.", "Sentences? Sentences. Sentences!")
+  )
+
   expect_equal(
     plu_ral(c(w = "word", p = "phrase", "sentence")),
     c(w = "words", p = "phrases", "sentences")
