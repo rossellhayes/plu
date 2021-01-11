@@ -14,6 +14,14 @@ test_that("plu_stick sep works", {
   expect_equal(
     plu_stick(ingredients, sep = "/"), "sugar/spice and everything nice"
   )
+
+  expect_equal(
+    plu_stick(ingredients, sep = ""), "sugarspice and everything nice"
+  )
+
+  expect_equal(
+    plu_stick(ingredients, sep = NULL), "sugarspice and everything nice"
+  )
 })
 
 test_that("plu_stick oxford works", {
