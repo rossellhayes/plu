@@ -11,7 +11,7 @@
 MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://cran.r-project.org/web/licenses/MIT)
 [![R build
 status](https://github.com/rossellhayes/plu/workflows/R-CMD-check/badge.svg)](https://github.com/rossellhayes/plu/actions)
-[![](https://codecov.io/gh/rossellhayes/plu/branch/master/graph/badge.svg)](https://codecov.io/gh/rossellhayes/plu)
+[![](https://codecov.io/gh/rossellhayes/plu/branch/main/graph/badge.svg)](https://codecov.io/gh/rossellhayes/plu)
 [![Dependencies](https://tinyverse.netlify.com/badge/plu)](https://cran.r-project.org/package=plu)
 [![CodeFactor](https://www.codefactor.io/repository/github/rossellhayes/plu/badge)](https://www.codefactor.io/repository/github/rossellhayes/plu)
 <!-- badges: end -->
@@ -79,7 +79,7 @@ paste(
   ),
   plu::ral("is {negative}.", ints[ints < 0])
 )
-#> [1] "All inputs must be non-negative. `-4`, `-7`, `-4`, `-7`, `-1` and 2 more integers are negative."
+#> [1] "All inputs must be non-negative. `-1`, `-5`, `-4`, `-5`, `-7` and 3 more integers are negative."
 ```
 
 ## Credits
@@ -91,7 +91,7 @@ Hex sticker font is
 Image adapted from icon made by [Freepik](https://www.freepik.com) from
 [flaticon.com](https://www.flaticon.com/free-icon/umbrella_2357382).
 
------
+------------------------------------------------------------------------
 
 Please note that the **plu** project is released with a [Contributor
 Code of
