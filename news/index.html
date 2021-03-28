@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -122,6 +122,26 @@
       <small>Source: <a href='https://github.com/rossellhayes/plu/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="plu-development-version" class="section level1">
+<h1 class="page-header" data-toc-text="development version">
+<a href="#plu-development-version" class="anchor"></a>plu (development version)<small> Unreleased </small>
+</h1>
+<ul>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles {braced} strings that contain sentence breaks.
+<ul>
+<li>Previously, sentence breaks would break the {braced} string and apply normal pluralization to its contents.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles braced pipe sequences when <code>pl</code> is set to <code>FALSE</code>.
+<ul>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral("{singular|plural}", pl = FALSE)</a></code> now returns <code>"singular"</code> instead of incorrectly returning <code>"plural"</code>.</li>
+</ul>
+</li>
+</ul>
+</div>
     <div id="plu-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#plu-020" class="anchor"></a>plu 0.2.0<small> 2021-01-11 </small>

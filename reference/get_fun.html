@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -151,9 +151,9 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='va'>plu_ral</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
-#&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
-#&gt;         "liberal", "none"), replace_n = TRUE) 
+</div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
+#&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
+#&gt;     replace_n = TRUE) 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -161,41 +161,40 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!is.character(x)) {
 #&gt;         rlang::abort("`x` must be a character vector")
 #&gt;     }
-#&gt;     if (length(n) != 1) {
-#&gt;         rlang::abort("`n` must be length one")
-#&gt;     }
-#&gt;     if (!is.numeric(n)) {
-#&gt;         rlang::abort("`n` must be numeric")
-#&gt;     }
-#&gt;     if (length(pl) != 1) {
-#&gt;         rlang::abort("`pl` must be length one")
-#&gt;     }
-#&gt;     if (!is.logical(pl) | is.na(pl)) {
-#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
-#&gt;     }
 #&gt;     if (length(replace_n) != 1) {
 #&gt;         rlang::abort("`replace_n` must be length one")
 #&gt;     }
 #&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
 #&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
 #&gt;     }
-#&gt;     if (any(nchar(x) &gt; 1)) {
-#&gt;         mat &lt;- stringi::stri_split_boundaries(x, type = "sentence", 
-#&gt;             simplify = TRUE)
-#&gt;     }
-#&gt;     else {
-#&gt;         mat &lt;- matrix(x, ncol = 1)
-#&gt;     }
-#&gt;     start_space &lt;- substr(mat, 1, 1) == " "
-#&gt;     end_space &lt;- substr(mat, nchar(mat), nchar(mat)) == " "
-#&gt;     start_caps &lt;- is_capitalized(mat, strict = TRUE)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     pl &lt;- derive_pl(pl, n, vector)
+#&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             simplify = TRUE)
-#&gt;         braced &lt;- stringi::stri_detect_regex(split, paste0("\\{|\\}", 
+#&gt;         sing_split &lt;- t(sing_split)
+#&gt;         braced &lt;- stringi::stri_detect_regex(sing_split, paste0("\\{|\\}", 
 #&gt;             ifelse(replace_n, "|\\bn\\b", "")))
-#&gt;         split[!braced] &lt;- plu_ralize(split[!braced], irregulars = irregulars)
-#&gt;         mat[] &lt;- apply(split, 1, paste, collapse = "")
+#&gt;         plu_split &lt;- sing_split
+#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
+#&gt;             irregulars = irregulars)
+#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
+#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         if (any(removed)) {
+#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- caps[caps %in% removed]
+#&gt;             after_caps &lt;- vapply(caps, function(i) {
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
+#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx[1] + i - 1L
+#&gt;             }, integer(1))
+#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             after_removed &lt;- removed + 1
+#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;                 " "] &lt;- ""
+#&gt;         }
+#&gt;         mat[] &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
 #&gt;         switch(as.character(abs(n)), `1` = "$1", `2` = "$2", 
@@ -209,18 +208,14 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", 
 #&gt;         "$1")
-#&gt;     mat[] &lt;- plu_nge(mat, ends = TRUE)
-#&gt;     mat[start_space] &lt;- paste0(" ", mat[start_space])
-#&gt;     mat[end_space] &lt;- paste0(mat[end_space], " ")
-#&gt;     mat[start_caps] &lt;- capitalize(mat[start_caps])
-#&gt;     x[] &lt;- apply(mat, 1, paste, collapse = "")
+#&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdd5fe60218&gt;
+#&gt; &lt;bytecode: 0x7f97fff0c558&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='fu'>plu</span><span class='fu'>::</span><span class='va'><a href='plu_ral.html'>ral</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
-#&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
-#&gt;         "liberal", "none"), replace_n = TRUE) 
+</div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
+#&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
+#&gt;     replace_n = TRUE) 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -228,41 +223,40 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!is.character(x)) {
 #&gt;         rlang::abort("`x` must be a character vector")
 #&gt;     }
-#&gt;     if (length(n) != 1) {
-#&gt;         rlang::abort("`n` must be length one")
-#&gt;     }
-#&gt;     if (!is.numeric(n)) {
-#&gt;         rlang::abort("`n` must be numeric")
-#&gt;     }
-#&gt;     if (length(pl) != 1) {
-#&gt;         rlang::abort("`pl` must be length one")
-#&gt;     }
-#&gt;     if (!is.logical(pl) | is.na(pl)) {
-#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
-#&gt;     }
 #&gt;     if (length(replace_n) != 1) {
 #&gt;         rlang::abort("`replace_n` must be length one")
 #&gt;     }
 #&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
 #&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
 #&gt;     }
-#&gt;     if (any(nchar(x) &gt; 1)) {
-#&gt;         mat &lt;- stringi::stri_split_boundaries(x, type = "sentence", 
-#&gt;             simplify = TRUE)
-#&gt;     }
-#&gt;     else {
-#&gt;         mat &lt;- matrix(x, ncol = 1)
-#&gt;     }
-#&gt;     start_space &lt;- substr(mat, 1, 1) == " "
-#&gt;     end_space &lt;- substr(mat, nchar(mat), nchar(mat)) == " "
-#&gt;     start_caps &lt;- is_capitalized(mat, strict = TRUE)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     pl &lt;- derive_pl(pl, n, vector)
+#&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             simplify = TRUE)
-#&gt;         braced &lt;- stringi::stri_detect_regex(split, paste0("\\{|\\}", 
+#&gt;         sing_split &lt;- t(sing_split)
+#&gt;         braced &lt;- stringi::stri_detect_regex(sing_split, paste0("\\{|\\}", 
 #&gt;             ifelse(replace_n, "|\\bn\\b", "")))
-#&gt;         split[!braced] &lt;- plu_ralize(split[!braced], irregulars = irregulars)
-#&gt;         mat[] &lt;- apply(split, 1, paste, collapse = "")
+#&gt;         plu_split &lt;- sing_split
+#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
+#&gt;             irregulars = irregulars)
+#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
+#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         if (any(removed)) {
+#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- caps[caps %in% removed]
+#&gt;             after_caps &lt;- vapply(caps, function(i) {
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
+#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx[1] + i - 1L
+#&gt;             }, integer(1))
+#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             after_removed &lt;- removed + 1
+#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;                 " "] &lt;- ""
+#&gt;         }
+#&gt;         mat[] &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
 #&gt;         switch(as.character(abs(n)), `1` = "$1", `2` = "$2", 
@@ -276,18 +270,14 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", 
 #&gt;         "$1")
-#&gt;     mat[] &lt;- plu_nge(mat, ends = TRUE)
-#&gt;     mat[start_space] &lt;- paste0(" ", mat[start_space])
-#&gt;     mat[end_space] &lt;- paste0(mat[end_space], " ")
-#&gt;     mat[start_caps] &lt;- capitalize(mat[start_caps])
-#&gt;     x[] &lt;- apply(mat, 1, paste, collapse = "")
+#&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdd60991b90&gt;
+#&gt; &lt;bytecode: 0x7f97fff970f0&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu_ral"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
-#&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
-#&gt;         "liberal", "none"), replace_n = TRUE) 
+</div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
+#&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
+#&gt;     replace_n = TRUE) 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -295,41 +285,40 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!is.character(x)) {
 #&gt;         rlang::abort("`x` must be a character vector")
 #&gt;     }
-#&gt;     if (length(n) != 1) {
-#&gt;         rlang::abort("`n` must be length one")
-#&gt;     }
-#&gt;     if (!is.numeric(n)) {
-#&gt;         rlang::abort("`n` must be numeric")
-#&gt;     }
-#&gt;     if (length(pl) != 1) {
-#&gt;         rlang::abort("`pl` must be length one")
-#&gt;     }
-#&gt;     if (!is.logical(pl) | is.na(pl)) {
-#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
-#&gt;     }
 #&gt;     if (length(replace_n) != 1) {
 #&gt;         rlang::abort("`replace_n` must be length one")
 #&gt;     }
 #&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
 #&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
 #&gt;     }
-#&gt;     if (any(nchar(x) &gt; 1)) {
-#&gt;         mat &lt;- stringi::stri_split_boundaries(x, type = "sentence", 
-#&gt;             simplify = TRUE)
-#&gt;     }
-#&gt;     else {
-#&gt;         mat &lt;- matrix(x, ncol = 1)
-#&gt;     }
-#&gt;     start_space &lt;- substr(mat, 1, 1) == " "
-#&gt;     end_space &lt;- substr(mat, nchar(mat), nchar(mat)) == " "
-#&gt;     start_caps &lt;- is_capitalized(mat, strict = TRUE)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     pl &lt;- derive_pl(pl, n, vector)
+#&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             simplify = TRUE)
-#&gt;         braced &lt;- stringi::stri_detect_regex(split, paste0("\\{|\\}", 
+#&gt;         sing_split &lt;- t(sing_split)
+#&gt;         braced &lt;- stringi::stri_detect_regex(sing_split, paste0("\\{|\\}", 
 #&gt;             ifelse(replace_n, "|\\bn\\b", "")))
-#&gt;         split[!braced] &lt;- plu_ralize(split[!braced], irregulars = irregulars)
-#&gt;         mat[] &lt;- apply(split, 1, paste, collapse = "")
+#&gt;         plu_split &lt;- sing_split
+#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
+#&gt;             irregulars = irregulars)
+#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
+#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         if (any(removed)) {
+#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- caps[caps %in% removed]
+#&gt;             after_caps &lt;- vapply(caps, function(i) {
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
+#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx[1] + i - 1L
+#&gt;             }, integer(1))
+#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             after_removed &lt;- removed + 1
+#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;                 " "] &lt;- ""
+#&gt;         }
+#&gt;         mat[] &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
 #&gt;         switch(as.character(abs(n)), `1` = "$1", `2` = "$2", 
@@ -343,18 +332,14 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", 
 #&gt;         "$1")
-#&gt;     mat[] &lt;- plu_nge(mat, ends = TRUE)
-#&gt;     mat[start_space] &lt;- paste0(" ", mat[start_space])
-#&gt;     mat[end_space] &lt;- paste0(mat[end_space], " ")
-#&gt;     mat[start_caps] &lt;- capitalize(mat[start_caps])
-#&gt;     x[] &lt;- apply(mat, 1, paste, collapse = "")
+#&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdd5fe60218&gt;
+#&gt; &lt;bytecode: 0x7f97fff0c558&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu::ral"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
-#&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
-#&gt;         "liberal", "none"), replace_n = TRUE) 
+</div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
+#&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
+#&gt;     replace_n = TRUE) 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -362,41 +347,40 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!is.character(x)) {
 #&gt;         rlang::abort("`x` must be a character vector")
 #&gt;     }
-#&gt;     if (length(n) != 1) {
-#&gt;         rlang::abort("`n` must be length one")
-#&gt;     }
-#&gt;     if (!is.numeric(n)) {
-#&gt;         rlang::abort("`n` must be numeric")
-#&gt;     }
-#&gt;     if (length(pl) != 1) {
-#&gt;         rlang::abort("`pl` must be length one")
-#&gt;     }
-#&gt;     if (!is.logical(pl) | is.na(pl)) {
-#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
-#&gt;     }
 #&gt;     if (length(replace_n) != 1) {
 #&gt;         rlang::abort("`replace_n` must be length one")
 #&gt;     }
 #&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
 #&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
 #&gt;     }
-#&gt;     if (any(nchar(x) &gt; 1)) {
-#&gt;         mat &lt;- stringi::stri_split_boundaries(x, type = "sentence", 
-#&gt;             simplify = TRUE)
-#&gt;     }
-#&gt;     else {
-#&gt;         mat &lt;- matrix(x, ncol = 1)
-#&gt;     }
-#&gt;     start_space &lt;- substr(mat, 1, 1) == " "
-#&gt;     end_space &lt;- substr(mat, nchar(mat), nchar(mat)) == " "
-#&gt;     start_caps &lt;- is_capitalized(mat, strict = TRUE)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     pl &lt;- derive_pl(pl, n, vector)
+#&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             simplify = TRUE)
-#&gt;         braced &lt;- stringi::stri_detect_regex(split, paste0("\\{|\\}", 
+#&gt;         sing_split &lt;- t(sing_split)
+#&gt;         braced &lt;- stringi::stri_detect_regex(sing_split, paste0("\\{|\\}", 
 #&gt;             ifelse(replace_n, "|\\bn\\b", "")))
-#&gt;         split[!braced] &lt;- plu_ralize(split[!braced], irregulars = irregulars)
-#&gt;         mat[] &lt;- apply(split, 1, paste, collapse = "")
+#&gt;         plu_split &lt;- sing_split
+#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
+#&gt;             irregulars = irregulars)
+#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
+#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         if (any(removed)) {
+#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- caps[caps %in% removed]
+#&gt;             after_caps &lt;- vapply(caps, function(i) {
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
+#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx[1] + i - 1L
+#&gt;             }, integer(1))
+#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             after_removed &lt;- removed + 1
+#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;                 " "] &lt;- ""
+#&gt;         }
+#&gt;         mat[] &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
 #&gt;         switch(as.character(abs(n)), `1` = "$1", `2` = "$2", 
@@ -410,23 +394,19 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", 
 #&gt;         "$1")
-#&gt;     mat[] &lt;- plu_nge(mat, ends = TRUE)
-#&gt;     mat[start_space] &lt;- paste0(" ", mat[start_space])
-#&gt;     mat[end_space] &lt;- paste0(mat[end_space], " ")
-#&gt;     mat[start_caps] &lt;- capitalize(mat[start_caps])
-#&gt;     x[] &lt;- apply(mat, 1, paste, collapse = "")
+#&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdd60991b90&gt;
+#&gt; &lt;bytecode: 0x7f97fff970f0&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'>
 <span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x) 
 #&gt; x
-#&gt; &lt;bytecode: 0x7fdd5cdf0590&gt;
+#&gt; &lt;bytecode: 0x7f97fcb72b80&gt;
 #&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span>, default <span class='op'>=</span> <span class='va'>plu_ral</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; function (x, vector = integer(2), n_fn = NULL, ..., n = length(vector), 
-#&gt;     pl = abs(n) != 1, irregulars = c("moderate", "conservative", 
-#&gt;         "liberal", "none"), replace_n = TRUE) 
+</div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
+#&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
+#&gt;     replace_n = TRUE) 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -434,41 +414,40 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!is.character(x)) {
 #&gt;         rlang::abort("`x` must be a character vector")
 #&gt;     }
-#&gt;     if (length(n) != 1) {
-#&gt;         rlang::abort("`n` must be length one")
-#&gt;     }
-#&gt;     if (!is.numeric(n)) {
-#&gt;         rlang::abort("`n` must be numeric")
-#&gt;     }
-#&gt;     if (length(pl) != 1) {
-#&gt;         rlang::abort("`pl` must be length one")
-#&gt;     }
-#&gt;     if (!is.logical(pl) | is.na(pl)) {
-#&gt;         rlang::abort("`pl` must be TRUE or FALSE")
-#&gt;     }
 #&gt;     if (length(replace_n) != 1) {
 #&gt;         rlang::abort("`replace_n` must be length one")
 #&gt;     }
 #&gt;     if (!is.logical(replace_n) | is.na(replace_n)) {
 #&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
 #&gt;     }
-#&gt;     if (any(nchar(x) &gt; 1)) {
-#&gt;         mat &lt;- stringi::stri_split_boundaries(x, type = "sentence", 
-#&gt;             simplify = TRUE)
-#&gt;     }
-#&gt;     else {
-#&gt;         mat &lt;- matrix(x, ncol = 1)
-#&gt;     }
-#&gt;     start_space &lt;- substr(mat, 1, 1) == " "
-#&gt;     end_space &lt;- substr(mat, nchar(mat), nchar(mat)) == " "
-#&gt;     start_caps &lt;- is_capitalized(mat, strict = TRUE)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     pl &lt;- derive_pl(pl, n, vector)
+#&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- stringi::stri_split_regex(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             simplify = TRUE)
-#&gt;         braced &lt;- stringi::stri_detect_regex(split, paste0("\\{|\\}", 
+#&gt;         sing_split &lt;- t(sing_split)
+#&gt;         braced &lt;- stringi::stri_detect_regex(sing_split, paste0("\\{|\\}", 
 #&gt;             ifelse(replace_n, "|\\bn\\b", "")))
-#&gt;         split[!braced] &lt;- plu_ralize(split[!braced], irregulars = irregulars)
-#&gt;         mat[] &lt;- apply(split, 1, paste, collapse = "")
+#&gt;         plu_split &lt;- sing_split
+#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
+#&gt;             irregulars = irregulars)
+#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
+#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         if (any(removed)) {
+#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- caps[caps %in% removed]
+#&gt;             after_caps &lt;- vapply(caps, function(i) {
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
+#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx[1] + i - 1L
+#&gt;             }, integer(1))
+#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             after_removed &lt;- removed + 1
+#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;                 " "] &lt;- ""
+#&gt;         }
+#&gt;         mat[] &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
 #&gt;         switch(as.character(abs(n)), `1` = "$1", `2` = "$2", 
@@ -482,14 +461,10 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     }
 #&gt;     mat[] &lt;- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", 
 #&gt;         "$1")
-#&gt;     mat[] &lt;- plu_nge(mat, ends = TRUE)
-#&gt;     mat[start_space] &lt;- paste0(" ", mat[start_space])
-#&gt;     mat[end_space] &lt;- paste0(mat[end_space], " ")
-#&gt;     mat[start_caps] &lt;- capitalize(mat[start_caps])
-#&gt;     x[] &lt;- apply(mat, 1, paste, collapse = "")
+#&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdd5fe60218&gt;
+#&gt; &lt;bytecode: 0x7f97fff0c558&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
