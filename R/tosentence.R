@@ -1,3 +1,3 @@
 tosentence <- function(x) {
-  gsub("^([a-z])", "\\U\\1", x, perl = TRUE)
+  gsub("^(.*?)(\\p{L})(.*)$", "\\1\\U\\2\\L\\3", x, perl = TRUE)
 }
