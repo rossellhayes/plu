@@ -43,14 +43,16 @@ The default can be changed by setting \code{options(plu.oxford_comma)}.}
 \item{syndeton}{\lifecycle{deprecated} Whether to place the conjunction
 before the \code{"last"} list items, between \code{"all"} list items, or
 between \code{"none"}.
-Defaults to \code{"last"}.\preformatted{This argument is deprecated. You should set `sep` and `conj` explicitly
-instead of using `syndeton`.
-}}
+Defaults to \code{"last"}.
+
+This argument is deprecated. You should set \code{sep} and \code{conj} explicitly
+instead of using \code{syndeton}.}
 
 \item{fn}{\lifecycle{deprecated} A function to apply to all items in
-the list.\preformatted{This argument is deprecated. You should apply a function to `x` before
-passing it to `plu_stick()`.
-}}
+the list.
+
+This argument is deprecated. You should apply a function to \code{x} before
+passing it to \code{plu_stick()}.}
 
 \item{...}{\lifecycle{deprecated} Additional arguments to \code{fn}.}
 }
