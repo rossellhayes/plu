@@ -65,9 +65,7 @@ plu_ral <- function(
   if (!is.character(x)) {rlang::abort("`x` must be a character vector")}
 
   if (length(replace_n) != 1) {rlang::abort("`replace_n` must be length one")}
-  if (!is.logical(replace_n) | is.na(replace_n)) {
-    rlang::abort("`replace_n` must be TRUE or FALSE")
-  }
+  if (!is_t_or_f(replace_n)) {rlang::abort("`replace_n` must be TRUE or FALSE")}
 
   mat <- matrix(x, nrow = 1)
 
@@ -95,7 +93,8 @@ plu_ral <- function(
 
     # Find where "a" or "an" have been removed
     removed <- which(plu_split == "" & sing_split != "")
-    removed <- removed[removed %% nrow(sing_split) != 0] # Exclude ends of lines
+    # Exclude ends of lines
+    removed <- removed[removed %% nrow(sing_split) != 0]
 
     if (any(removed)) {
       # Capitalize word after removed "A" or "An"
@@ -144,13 +143,6 @@ plu_ral <- function(
   }
 
   mat[] <- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", "$1")
-  # mat[] <- plu_nge(mat, ends = TRUE)
-
-  # Retain spaces at the beginning and end of `x`
-  # mat[substr(x, 1, 1) == " "] <- paste0(" ", mat[substr(x, 1, 1) == " "])
-  # mat[substr(x, nchar(x), nchar(x)) == " "] <- paste0(
-    # mat[substr(x, nchar(x), nchar(x)) == " "], " "
-  # )
 
   x[] <- apply(mat, 2, paste, collapse = "")
   x
@@ -163,10 +155,8 @@ ral <- plu_ral
 
 derive_pl <- function(pl, n, vector) {
   if (!is.null(pl)) {
-    if (length(pl) != 1)              {rlang::abort("`pl` must be length one")}
-    if (!is.logical(pl) || is.na(pl)) {
-      rlang::abort("`pl` must be TRUE or FALSE")
-    }
+    if (length(pl) != 1) {rlang::abort("`pl` must be length one")}
+    if (!is_t_or_f(pl))  {rlang::abort("`pl` must be TRUE or FALSE")}
     return(pl)
   }
 
@@ -194,3 +184,5 @@ derive_n <- function(pl, n, vector) {
 
   1
 }
+
+is_t_or_f <- function(x) {is.logical(x) && !is.na(x)}

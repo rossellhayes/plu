@@ -38,9 +38,7 @@ plu_stick <- function(
   conj <- validate_sep(conj)
 
   if (length(oxford) != 1) {stop("`oxford` must be length one")}
-  if (!is.logical(oxford) || is.na(oxford)) {
-    stop("`oxford` must be TRUE or FALSE")
-  }
+  if (!is_t_or_f(oxford))  {stop("`oxford` must be TRUE or FALSE")}
 
   if (lifecycle::is_present(fn)) {
     lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[1], "(fn = )"))
