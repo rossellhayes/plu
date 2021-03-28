@@ -19,6 +19,9 @@
 #'     instead of using `syndeton`.
 #' @param fn \lifecycle{deprecated} A function to apply to all items in
 #'     the list.
+#'
+#'     This argument is deprecated. You should apply a function to `x` before
+#'     passing it to `plu_stick()`.
 #' @param ... \lifecycle{deprecated} Additional arguments to `fn`.
 #'
 #' @return A character vector of length 1.

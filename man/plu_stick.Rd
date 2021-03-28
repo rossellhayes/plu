@@ -48,7 +48,9 @@ instead of using `syndeton`.
 }}
 
 \item{fn}{\lifecycle{deprecated} A function to apply to all items in
-the list.}
+the list.\preformatted{This argument is deprecated. You should apply a function to `x` before
+passing it to `plu_stick()`.
+}}
 
 \item{...}{\lifecycle{deprecated} Additional arguments to \code{fn}.}
 }
