@@ -1,6 +1,6 @@
 Type: Package
 Package: plu
-Title: Pluralize Phrases
+Title: Dynamically Pluralize Phrases
 Version: 0.2.0.9000
 Authors@R: 
     person(given = "Alexander",
