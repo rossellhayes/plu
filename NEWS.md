@@ -1,5 +1,10 @@
 # plu (development version)
 
+* `plu_ral()` now correctly handles {braced} strings that contain sentence breaks.
+  * Previously, sentence breaks would break the {braced} string and apply normal pluralization to its contents.
+* `plu_ral()` now correctly handles braced pipe sequences when `pl` is set to `FALSE`.
+  * `plu_ral("{singular|plural}", pl = FALSE)` now returns `"singular"` instead of incorrectly returning `"plural"`.
+
 # plu 0.2.0
 
 ## New features

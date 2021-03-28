@@ -51,53 +51,79 @@
 #'
 #' @seealso [plu::ralize()] to convert an English word to its plural form.
 #'
+#' @importFrom rlang %||%
 #' @export
 #'
 #' @example examples/plu_ral.R
 
 plu_ral <- function(
-  x, vector = integer(2), n_fn = NULL, ...,
-  n = length(vector), pl = abs(n) != 1,
+  x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
   replace_n = TRUE
 ) {
   if (!length(x))       {return(character(0))}
   if (!is.character(x)) {rlang::abort("`x` must be a character vector")}
 
-  if (length(n) != 1) {rlang::abort("`n` must be length one")}
-  if (!is.numeric(n)) {rlang::abort("`n` must be numeric")}
-
-  if (length(pl) != 1)             {rlang::abort("`pl` must be length one")}
-  if (!is.logical(pl) | is.na(pl)) {rlang::abort("`pl` must be TRUE or FALSE")}
-
   if (length(replace_n) != 1) {rlang::abort("`replace_n` must be length one")}
   if (!is.logical(replace_n) | is.na(replace_n)) {
     rlang::abort("`replace_n` must be TRUE or FALSE")
   }
 
-  if (any(nchar(x) > 1)) {
-    mat <- stringi::stri_split_boundaries(x, type = "sentence", simplify = TRUE)
-  } else {
-    mat <- matrix(x, ncol = 1)
-  }
+  mat <- matrix(x, nrow = 1)
 
-  start_space <- substr(mat, 1, 1) == " "
-  end_space   <- substr(mat, nchar(mat), nchar(mat)) == " "
-  start_caps  <- is_capitalized(mat, strict = TRUE)
+  pl <- derive_pl(pl, n, vector)
+  n  <- derive_n(pl, n, vector)
 
   if (pl) {
-    split <- stringi::stri_split_regex(
+    # Split strings into individual words and punctuation marks
+    sing_split <- stringi::stri_split_regex(
       mat,
       "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
       simplify = TRUE
     )
+    sing_split <- t(sing_split)
 
-    braced  <- stringi::stri_detect_regex(
-      split, paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", ""))
+    # Pluralize words that aren't wrapped in {braces}
+    braced <- stringi::stri_detect_regex(
+      sing_split, paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", ""))
     )
 
-    split[!braced] <- plu_ralize(split[!braced], irregulars = irregulars)
-    mat[]          <- apply(split, 1, paste, collapse = "")
+    plu_split          <- sing_split
+    plu_split[!braced] <- plu_ralize(
+      sing_split[!braced], irregulars = irregulars
+    )
+
+    # Find where "a" or "an" have been removed
+    removed <- which(plu_split == "" & sing_split != "")
+    removed <- removed[removed %% nrow(sing_split) != 0] # Exclude ends of lines
+
+    if (any(removed)) {
+      # Capitalize word after removed "A" or "An"
+      caps <- which(is_capitalized(sing_split))
+      caps <- caps[caps %in% removed]
+
+      after_caps <- vapply(
+        caps,
+        function(i) {
+          idx <- which(
+            grepl(
+              "[[:alpha:]]",
+              plu_split[seq(i, (i %/% nrow(plu_split) + 1) * nrow(plu_split))]
+            )
+          )
+          idx[1] + i - 1L
+        },
+        integer(1)
+      )
+
+      plu_split[after_caps] <- capitalize(plu_split[after_caps])
+
+      # Remove spaces after removed "a" or "an"
+      after_removed <- removed + 1
+      plu_split[after_removed][plu_split[after_removed] == " "] <- ""
+    }
+
+    mat[] <- apply(plu_split, 2, paste, collapse = "")
   }
 
   mat[] <- stringi::stri_replace_all_regex(
@@ -118,13 +144,15 @@ plu_ral <- function(
   }
 
   mat[] <- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", "$1")
-  mat[] <- plu_nge(mat, ends = TRUE)
+  # mat[] <- plu_nge(mat, ends = TRUE)
 
-  mat[start_space] <- paste0(" ", mat[start_space])
-  mat[end_space]   <- paste0(mat[end_space], " ")
-  mat[start_caps]  <- capitalize(mat[start_caps])
+  # Retain spaces at the beginning and end of `x`
+  # mat[substr(x, 1, 1) == " "] <- paste0(" ", mat[substr(x, 1, 1) == " "])
+  # mat[substr(x, nchar(x), nchar(x)) == " "] <- paste0(
+    # mat[substr(x, nchar(x), nchar(x)) == " "], " "
+  # )
 
-  x[] <- apply(mat, 1, paste, collapse = "")
+  x[] <- apply(mat, 2, paste, collapse = "")
   x
 }
 
@@ -132,3 +160,37 @@ plu_ral <- function(
 #' @export
 
 ral <- plu_ral
+
+derive_pl <- function(pl, n, vector) {
+  if (!is.null(pl)) {
+    if (length(pl) != 1)              {rlang::abort("`pl` must be length one")}
+    if (!is.logical(pl) || is.na(pl)) {
+      rlang::abort("`pl` must be TRUE or FALSE")
+    }
+    return(pl)
+  }
+
+  if (!is.null(n))      {return(abs(n) != 1)}
+  if (!is.null(vector)) {return(abs(length(vector)) != 1)}
+  TRUE
+}
+
+derive_n <- function(pl, n, vector) {
+  if (!is.null(n)) {
+    if (length(n) != 1)     {rlang::abort("`n` must be length one")}
+    if (!is.numeric(n))     {rlang::abort("`n` must be numeric")}
+    if (pl  && abs(n) == 1) {return(2)}
+    if (!pl && abs(n) != 1) {return(1)}
+    return(n)
+  }
+
+  if (!is.null(vector)) {
+    if (pl  && abs(length(vector)) == 1) {return(2)}
+    if (!pl && abs(length(vector)) != 1) {return(1)}
+    return(length(vector))
+  }
+
+  if (pl) {return(2)}
+
+  1
+}

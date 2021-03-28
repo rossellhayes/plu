@@ -85,6 +85,9 @@ test_that("pipe works", {
   expect_equal(plu_ral("{single|dual|plural} number", two), "dual numbers")
   expect_equal(plu_ral("{single|dual|plural} number", fifty), "plural numbers")
 
+  expect_equal(plu_ral("{single|plural} number", pl = FALSE), "single number")
+  expect_equal(plu_ral("{single|plural} number", pl = TRUE),  "plural numbers")
+
   expect_equal(plu_ral("number{1|2}",   one),   "number1")
   expect_equal(plu_ral("number{|2}",    one),   "number")
   expect_equal(plu_ral("number{1|2}",   two),   "number2")
@@ -107,6 +110,9 @@ test_that("capitalization", {
   expect_equal(plu_ral("A word"), "Words")
   expect_equal(plu_ral("! A word"), "! Words")
   expect_equal(plu_ral("A test! A test! A test!"), "Tests! Tests! Tests!")
+
+  expect_equal(plu_ral("{ |\n}", pl = FALSE), " ")
+  expect_equal(plu_ral("{ |\n}", pl = TRUE),  "\n")
 })
 
 test_that("non-words", {
