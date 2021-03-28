@@ -7,22 +7,22 @@
 \usage{
 plu_ral(
   x,
-  vector = integer(2),
+  vector = NULL,
   n_fn = NULL,
   ...,
-  n = length(vector),
-  pl = abs(n) != 1,
+  n = NULL,
+  pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
   replace_n = TRUE
 )
 
 ral(
   x,
-  vector = integer(2),
+  vector = NULL,
   n_fn = NULL,
   ...,
-  n = length(vector),
-  pl = abs(n) != 1,
+  n = NULL,
+  pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
   replace_n = TRUE
 )
