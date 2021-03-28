@@ -5,6 +5,13 @@ test_that("is_capital", {
   expect_equal(is_capital(1),   NA)
 })
 
+test_that("is_capital strict", {
+  expect_equal(is_capital("A", strict = TRUE), TRUE)
+  expect_equal(is_capital("a", strict = TRUE), FALSE)
+  expect_equal(is_capital("?", strict = TRUE), FALSE)
+  expect_equal(is_capital(1,   strict = TRUE), FALSE)
+})
+
 test_that("vectorized is_capital", {
   expect_equal(is_capital(LETTERS), rep(TRUE,  26))
   expect_equal(is_capital(letters), rep(FALSE, 26))

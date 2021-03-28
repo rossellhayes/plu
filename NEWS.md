@@ -6,8 +6,10 @@
   * Previously, sentence breaks would break the {braced} string and apply normal pluralization to its contents.
 * `plu_ral()` now correctly handles {braced|pipe} sequences when `pl` is set to `FALSE`.
   * `plu_ral("{singular|plural}", pl = FALSE)` now returns `"singular"` instead of incorrectly returning `"plural"`.
-* `plu_ralize()` now correctly handled ALL-CAPS words where their lowercase equivalent has an irregular plural.
+* `plu_ralize()` now correctly handles ALL-CAPS words where their lowercase equivalent has an irregular plural.
   * `plu_ralize("CHILD")` now returns `"CHILDs"` instead of incorrectly returning `"Children"`.
+* `is_capital(strict = TRUE)` now correctly handles non-character inputs.
+  * `is_capital(1, strict = TRUE)` no returns `FALSE` instead of incorrectly returning `NA`.
 
 # plu 0.2.0
 

@@ -40,7 +40,7 @@ capitalize <- function(x) {
 #' @export
 
 is_capital <- function(x, strict = FALSE) {
-  if (!is.character(x)) {return(rep(NA, length(x)))}
+  if (!is.character(x)) {return(rep.int(ifelse(strict, FALSE, NA), length(x)))}
 
   x     <- suppressWarnings(do.call(rbind, strsplit(x, "")))
   caps  <- stringi::stri_trans_toupper(x)
@@ -66,13 +66,13 @@ is_capitalized <- function(x, strict = FALSE) {
 }
 
 lgl_collapse <- function(x) {
-  if (any(is.na(x)))  {return(NA)}
-  if (all(x))         {return(TRUE)}
-  if (all(!x))        {return(FALSE)}
+  if (anyNA(x)) {return(NA)}
+  if (all(x))   {return(TRUE)}
+  if (all(!x))  {return(FALSE)}
   NA
 }
 
 lgl_collapse_strict <- function(x) {
-  if (any(is.na(x))) {return(FALSE)}
+  if (anyNA(x)) {return(FALSE)}
   all(x)
 }
