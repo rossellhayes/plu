@@ -4,8 +4,10 @@ test_that("simple pluralization", {
 
 test_that("character vector pluralization", {
   expect_equal(plu_ralize(c("word", "group")), c("words", "groups"))
+
   expect_equal(
-    plu_ralize(c("word", "worry", "fox")), c("words", "worries", "foxes")
+    plu_ralize(c("word", "worry", "fox", "soliloquy", "batch", "TTY", "day")),
+    c("words", "worries", "foxes", "soliloquies", "batches", "TTYs", "days")
   )
 })
 
@@ -22,9 +24,15 @@ test_that("default irregular pluralization", {
 
 test_that("capitalized irregular pluralization", {
   withr::local_options(plu.irregulars = NULL)
+
   expect_equal(
     plu_ralize(c("Formula", "Person", "Child")),
     c("Formulas", "People", "Children")
+  )
+
+  expect_equal(
+    plu_ralize(c("FORMULA", "PERSON", "CHILD")),
+    c("FORMULAs", "PERSONs", "CHILDs")
   )
 })
 
