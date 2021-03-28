@@ -8,17 +8,17 @@ Authors@R:
            role = c("aut", "cre", "cph"),
            email = "alexander@rossellhayes.com",
            comment = c(ORCID = "0000-0001-9412-0457"))
-Description: Converts English phrases to singular or plural form
-    based on the length of an associated vector.  Contains helper
-    functions to create natural language lists from vectors and to include
-    the length of a vector in natural language.
+Description: Converts English phrases to singular or plural form based on
+    the length of an associated vector.  Contains helper functions to
+    create natural language lists from vectors and to include the length
+    of a vector in natural language.
 License: MIT + file LICENSE
-URL: https://plu.rossellhayes.com,
-    https://github.com/rossellhayes/plu
+URL: https://plu.rossellhayes.com, https://github.com/rossellhayes/plu
 BugReports: https://github.com/rossellhayes/plu/issues
 Depends:
     R (>= 2.10)
 Imports: 
+    backports,
     lifecycle,
     rlang,
     stringi
