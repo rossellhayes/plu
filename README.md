@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/plu?color=brightgreen)](https://cran.r-project.org/package=plu)
-[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://cran.r-project.org/web/licenses/MIT)
 [![R build
@@ -79,7 +79,7 @@ paste(
   ),
   plu::ral("is {negative}.", ints[ints < 0])
 )
-#> [1] "All inputs must be non-negative. `-1`, `-5`, `-4`, `-5`, `-7` and 3 more integers are negative."
+#> [1] "All inputs must be non-negative. `-1`, `-9`, `-5`, `-8`, `-2` and 6 more integers are negative."
 ```
 
 ## Credits
