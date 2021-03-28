@@ -31,7 +31,7 @@ ral(
 \item{x}{An English word or phrase to be pluralized.
 See details for special sequences which are handled differently.}
 
-\item{vector}{A vector whose length determines \code{n}. Defaults to length 2.}
+\item{vector}{A vector whose length determines \code{n}. Defaults to \code{NULL}.}
 
 \item{n_fn}{A function to apply to the output of the special sequence
 \code{"n"}. See examples.
@@ -40,7 +40,8 @@ Defaults to \code{identity}, which returns \code{n} unchanged.}
 \item{...}{Additional arguments passed to the function \code{n_fn}.}
 
 \item{n}{The number which will determine the plurality of \code{x}.
-Defaults to \code{length(n)}. If specified, overrides \code{vector}.}
+Defaults to \code{length(vector)}.
+If specified, overrides \code{vector}.}
 
 \item{pl}{A logical value indicating whether to use the plural form (if
 \code{TRUE}) or the singular form (if \code{FALSE}) of \code{x}.

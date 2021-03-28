@@ -2,13 +2,14 @@
 #'
 #' @param x An English word or phrase to be pluralized.
 #'     See details for special sequences which are handled differently.
-#' @param vector A vector whose length determines `n`. Defaults to length 2.
+#' @param vector A vector whose length determines `n`. Defaults to `NULL`.
 #' @param n_fn A function to apply to the output of the special sequence
 #'     `"n"`. See examples.
 #'     Defaults to `identity`, which returns `n` unchanged.
 #' @param ... Additional arguments passed to the function `n_fn`.
 #' @param n The number which will determine the plurality of `x`.
-#'     Defaults to `length(n)`. If specified, overrides `vector`.
+#'     Defaults to `length(vector)`.
+#'     If specified, overrides `vector`.
 #' @param pl A logical value indicating whether to use the plural form (if
 #'     `TRUE`) or the singular form (if `FALSE`) of `x`.
 #'     Defaults to `FALSE` when `n` is `1` or `-1` and `TRUE` for all other
@@ -160,9 +161,12 @@ derive_pl <- function(pl, n, vector) {
     return(pl)
   }
 
-  if (!is.null(n))      {return(abs(n) != 1)}
-  if (!is.null(vector)) {return(abs(length(vector)) != 1)}
-  TRUE
+  if (!is.null(n)) {
+    if (!is.numeric(n)) {rlang::abort("`n` must be numeric")}
+    return(abs(n) != 1)
+  }
+
+  abs(length(vector)) != 1
 }
 
 derive_n <- function(pl, n, vector) {
@@ -174,15 +178,9 @@ derive_n <- function(pl, n, vector) {
     return(n)
   }
 
-  if (!is.null(vector)) {
-    if (pl  && abs(length(vector)) == 1) {return(2)}
-    if (!pl && abs(length(vector)) != 1) {return(1)}
-    return(length(vector))
-  }
-
-  if (pl) {return(2)}
-
-  1
+  if (pl  && abs(length(vector)) == 1) {return(2)}
+  if (!pl && abs(length(vector)) != 1) {return(1)}
+  length(vector)
 }
 
 is_t_or_f <- function(x) {is.logical(x) && !is.na(x)}

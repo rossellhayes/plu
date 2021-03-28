@@ -20,6 +20,20 @@ test_that("vector", {
   expect_equal(plu_ral("word", two), "words")
 })
 
+test_that("vector n pl disagreement", {
+  expect_equal(plu_ral("word", n = 1, pl = TRUE),  "words")
+  expect_equal(plu_ral("word", n = 2, pl = FALSE), "word")
+
+  expect_equal(plu_ral("word", one, pl = TRUE),  "words")
+  expect_equal(plu_ral("word", two, pl = FALSE), "word")
+
+  expect_equal(plu_ral("word", one, n = 2), "words")
+  expect_equal(plu_ral("word", two, n = 1), "word")
+
+  expect_equal(plu_ral("word", one, n = 2, pl = FALSE), "word")
+  expect_equal(plu_ral("word", two, n = 1, pl = TRUE),  "words")
+})
+
 test_that("spaces", {
   expect_equal(plu_ral("word "), "words ")
   expect_equal(plu_ral(" word"), " words")
@@ -37,8 +51,8 @@ test_that("vector", {
   )
 
   expect_equal(
-    plu_ral(c("person ", " cactus", "attorney {general}", "", "{1|2|3}")),
-    c("people ", " cacti", "attorneys general", "", "2")
+    plu_ral(c("person ", " cactus", "attorney {general}", "", "{1|2|0}")),
+    c("people ", " cacti", "attorneys general", "", "0")
   )
 
   expect_equal(
@@ -126,6 +140,7 @@ test_that("early return", {
 test_that("errors", {
   expect_error(plu_ral(integer(1)))
   expect_error(plu_ral("word", n = character(1)))
+  expect_error(plu_ral("word", pl = TRUE, n = character(1)))
   expect_error(plu_ral("word", n = numeric(2)))
   expect_error(plu_ral("word", pl = NA))
   expect_error(plu_ral("word", pl = numeric(1)))
