@@ -127,6 +127,11 @@
 <a href="#plu-development-version" class="anchor"></a>plu (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li>Modest speed improvements to <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.
+<ul>
+<li>This propagates to <code><a href="../reference/plu_ral.html">plu_ral()</a></code> and <code><a href="../reference/plu_more.html">plu_more()</a></code>, which use <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> internally.</li>
+</ul>
+</li>
 <li>
 <code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles {braced} strings that contain sentence breaks.
 <ul>
@@ -138,6 +143,13 @@
 <ul>
 <li>
 <code><a href="../reference/plu_ral.html">plu_ral("{singular|plural}", pl = FALSE)</a></code> now returns <code>"singular"</code> instead of incorrectly returning <code>"plural"</code>.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> now correctly handled ALL-CAPS words where their lowercase equivalent has an irregular plural.
+<ul>
+<li>
+<code><a href="../reference/plu_ralize.html">plu_ralize("CHILD")</a></code> now returns <code>"CHILDs"</code> instead of incorrectly returning <code>"Children"</code>.</li>
 </ul>
 </li>
 </ul>
