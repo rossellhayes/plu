@@ -2,11 +2,14 @@
 % Please edit documentation in R/is_capital.R
 \name{capitalize}
 \alias{capitalize}
+\alias{plu_capitalize}
 \alias{is_capital}
 \alias{is_capitalized}
 \title{Capitalization}
 \usage{
 capitalize(x)
+
+plu_capitalize(x)
 
 is_capital(x, strict = FALSE)
 
@@ -38,9 +41,7 @@ unicase language like Arabic, Chinese or Hindi).
 
 \code{is_capitalized()} returns \code{\link{TRUE}} if the first alphabetic character in a
 string is capital, \code{\link{FALSE}} if the first alphabetic character is lowercase,
-and \code{\link{NA}} if there are no alphabetic characters or the first alphabetic
-character is caseless (i.e. from a unicase language like Arabic, Chinese
-or Hindi).
+and \code{\link{NA}} if there are no alphabetic characters.
 }
 \examples{
 capitalize(c("word", "a whole phrase"))

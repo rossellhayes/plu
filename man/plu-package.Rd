@@ -4,7 +4,7 @@
 \name{plu-package}
 \alias{plu}
 \alias{plu-package}
-\title{plu: Pluralize Phrases}
+\title{plu: Dynamically Pluralize Phrases}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 

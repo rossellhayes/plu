@@ -10,9 +10,7 @@
 #'
 #' `is_capitalized()` returns [`TRUE`] if the first alphabetic character in a
 #' string is capital, [`FALSE`] if the first alphabetic character is lowercase,
-#' and [`NA`] if there are no alphabetic characters or the first alphabetic
-#' character is caseless (i.e. from a unicase language like Arabic, Chinese
-#' or Hindi).
+#' and [`NA`] if there are no alphabetic characters.
 #'
 #' @param x A character vector.
 #' @param strict If strict is `TRUE`, `is_capital()` and `is_capitalized()`
@@ -30,38 +28,60 @@
 #' @example examples/is_capital.R
 
 capitalize <- function(x) {
-  first_letter       <- stringi::stri_extract_first_regex(x, "[:alpha:]")
-  capitalized_letter <- stringi::stri_trans_toupper(first_letter)
-
-  stringi::stri_replace_first_regex(x, "[:alpha:]", capitalized_letter)
+  gsub("^(.*?)(\\p{L})(.*)$", "\\1\\U\\2\\E\\3", x, perl = TRUE)
 }
 
 #' @rdname capitalize
 #' @export
 
+plu_capitalize <- capitalize
+
+#' @rdname capitalize
+#' @export
+
 is_capital <- function(x, strict = FALSE) {
-  if (!is.character(x)) {return(rep.int(ifelse(strict, FALSE, NA), length(x)))}
+  strict_na <- ifelse(strict, FALSE, NA)
 
-  x     <- suppressWarnings(do.call(rbind, strsplit(x, "")))
-  caps  <- stringi::stri_trans_toupper(x)
-  lower <- stringi::stri_trans_tolower(x)
+  if (!is.character(x)) {return(rep.int(strict_na, length(x)))}
 
-  result                <- matrix(nrow = nrow(x), ncol = ncol(x))
-  result[]              <- x == caps
-  result[caps == lower] <- NA
+  split <- plu_split(x, "")
+  chars <- unique(c(split))
+  match <- match(split, chars)
 
-  if (strict) {
-    return(apply(result, 1, lgl_collapse_strict))
-  }
+  caps   <- split
+  caps[] <- vapply(
+    chars, function(x) {gsub("(.*)", "\\U\\1", x, perl = TRUE)}, character(1)
+  )[match]
 
-  apply(result, 1, lgl_collapse)
+  lower   <- split
+  lower[] <- vapply(
+    chars, function(x) {gsub("(.*)", "\\L\\1", x, perl = TRUE)}, character(1)
+  )[match]
+
+  result                <- split
+  mode(result)          <- "logical"
+  result[]              <- split == caps
+  result[caps == lower] <- strict_na
+
+  result <- lapply(
+    seq_len(ncol(result)), function(i) {result[, i][split[, i] != ""]}
+  )
+  result <- vapply(
+    result, ifelse(strict, lgl_collapse_strict, lgl_collapse), logical(1)
+  )
+
+  out          <- x
+  mode(out)    <- "logical"
+  out          <- result
+  out[x == ""] <- strict_na
+  out
 }
 
 #' @rdname capitalize
 #' @export
 
 is_capitalized <- function(x, strict = FALSE) {
-  first_letter <- stringi::stri_extract_first_regex(x, "[:alpha:]")
+  first_letter <- gsub("^.*?(\\p{L}).*$", "\\1", x, perl = TRUE)
   is_capital(first_letter, strict = strict)
 }
 
@@ -73,6 +93,5 @@ lgl_collapse <- function(x) {
 }
 
 lgl_collapse_strict <- function(x) {
-  if (anyNA(x)) {return(FALSE)}
-  all(x)
+  length(x) && !anyNA(x) && all(x)
 }
