@@ -37,3 +37,19 @@ paste("The caterpillar ate", plu::ral("n delicacy", later))
 
 paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
 paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
+
+# Special brace strings
+plu::ral("{one|two}", n = 1)
+plu::ral("{one|two}", n = 2)
+
+plu::ral("{one|two|more}", n = 1)
+plu::ral("{one|two|more}", n = 2)
+plu::ral("{one|two|more}", n = 3)
+plu::ral("{one|two|more}", n = 50)
+
+plu::ral("{one|two|three|more}", n = 1)
+plu::ral("{one|two|three|more}", n = 2)
+plu::ral("{one|two|three|more}", n = 3)
+plu::ral("{one|two|three|more}", n = 50)
+plu::ral("{one|two|three|more}", n = 0)
+plu::ral("{one|two|three|more}", n = 1.5)

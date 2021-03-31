@@ -74,12 +74,14 @@
 #'
 #' - Strings between braces separated by a pipe will be treated as a custom
 #' plural (`"{a|some} word"` to "a word", "some words").
-#'     - Three strings separated by pipes will be treated as a singular, dual,
-#'     and plural form (`"{the|both|all} word"` to "the word" (1),
-#'     "both words" (2), "all words" (3+)).
+#'     - More than two strings separated by pipes will be treated as singular,
+#'     dual, trial, ... and plural forms. For example, `"{the|both|all} word"`
+#'     to "the word" (1), "both words" (2), "all words" (3+).
+#'     - See examples for more.
 #'
-#' - Any other string between braces will be treated as invariant
-#' (`"attorney {general}"` to "attorneys general").
+#' - Any other string between braces without a pipe will be treated as
+#' invariant. For example, `"attorney {general}"` to "attorneys general" (notice
+#' "general" is not pluralized).
 #'
 #' @return The character vector `x` altered to match the number of `n`
 #'
@@ -100,37 +102,39 @@ plu_ral <- function(
   assert_length_1(replace_n)
   assert_t_or_f(replace_n)
 
-  mat <- matrix(x, nrow = 1)
-
   pl <- derive_pl(pl, n, vector)
   n  <- derive_n(pl, n, vector)
 
+  mat <- matrix(x, nrow = 1)
+
+  # Split strings into individual words and punctuation marks
+  split_in <- plu_split(
+    mat,
+    "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
+    perl = TRUE
+  )
+
+  braced <- grepl("\\{.*\\}", split_in)
+
+  if (replace_n) {replace_n <- grepl("\\bn\\b", split_in)}
+  n_fn <- get_fun(n_fn)
+
+  split_out <- split_in
+
   if (pl) {
-    # Split strings into individual words and punctuation marks
-    sing_split <- plu_split(
-      mat,
-      "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
-      perl = TRUE
-    )
-
     # Pluralize words that aren't wrapped in {braces}
-    braced <- grepl(
-      paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", "")), sing_split
-    )
-
-    plu_split          <- sing_split
-    plu_split[!braced] <- plu_ralize(
-      sing_split[!braced], irregulars = irregulars
+    split_out[!braced & !replace_n] <- plu_ralize(
+      split_in[!braced & !replace_n], irregulars = irregulars
     )
 
     # Find where "a" or "an" have been removed
-    removed <- which(plu_split == "" & sing_split != "")
+    removed <- which(split_out == "" & split_in != "")
     # Exclude ends of lines
-    removed <- removed[removed %% nrow(sing_split) != 0]
+    removed <- removed[removed %% nrow(split_out) != 0]
 
     if (any(removed)) {
       # Capitalize word after removed "A" or "An"
-      caps <- which(is_capitalized(sing_split))
+      caps <- which(is_capitalized(split_in))
       caps <- caps[caps %in% removed]
 
       after_caps <- vapply(
@@ -139,7 +143,7 @@ plu_ral <- function(
           idx <- which(
             grepl(
               "[[:alpha:]]",
-              plu_split[seq(i, (i %/% nrow(plu_split) + 1) * nrow(plu_split))]
+              split_out[seq(i, (i %/% nrow(split_out) + 1) * nrow(split_out))]
             )
           )
           idx[1] + i - 1L
@@ -147,35 +151,21 @@ plu_ral <- function(
         integer(1)
       )
 
-      plu_split[after_caps] <- capitalize(plu_split[after_caps])
+      split_out[after_caps] <- capitalize(split_out[after_caps])
 
       # Remove spaces after removed "a" or "an"
       after_removed <- removed + 1
-      plu_split[after_removed][plu_split[after_removed] == " "] <- ""
+      split_out[after_removed][split_out[after_removed] == " "] <- ""
     }
-
-    mat[] <- apply(plu_split, 2, paste, collapse = "")
   }
 
+  # Select appropriate option for words wrapped in braces
+  split_out[braced] <- pluralize_braces(split_out[braced], n)
 
-  mat[] <- gsub(
-    "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
-    switch(as.character(abs(n)), "1" = "\\1", "2" = "\\2", "\\3"),
-    mat
-  )
+  # replace "n" with `n`
+  split_out[replace_n] <- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
 
-  mat[] <- gsub(
-    "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
-    ifelse(abs(n) == 1, "\\1", "\\2"),
-    mat
-  )
-
-  if (replace_n) {
-    n_fn  <- get_fun(n_fn)
-    mat[] <- gsub("\\bn\\b", n_fn(n, ...), mat)
-  }
-
-  mat[] <- gsub("\\{([^{}]*)\\}", "\\1", mat)
+  mat[] <- apply(split_out, 2, paste, collapse = "")
 
   x[] <- apply(mat, 2, paste, collapse = "")
   x
@@ -214,4 +204,22 @@ derive_n <- function(pl, n, vector) {
   if (pl  && abs(length(vector)) == 1) {return(2)}
   if (!pl && abs(length(vector)) != 1) {return(1)}
   length(vector)
+}
+
+pluralize_braces <- function(x, n) {
+  brace_list <- list(
+    pre = sub("(?s)(^.*?)\\{.*$",    "\\1", x, perl = TRUE),
+    mid = sub("(?s)^.*?\\{(.*?)\\}", "\\1", x, perl = TRUE)
+  )
+
+  brace_list$mid <- vapply(
+    strsplit(brace_list$mid, "\\|"),
+    function(x) {
+      if (abs(n) %in% seq_along(x)) {return(x[abs(n)])}
+      x[length(x)]
+    },
+    character(1)
+  )
+
+  paste0(brace_list$pre, brace_list$mid)
 }

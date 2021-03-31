@@ -76,11 +76,13 @@ test_that("vector", {
 })
 
 test_that("punctuation", {
-  expect_equal(plu_ral("This is a word."), "These are words.")
+  expect_equal(plu_ral("This is a word."),    "These are words.")
   expect_equal(plu_ral("This isn't a word."), "These aren't words.")
-  expect_equal(plu_ral("Is he a low-life?"), "Are they low-lifes?")
+  expect_equal(plu_ral("Is he a low-life?"),  "Are they low-lifes?")
+  expect_equal(plu_ral("sir/madam"),          "sirs/madams")
   expect_equal(
-    plu_ral("A Hispanic/Latino is a voter!"), "Hispanics/Latinos are voters!"
+    plu_ral(c("He's a do-gooder", "He does {good}")),
+    c("They're do-gooders", "They do good")
   )
 })
 
@@ -113,6 +115,31 @@ test_that("pipe works", {
   expect_equal(plu_ral("number{|2}",    one),   "number")
   expect_equal(plu_ral("number{1|2}",   two),   "number2")
   expect_equal(plu_ral("number{1|2|3}", fifty), "number3")
+})
+
+test_that("arbitrary length pipe", {
+  expect_equal(plu_ral("{one|two|three|more}", n =   1), "one")
+  expect_equal(plu_ral("{one|two|three|more}", n =  -1), "one")
+  expect_equal(plu_ral("{one|two|three|more}", n =   2), "two")
+  expect_equal(plu_ral("{one|two|three|more}", n =  -2), "two")
+  expect_equal(plu_ral("{one|two|three|more}", n =   3), "three")
+  expect_equal(plu_ral("{one|two|three|more}", n =  -3), "three")
+  expect_equal(plu_ral("{one|two|three|more}", n =   4), "more")
+  expect_equal(plu_ral("{one|two|three|more}", n =  -4), "more")
+  expect_equal(plu_ral("{one|two|three|more}", n =  50), "more")
+  expect_equal(plu_ral("{one|two|three|more}", n = 0.5), "more")
+
+  x <- c("{one}", "{one|two}", "{one|two|three|more}")
+  expect_equal(plu_ral(x, n =   1), c("one", "one", "one"))
+  expect_equal(plu_ral(x, n =  -1), c("one", "one", "one"))
+  expect_equal(plu_ral(x, n =   2), c("one", "two", "two"))
+  expect_equal(plu_ral(x, n =  -2), c("one", "two", "two"))
+  expect_equal(plu_ral(x, n =   3), c("one", "two", "three"))
+  expect_equal(plu_ral(x, n =  -3), c("one", "two", "three"))
+  expect_equal(plu_ral(x, n =   4), c("one", "two", "more"))
+  expect_equal(plu_ral(x, n =  -4), c("one", "two", "more"))
+  expect_equal(plu_ral(x, n =  50), c("one", "two", "more"))
+  expect_equal(plu_ral(x, n = 0.5), c("one", "two", "more"))
 })
 
 test_that("number", {

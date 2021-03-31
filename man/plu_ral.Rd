@@ -117,12 +117,14 @@ number in \code{n}.
 \item Strings between braces separated by a pipe will be treated as a custom
 plural (\code{"{a|some} word"} to "a word", "some words").
 \itemize{
-\item Three strings separated by pipes will be treated as a singular, dual,
-and plural form (\code{"{the|both|all} word"} to "the word" (1),
-"both words" (2), "all words" (3+)).
+\item More than two strings separated by pipes will be treated as singular,
+dual, trial, ... and plural forms. For example, \code{"{the|both|all} word"}
+to "the word" (1), "both words" (2), "all words" (3+).
+\item See examples for more.
 }
-\item Any other string between braces will be treated as invariant
-(\code{"attorney {general}"} to "attorneys general").
+\item Any other string between braces without a pipe will be treated as
+invariant. For example, \code{"attorney {general}"} to "attorneys general" (notice
+"general" is not pluralized).
 }
 }
 
@@ -166,6 +168,22 @@ paste("The caterpillar ate", plu::ral("n delicacy", later))
 
 paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
 paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
+
+# Special brace strings
+plu::ral("{one|two}", n = 1)
+plu::ral("{one|two}", n = 2)
+
+plu::ral("{one|two|more}", n = 1)
+plu::ral("{one|two|more}", n = 2)
+plu::ral("{one|two|more}", n = 3)
+plu::ral("{one|two|more}", n = 50)
+
+plu::ral("{one|two|three|more}", n = 1)
+plu::ral("{one|two|three|more}", n = 2)
+plu::ral("{one|two|three|more}", n = 3)
+plu::ral("{one|two|three|more}", n = 50)
+plu::ral("{one|two|three|more}", n = 0)
+plu::ral("{one|two|three|more}", n = 1.5)
 }
 \seealso{
 \code{\link[=plu_ralize]{plu_ralize()}} to convert an English word to its
