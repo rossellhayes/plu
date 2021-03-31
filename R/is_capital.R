@@ -42,25 +42,23 @@ plu_capitalize <- capitalize
 is_capital <- function(x, strict = FALSE) {
   strict_na <- ifelse(strict, FALSE, NA)
 
-  if (!is.character(x)) {return(rep.int(strict_na, length(x)))}
+  if (!is.character(x)) {
+    result      <- rep.int(strict_na, length(x))
+    dim(result) <- dim(x)
+    return(result)
+  }
 
   split <- plu_split(x, "")
   chars <- unique(c(split))
   match <- match(split, chars)
 
-  caps   <- split
-  caps[] <- vapply(
-    chars, function(x) {gsub("(.*)", "\\U\\1", x, perl = TRUE)}, character(1)
-  )[match]
-
+  caps    <- split
+  caps[]  <- toupper(chars)[match]
   lower   <- split
-  lower[] <- vapply(
-    chars, function(x) {gsub("(.*)", "\\L\\1", x, perl = TRUE)}, character(1)
-  )[match]
+  lower[] <- tolower(chars)[match]
 
-  result                <- split
-  mode(result)          <- "logical"
-  result[]              <- split == caps
+  result                <- split == caps
+  dim(result)           <- dim(split)
   result[caps == lower] <- strict_na
 
   result <- lapply(
@@ -70,11 +68,9 @@ is_capital <- function(x, strict = FALSE) {
     result, ifelse(strict, lgl_collapse_strict, lgl_collapse), logical(1)
   )
 
-  out          <- x
-  mode(out)    <- "logical"
-  out          <- result
-  out[x == ""] <- strict_na
-  out
+  dim(result)     <- dim(x)
+  result[x == ""] <- strict_na
+  result
 }
 
 #' @rdname capitalize
