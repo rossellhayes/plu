@@ -52,9 +52,7 @@
 #'
 #' @seealso [plu::ralize()] to convert an English word to its plural form.
 #'
-#' @importFrom rlang %||%
 #' @export
-#'
 #' @example examples/plu_ral.R
 
 plu_ral <- function(
@@ -62,11 +60,11 @@ plu_ral <- function(
   irregulars = c("moderate", "conservative", "liberal", "none"),
   replace_n = TRUE
 ) {
-  if (!length(x))       {return(character(0))}
-  if (!is.character(x)) {rlang::abort("`x` must be a character vector")}
+  if (!length(x)) {return(character(0))}
+  assert_type(x, "character")
 
-  if (length(replace_n) != 1) {rlang::abort("`replace_n` must be length one")}
-  if (!is_t_or_f(replace_n)) {rlang::abort("`replace_n` must be TRUE or FALSE")}
+  assert_length_1(replace_n)
+  assert_t_or_f(replace_n)
 
   mat <- matrix(x, nrow = 1)
 
@@ -156,13 +154,14 @@ ral <- plu_ral
 
 derive_pl <- function(pl, n, vector) {
   if (!is.null(pl)) {
-    if (length(pl) != 1) {rlang::abort("`pl` must be length one")}
-    if (!is_t_or_f(pl))  {rlang::abort("`pl` must be TRUE or FALSE")}
+    assert_length_1(pl)
+    assert_t_or_f(pl)
     return(pl)
   }
 
   if (!is.null(n)) {
-    if (!is.numeric(n)) {rlang::abort("`n` must be numeric")}
+    assert_length_1(n)
+    assert_type(n, "numeric")
     return(abs(n) != 1)
   }
 
@@ -171,8 +170,8 @@ derive_pl <- function(pl, n, vector) {
 
 derive_n <- function(pl, n, vector) {
   if (!is.null(n)) {
-    if (length(n) != 1)     {rlang::abort("`n` must be length one")}
-    if (!is.numeric(n))     {rlang::abort("`n` must be numeric")}
+    assert_length_1(n)
+    assert_type(n, "numeric")
     if (pl  && abs(n) == 1) {return(2)}
     if (!pl && abs(n) != 1) {return(1)}
     return(n)
@@ -182,5 +181,3 @@ derive_n <- function(pl, n, vector) {
   if (!pl && abs(length(vector)) != 1) {return(1)}
   length(vector)
 }
-
-is_t_or_f <- function(x) {is.logical(x) && !is.na(x)}

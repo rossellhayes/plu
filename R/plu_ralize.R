@@ -31,8 +31,8 @@ plu_ralize <- function(
     "plu.irregulars", c("moderate", "conservative", "liberal", "none")
   )
 ) {
-  if (!length(x))       return(character(0))
-  if (!is.character(x)) stop("`x` must be a character vector")
+  if (!length(x)) return(character(0))
+  assert_type(x, "character")
 
   irregulars <- match.arg(
     irregulars, c("moderate", "conservative", "liberal", "none")

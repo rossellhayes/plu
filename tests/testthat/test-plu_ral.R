@@ -15,6 +15,13 @@ test_that("n", {
   expect_equal(plu_ral("word", n = 0.5), "words")
 })
 
+test_that("integer n", {
+  expect_equal(plu_ral("word", n = 1L), "word")
+  expect_equal(plu_ral("word", n = -1L), "word")
+  expect_equal(plu_ral("word", n = 2L), "words")
+  expect_equal(plu_ral("word", n = 0L), "words")
+})
+
 test_that("vector", {
   expect_equal(plu_ral("word", one), "word")
   expect_equal(plu_ral("word", two), "words")
@@ -138,16 +145,30 @@ test_that("early return", {
 })
 
 test_that("errors", {
-  expect_error(plu_ral(integer(1)))
-  expect_error(plu_ral("word", n = character(1)))
-  expect_error(plu_ral("word", pl = TRUE, n = character(1)))
-  expect_error(plu_ral("word", n = numeric(2)))
-  expect_error(plu_ral("word", pl = NA))
-  expect_error(plu_ral("word", pl = numeric(1)))
-  expect_error(plu_ral("word", pl = logical(2)))
-  expect_error(plu_ral("word", replace_n = NA))
-  expect_error(plu_ral("word", replace_n = numeric(1)))
-  expect_error(plu_ral("word", replace_n = logical(2)))
+  expect_error(plu_ral(integer(1)), "`x` must be of type character")
+
+  expect_error(
+    plu_ral("word", n = character(1)), "`n` must be of type numeric"
+  )
+  expect_error(
+    plu_ral("word", pl = TRUE, n = character(1)), "`n` must be of type numeric"
+  )
+  expect_error(plu_ral("word", n = numeric(2)), "`n` must be length one")
+
+  expect_error(plu_ral("word", pl = NA),         "`pl` must be TRUE or FALSE")
+  expect_error(plu_ral("word", pl = numeric(1)), "`pl` must be TRUE or FALSE")
+  expect_error(plu_ral("word", pl = logical(2)), "`pl` must be length one")
+
+  expect_error(
+    plu_ral("word", replace_n = NA), "`replace_n` must be TRUE or FALSE"
+  )
+  expect_error(
+    plu_ral("word", replace_n = numeric(1)),
+    "`replace_n` must be TRUE or FALSE"
+  )
+  expect_error(
+    plu_ral("word", replace_n = logical(2)), "`replace_n` must be length one"
+  )
 
   expect_error(plu_ral("word", n_fn = plu_not_real_fun),    "plu_not_real_fun")
   expect_error(plu_ral("word", n_fn = "plu_not_real_fun"),  "plu_not_real_fun")

@@ -27,21 +27,13 @@
 #' @example examples/plu_more.R
 
 plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
-  if (!is.null(max) && length(max) != 1) {
-    stop("`max` must be length one or NULL.", call. = FALSE)
-  }
-
+  assert_length_1_or_null(max)
   if (is.null(max) || isFALSE(max) || is.na(max)) {max <- Inf}
+  assert_type(max, "numeric")
 
-  if (!is.numeric(max)) {
-    stop("`max` must be a numeric or NULL.", call. = FALSE)
-  }
-
-  n <- length(x)
-
+  n    <- length(x)
   type <- format_type(type, x)
-
-  fn <- get_fun(fn)
+  fn   <- get_fun(fn)
 
   if (max < 1 || n < 1) {
     return(plu_nge(paste(fn(n, ...), plu_ral(type, n = n)), ends = TRUE))
@@ -62,7 +54,7 @@ plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
 more <- plu_more
 
 format_type <- function(type, x) {
-  if (length(type) > 1) {stop("`type` must be length one", call. = FALSE)}
+  assert_length_1(type)
 
   if (is.character(type) && length(type) == 1)       {return(type)}
   if (is.null(type) || isFALSE(type) || is.na(type)) {return("")}

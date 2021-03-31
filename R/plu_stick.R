@@ -42,8 +42,8 @@ plu_stick <- function(
   sep  <- validate_sep(sep)
   conj <- validate_sep(conj)
 
-  if (length(oxford) != 1) {stop("`oxford` must be length one")}
-  if (!is_t_or_f(oxford))  {stop("`oxford` must be TRUE or FALSE")}
+  assert_length_1(oxford)
+  assert_t_or_f(oxford)
 
   if (lifecycle::is_present(fn)) {
     lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[1], "(fn = )"))
@@ -83,14 +83,7 @@ stick <- plu_stick
 
 validate_sep <- function(sep) {
   if (is.null(sep)) {return("")}
-
-  if (length(sep) > 1)    {
-    stop("`", deparse(substitute(sep)), "` must be length one")
-  }
-
-  if (!is.character(sep)) {
-    stop("`", deparse(substitute(sep)), "` must be a character string")
-  }
-
+  assert_length_1(sep, deparse(substitute(sep)))
+  assert_type(sep, "character", deparse(substitute(sep)))
   sep
 }
