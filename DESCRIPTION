@@ -20,7 +20,6 @@ Depends:
 Imports: 
     backports,
     lifecycle,
-    rlang,
     stringi
 Suggests: 
     covr,
