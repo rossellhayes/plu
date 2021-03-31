@@ -107,20 +107,6 @@ plu_ral <- function(
 
   if (pl) {
     # Split strings into individual words and punctuation marks
-    # sing_split <- strsplit(
-    #   mat,
-    #   "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
-    #   perl = TRUE
-    # )
-    #
-    # max_ln <- max(lengths(sing_split))
-    #
-    # sing_split <- vapply(
-    #   sing_split,
-    #   function(x) {c(x, character(max_ln - length(x)))},
-    #   character(max_ln)
-    # )
-
     sing_split <- plu_split(
       mat,
       "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
@@ -168,12 +154,9 @@ plu_ral <- function(
       plu_split[after_removed][plu_split[after_removed] == " "] <- ""
     }
 
-    # if (is.array(plu_split)) {
-      plu_split <- apply(plu_split, 2, paste, collapse = "")
-    # }
-
-    mat[] <- plu_split
+    mat[] <- apply(plu_split, 2, paste, collapse = "")
   }
+
 
   mat[] <- gsub(
     "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
