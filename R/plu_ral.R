@@ -1,6 +1,6 @@
 #' Pluralize a phrase based on the length of a vector
 #'
-#' @param x An English word or phrase to be pluralized.
+#' @param x An character vector of English words or phrase to be pluralized.
 #'     See details for special sequences which are handled differently.
 #' @param vector A vector whose length determines `n`. Defaults to `NULL`.
 #' @param n_fn A function to apply to the output of the special sequence
@@ -22,6 +22,7 @@
 #'     `"liberal"` uses a regular plural if it exists, even if an irregular
 #'     plural is more common.
 #'     `"none"` attempts to apply regular noun pluralization rules to all words.
+#'     See section "Irregular plurals" for more details.
 #'     Defaults to `"moderate"`.
 #'     The default can be changed by setting `options(plu.irregulars)`.
 #'     See examples in [plu::ralize()] for more details.
@@ -30,7 +31,39 @@
 #'     See details.
 #'     Defaults to `TRUE`.
 #'
-#' @details Certain strings in `x` are treated specially.
+#' @section Irregular plurals:
+#'
+#' Many words in English have both regular and irregular plural forms.
+#' For example, the word "person" can be pluralized as "persons" or "people",
+#' and the word "formula" can be pluralized as "formulas" or "formulae".
+#' `plu` offers several options for how to handle words with multiple plurals.
+#'
+#' - The `moderate` list attempts to apply the most common pluralization,
+#' whether it is regular or irregular.
+#' This chooses the irregular plural "people" but the regular plural "formulas".
+#'
+#' - The `conservative` list attempts to apply an irregular plural to every word
+#' that has one.
+#' This chooses "people" and "formulae", but still uses regular plurals for
+#' words that have no irregular plural form.
+#'
+#' - The `liberal` list attempts to apply a regular plural to every word that
+#' has one.
+#' This chooses "persons" and "formulas", but still uses irregular plurals for
+#' words that have no common regular plural, like "women".
+#' Many words in English have invariant plurals that look exactly the same as
+#' their singular forms, like "fish" or "deer".
+#' The `liberal` list attempts to use regular plurals for these words,
+#' producing "fishes" and "deers".
+#'
+#' - The `none` list applies regular pluralization rules to all words, even
+#' those with no common regular plural.
+#' This produces, for example, "womans" as a plural for "woman" even though this
+#' is not a common English word.
+#'
+#' @section Special strings:
+#'
+#' Certain strings in `x` receive special treatment.
 #'
 #' - By default, `"a"` and `"an"` are deleted in the plural
 #' ("a word" to "words").
@@ -50,7 +83,8 @@
 #'
 #' @return The character vector `x` altered to match the number of `n`
 #'
-#' @seealso [plu::ralize()] to convert an English word to its plural form.
+#' @seealso [plu_ralize()] to convert an English word to its
+#' plural form.
 #'
 #' @export
 #' @example examples/plu_ral.R

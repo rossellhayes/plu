@@ -33,9 +33,10 @@ even if a regular plural is more common.
 \code{"liberal"} uses a regular plural if it exists, even if an irregular
 plural is more common.
 \code{"none"} attempts to apply regular noun pluralization rules to all words.
+See section "Irregular plurals" for more details.
 Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
-See examples.}
+See examples in \code{\link[=ralize]{ralize()}} for more details.}
 }
 \value{
 The character vector \code{x} pluralized
@@ -43,6 +44,36 @@ The character vector \code{x} pluralized
 \description{
 Pluralize a word
 }
+\section{Irregular plurals}{
+
+
+Many words in English have both regular and irregular plural forms.
+For example, the word "person" can be pluralized as "persons" or "people",
+and the word "formula" can be pluralized as "formulas" or "formulae".
+\code{plu} offers several options for how to handle words with multiple plurals.
+\itemize{
+\item The \code{moderate} list attempts to apply the most common pluralization,
+whether it is regular or irregular.
+This chooses the irregular plural "people" but the regular plural "formulas".
+\item The \code{conservative} list attempts to apply an irregular plural to every word
+that has one.
+This chooses "people" and "formulae", but still uses regular plurals for
+words that have no irregular plural form.
+\item The \code{liberal} list attempts to apply a regular plural to every word that
+has one.
+This chooses "persons" and "formulas", but still uses irregular plurals for
+words that have no common regular plural, like "women".
+Many words in English have invariant plurals that look exactly the same as
+their singular forms, like "fish" or "deer".
+The \code{liberal} list attempts to use regular plurals for these words,
+producing "fishes" and "deers".
+\item The \code{none} list applies regular pluralization rules to all words, even
+those with no common regular plural.
+This produces, for example, "womans" as a plural for "woman" even though this
+is not a common English word.
+}
+}
+
 \examples{
 plu::ralize("word")
 plu::ralize(c("group", "word"))
@@ -53,5 +84,5 @@ plu::ralize(c("formula", "person", "child"), irregulars = "liberal")
 plu::ralize(c("formula", "person", "child"), irregulars = "none")
 }
 \seealso{
-\code{\link[=ral]{ral()}} to pluralize an English phrase based on a condition
+\code{\link[=plu_ral]{plu_ral()}} to pluralize an English phrase based on a condition
 }

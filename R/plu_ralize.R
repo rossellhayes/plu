@@ -1,20 +1,12 @@
 #' Pluralize a word
 #'
 #' @param x A character vector of English words to be pluralized
-#' @param irregulars What level of irregularity to use in pluralization.
-#'     `"moderate"` uses the most common pluralization.
-#'     `"conservative"` uses the most common irregular plural if one exists,
-#'     even if a regular plural is more common.
-#'     `"liberal"` uses a regular plural if it exists, even if an irregular
-#'     plural is more common.
-#'     `"none"` attempts to apply regular noun pluralization rules to all words.
-#'     Defaults to `"moderate"`.
-#'     The default can be changed by setting `options(plu.irregulars)`.
-#'     See examples.
+#' @inheritParams plu_ral
 #'
 #' @return The character vector `x` pluralized
 #'
-#' @seealso [plu::ral()] to pluralize an English phrase based on a condition
+#' @seealso [plu_ral()] to pluralize an English phrase based on a condition
+#' @inheritSection plu_ral Irregular plurals
 #'
 #' @source Irregular plurals list adapted from the Automatically Generated
 #' Inflection Database (AGID).
