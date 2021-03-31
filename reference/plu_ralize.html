@@ -156,9 +156,10 @@ even if a regular plural is more common.
 <code>"liberal"</code> uses a regular plural if it exists, even if an irregular
 plural is more common.
 <code>"none"</code> attempts to apply regular noun pluralization rules to all words.
+See section "Irregular plurals" for more details.
 Defaults to <code>"moderate"</code>.
 The default can be changed by setting <code><a href='https://rdrr.io/r/base/options.html'>options(plu.irregulars)</a></code>.
-See examples.</p></td>
+See examples in <code>ralize()</code> for more details.</p></td>
     </tr>
     </table>
 
@@ -170,9 +171,39 @@ Inflection Database (AGID).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The character vector <code>x</code> pluralized</p>
+    <h2 class="hasAnchor" id="irregular-plurals"><a class="anchor" href="#irregular-plurals"></a>Irregular plurals</h2>
+
+    
+
+
+<p>Many words in English have both regular and irregular plural forms.
+For example, the word "person" can be pluralized as "persons" or "people",
+and the word "formula" can be pluralized as "formulas" or "formulae".
+<code>plu</code> offers several options for how to handle words with multiple plurals.</p><ul>
+<li><p>The <code>moderate</code> list attempts to apply the most common pluralization,
+whether it is regular or irregular.
+This chooses the irregular plural "people" but the regular plural "formulas".</p></li>
+<li><p>The <code>conservative</code> list attempts to apply an irregular plural to every word
+that has one.
+This chooses "people" and "formulae", but still uses regular plurals for
+words that have no irregular plural form.</p></li>
+<li><p>The <code>liberal</code> list attempts to apply a regular plural to every word that
+has one.
+This chooses "persons" and "formulas", but still uses irregular plurals for
+words that have no common regular plural, like "women".
+Many words in English have invariant plurals that look exactly the same as
+their singular forms, like "fish" or "deer".
+The <code>liberal</code> list attempts to use regular plurals for these words,
+producing "fishes" and "deers".</p></li>
+<li><p>The <code>none</code> list applies regular pluralization rules to all words, even
+those with no common regular plural.
+This produces, for example, "womans" as a plural for "woman" even though this
+is not a common English word.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='plu_ral.html'>ral()</a></code> to pluralize an English phrase based on a condition</p></div>
+    <div class='dont-index'><p><code><a href='plu_ral.html'>plu_ral()</a></code> to pluralize an English phrase based on a condition</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ralize</span><span class='op'>(</span><span class='st'>"word"</span><span class='op'>)</span>

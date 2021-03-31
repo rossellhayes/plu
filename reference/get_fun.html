@@ -161,49 +161,44 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_type(x, "character")
 #&gt;     assert_length_1(replace_n)
 #&gt;     assert_t_or_f(replace_n)
-#&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         perl = TRUE)
+#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     if (replace_n) {
+#&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
+#&gt;     }
+#&gt;     n_fn &lt;- get_fun(n_fn)
+#&gt;     split_out &lt;- split_in
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;             perl = TRUE)
-#&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
-#&gt;             "")), sing_split)
-#&gt;         plu_split &lt;- sing_split
-#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
-#&gt;             irregulars = irregulars)
-#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
-#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         split_out[!braced &amp; !replace_n] &lt;- plu_ralize(split_in[!braced &amp; 
+#&gt;             !replace_n], irregulars = irregulars)
+#&gt;         removed &lt;- which(split_out == "" &amp; split_in != "")
+#&gt;         removed &lt;- removed[removed%%nrow(split_out) != 0]
 #&gt;         if (any(removed)) {
-#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- which(is_capitalized(split_in))
 #&gt;             caps &lt;- caps[caps %in% removed]
 #&gt;             after_caps &lt;- vapply(caps, function(i) {
-#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
-#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, 
+#&gt;                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))
 #&gt;                 idx[1] + i - 1L
 #&gt;             }, integer(1))
-#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             split_out[after_caps] &lt;- capitalize(split_out[after_caps])
 #&gt;             after_removed &lt;- removed + 1
-#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;             split_out[after_removed][split_out[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         mat[] &lt;- plu_split
 #&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
-#&gt;         switch(as.character(abs(n)), `1` = "\\1", `2` = "\\2", 
-#&gt;             "\\3"), mat)
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
-#&gt;         1, "\\1", "\\2"), mat)
-#&gt;     if (replace_n) {
-#&gt;         n_fn &lt;- get_fun(n_fn)
-#&gt;         mat[] &lt;- gsub("\\bn\\b", n_fn(n, ...), mat)
-#&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}]*)\\}", "\\1", mat)
+#&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
+#&gt;         n)
+#&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
+#&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fce99eb9278&gt;
+#&gt; &lt;bytecode: 0x7fc85c28e6a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='fu'>plu</span><span class='fu'>::</span><span class='va'><a href='plu_ral.html'>ral</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -215,49 +210,44 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_type(x, "character")
 #&gt;     assert_length_1(replace_n)
 #&gt;     assert_t_or_f(replace_n)
-#&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         perl = TRUE)
+#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     if (replace_n) {
+#&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
+#&gt;     }
+#&gt;     n_fn &lt;- get_fun(n_fn)
+#&gt;     split_out &lt;- split_in
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;             perl = TRUE)
-#&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
-#&gt;             "")), sing_split)
-#&gt;         plu_split &lt;- sing_split
-#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
-#&gt;             irregulars = irregulars)
-#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
-#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         split_out[!braced &amp; !replace_n] &lt;- plu_ralize(split_in[!braced &amp; 
+#&gt;             !replace_n], irregulars = irregulars)
+#&gt;         removed &lt;- which(split_out == "" &amp; split_in != "")
+#&gt;         removed &lt;- removed[removed%%nrow(split_out) != 0]
 #&gt;         if (any(removed)) {
-#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- which(is_capitalized(split_in))
 #&gt;             caps &lt;- caps[caps %in% removed]
 #&gt;             after_caps &lt;- vapply(caps, function(i) {
-#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
-#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, 
+#&gt;                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))
 #&gt;                 idx[1] + i - 1L
 #&gt;             }, integer(1))
-#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             split_out[after_caps] &lt;- capitalize(split_out[after_caps])
 #&gt;             after_removed &lt;- removed + 1
-#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;             split_out[after_removed][split_out[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         mat[] &lt;- plu_split
 #&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
-#&gt;         switch(as.character(abs(n)), `1` = "\\1", `2` = "\\2", 
-#&gt;             "\\3"), mat)
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
-#&gt;         1, "\\1", "\\2"), mat)
-#&gt;     if (replace_n) {
-#&gt;         n_fn &lt;- get_fun(n_fn)
-#&gt;         mat[] &lt;- gsub("\\bn\\b", n_fn(n, ...), mat)
-#&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}]*)\\}", "\\1", mat)
+#&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
+#&gt;         n)
+#&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
+#&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fce99f1bda0&gt;
+#&gt; &lt;bytecode: 0x7fc85c2e5058&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu_ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -269,49 +259,44 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_type(x, "character")
 #&gt;     assert_length_1(replace_n)
 #&gt;     assert_t_or_f(replace_n)
-#&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         perl = TRUE)
+#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     if (replace_n) {
+#&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
+#&gt;     }
+#&gt;     n_fn &lt;- get_fun(n_fn)
+#&gt;     split_out &lt;- split_in
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;             perl = TRUE)
-#&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
-#&gt;             "")), sing_split)
-#&gt;         plu_split &lt;- sing_split
-#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
-#&gt;             irregulars = irregulars)
-#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
-#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         split_out[!braced &amp; !replace_n] &lt;- plu_ralize(split_in[!braced &amp; 
+#&gt;             !replace_n], irregulars = irregulars)
+#&gt;         removed &lt;- which(split_out == "" &amp; split_in != "")
+#&gt;         removed &lt;- removed[removed%%nrow(split_out) != 0]
 #&gt;         if (any(removed)) {
-#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- which(is_capitalized(split_in))
 #&gt;             caps &lt;- caps[caps %in% removed]
 #&gt;             after_caps &lt;- vapply(caps, function(i) {
-#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
-#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, 
+#&gt;                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))
 #&gt;                 idx[1] + i - 1L
 #&gt;             }, integer(1))
-#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             split_out[after_caps] &lt;- capitalize(split_out[after_caps])
 #&gt;             after_removed &lt;- removed + 1
-#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;             split_out[after_removed][split_out[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         mat[] &lt;- plu_split
 #&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
-#&gt;         switch(as.character(abs(n)), `1` = "\\1", `2` = "\\2", 
-#&gt;             "\\3"), mat)
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
-#&gt;         1, "\\1", "\\2"), mat)
-#&gt;     if (replace_n) {
-#&gt;         n_fn &lt;- get_fun(n_fn)
-#&gt;         mat[] &lt;- gsub("\\bn\\b", n_fn(n, ...), mat)
-#&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}]*)\\}", "\\1", mat)
+#&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
+#&gt;         n)
+#&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
+#&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fce99eb9278&gt;
+#&gt; &lt;bytecode: 0x7fc85c28e6a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu::ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -323,54 +308,49 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_type(x, "character")
 #&gt;     assert_length_1(replace_n)
 #&gt;     assert_t_or_f(replace_n)
-#&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         perl = TRUE)
+#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     if (replace_n) {
+#&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
+#&gt;     }
+#&gt;     n_fn &lt;- get_fun(n_fn)
+#&gt;     split_out &lt;- split_in
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;             perl = TRUE)
-#&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
-#&gt;             "")), sing_split)
-#&gt;         plu_split &lt;- sing_split
-#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
-#&gt;             irregulars = irregulars)
-#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
-#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         split_out[!braced &amp; !replace_n] &lt;- plu_ralize(split_in[!braced &amp; 
+#&gt;             !replace_n], irregulars = irregulars)
+#&gt;         removed &lt;- which(split_out == "" &amp; split_in != "")
+#&gt;         removed &lt;- removed[removed%%nrow(split_out) != 0]
 #&gt;         if (any(removed)) {
-#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- which(is_capitalized(split_in))
 #&gt;             caps &lt;- caps[caps %in% removed]
 #&gt;             after_caps &lt;- vapply(caps, function(i) {
-#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
-#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, 
+#&gt;                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))
 #&gt;                 idx[1] + i - 1L
 #&gt;             }, integer(1))
-#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             split_out[after_caps] &lt;- capitalize(split_out[after_caps])
 #&gt;             after_removed &lt;- removed + 1
-#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;             split_out[after_removed][split_out[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         mat[] &lt;- plu_split
 #&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
-#&gt;         switch(as.character(abs(n)), `1` = "\\1", `2` = "\\2", 
-#&gt;             "\\3"), mat)
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
-#&gt;         1, "\\1", "\\2"), mat)
-#&gt;     if (replace_n) {
-#&gt;         n_fn &lt;- get_fun(n_fn)
-#&gt;         mat[] &lt;- gsub("\\bn\\b", n_fn(n, ...), mat)
-#&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}]*)\\}", "\\1", mat)
+#&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
+#&gt;         n)
+#&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
+#&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fce99f1bda0&gt;
+#&gt; &lt;bytecode: 0x7fc85c2e5058&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'>
 <span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x) 
 #&gt; x
-#&gt; &lt;bytecode: 0x7fce968bdf80&gt;
+#&gt; &lt;bytecode: 0x7fc8572d6980&gt;
 #&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span>, default <span class='op'>=</span> <span class='va'>plu_ral</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -382,49 +362,44 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_type(x, "character")
 #&gt;     assert_length_1(replace_n)
 #&gt;     assert_t_or_f(replace_n)
-#&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     mat &lt;- matrix(x, nrow = 1)
+#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         perl = TRUE)
+#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     if (replace_n) {
+#&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
+#&gt;     }
+#&gt;     n_fn &lt;- get_fun(n_fn)
+#&gt;     split_out &lt;- split_in
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;             perl = TRUE)
-#&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
-#&gt;             "")), sing_split)
-#&gt;         plu_split &lt;- sing_split
-#&gt;         plu_split[!braced] &lt;- plu_ralize(sing_split[!braced], 
-#&gt;             irregulars = irregulars)
-#&gt;         removed &lt;- which(plu_split == "" &amp; sing_split != "")
-#&gt;         removed &lt;- removed[removed%%nrow(sing_split) != 0]
+#&gt;         split_out[!braced &amp; !replace_n] &lt;- plu_ralize(split_in[!braced &amp; 
+#&gt;             !replace_n], irregulars = irregulars)
+#&gt;         removed &lt;- which(split_out == "" &amp; split_in != "")
+#&gt;         removed &lt;- removed[removed%%nrow(split_out) != 0]
 #&gt;         if (any(removed)) {
-#&gt;             caps &lt;- which(is_capitalized(sing_split))
+#&gt;             caps &lt;- which(is_capitalized(split_in))
 #&gt;             caps &lt;- caps[caps %in% removed]
 #&gt;             after_caps &lt;- vapply(caps, function(i) {
-#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", plu_split[seq(i, 
-#&gt;                   (i%/%nrow(plu_split) + 1) * nrow(plu_split))]))
+#&gt;                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, 
+#&gt;                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))
 #&gt;                 idx[1] + i - 1L
 #&gt;             }, integer(1))
-#&gt;             plu_split[after_caps] &lt;- capitalize(plu_split[after_caps])
+#&gt;             split_out[after_caps] &lt;- capitalize(split_out[after_caps])
 #&gt;             after_removed &lt;- removed + 1
-#&gt;             plu_split[after_removed][plu_split[after_removed] == 
+#&gt;             split_out[after_removed][split_out[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         mat[] &lt;- plu_split
 #&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
-#&gt;         switch(as.character(abs(n)), `1` = "\\1", `2` = "\\2", 
-#&gt;             "\\3"), mat)
-#&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}", ifelse(abs(n) == 
-#&gt;         1, "\\1", "\\2"), mat)
-#&gt;     if (replace_n) {
-#&gt;         n_fn &lt;- get_fun(n_fn)
-#&gt;         mat[] &lt;- gsub("\\bn\\b", n_fn(n, ...), mat)
-#&gt;     }
-#&gt;     mat[] &lt;- gsub("\\{([^{}]*)\\}", "\\1", mat)
+#&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
+#&gt;         n)
+#&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
+#&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fce99eb9278&gt;
+#&gt; &lt;bytecode: 0x7fc85c28e6a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

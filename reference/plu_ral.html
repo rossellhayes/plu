@@ -155,7 +155,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An English word or phrase to be pluralized.
+      <td><p>An character vector of English words or phrase to be pluralized.
 See details for special sequences which are handled differently.</p></td>
     </tr>
     <tr>
@@ -195,6 +195,7 @@ even if a regular plural is more common.
 <code>"liberal"</code> uses a regular plural if it exists, even if an irregular
 plural is more common.
 <code>"none"</code> attempts to apply regular noun pluralization rules to all words.
+See section "Irregular plurals" for more details.
 Defaults to <code>"moderate"</code>.
 The default can be changed by setting <code><a href='https://rdrr.io/r/base/options.html'>options(plu.irregulars)</a></code>.
 See examples in <code><a href='plu_ralize.html'>ralize()</a></code> for more details.</p></td>
@@ -211,9 +212,42 @@ Defaults to <code>TRUE</code>.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The character vector <code>x</code> altered to match the number of <code>n</code></p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="irregular-plurals"><a class="anchor" href="#irregular-plurals"></a>Irregular plurals</h2>
 
-    <p>Certain strings in <code>x</code> are treated specially.</p><ul>
+    
+
+
+<p>Many words in English have both regular and irregular plural forms.
+For example, the word "person" can be pluralized as "persons" or "people",
+and the word "formula" can be pluralized as "formulas" or "formulae".
+<code>plu</code> offers several options for how to handle words with multiple plurals.</p><ul>
+<li><p>The <code>moderate</code> list attempts to apply the most common pluralization,
+whether it is regular or irregular.
+This chooses the irregular plural "people" but the regular plural "formulas".</p></li>
+<li><p>The <code>conservative</code> list attempts to apply an irregular plural to every word
+that has one.
+This chooses "people" and "formulae", but still uses regular plurals for
+words that have no irregular plural form.</p></li>
+<li><p>The <code>liberal</code> list attempts to apply a regular plural to every word that
+has one.
+This chooses "persons" and "formulas", but still uses irregular plurals for
+words that have no common regular plural, like "women".
+Many words in English have invariant plurals that look exactly the same as
+their singular forms, like "fish" or "deer".
+The <code>liberal</code> list attempts to use regular plurals for these words,
+producing "fishes" and "deers".</p></li>
+<li><p>The <code>none</code> list applies regular pluralization rules to all words, even
+those with no common regular plural.
+This produces, for example, "womans" as a plural for "woman" even though this
+is not a common English word.</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="special-strings"><a class="anchor" href="#special-strings"></a>Special strings</h2>
+
+    
+
+
+<p>Certain strings in <code>x</code> receive special treatment.</p><ul>
 <li><p>By default, <code>"a"</code> and <code>"an"</code> are deleted in the plural
 ("a word" to "words").</p></li>
 <li><p>The string <code>"n"</code> will be replaced with the length of <code>vector</code> or the
@@ -222,17 +256,20 @@ number in <code>n</code>.</p><ul>
 </ul></li>
 <li><p>Strings between braces separated by a pipe will be treated as a custom
 plural (<code>"{a|some} word"</code> to "a word", "some words").</p><ul>
-<li><p>Three strings separated by pipes will be treated as a singular, dual,
-and plural form (<code>"{the|both|all} word"</code> to "the word" (1),
-"both words" (2), "all words" (3+)).</p></li>
+<li><p>More than two strings separated by pipes will be treated as singular,
+dual, trial, ... and plural forms. For example, <code>"{the|both|all} word"</code>
+to "the word" (1), "both words" (2), "all words" (3+).</p></li>
+<li><p>See examples for more.</p></li>
 </ul></li>
-<li><p>Any other string between braces will be treated as invariant
-(<code>"attorney {general}"</code> to "attorneys general").</p></li>
+<li><p>Any other string between braces without a pipe will be treated as
+invariant. For example, <code>"attorney {general}"</code> to "attorneys general" (notice
+"general" is not pluralized).</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='plu_ralize.html'>ralize()</a></code> to convert an English word to its plural form.</p></div>
+    <div class='dont-index'><p><code><a href='plu_ralize.html'>plu_ralize()</a></code> to convert an English word to its
+plural form.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"apple"</span>, pl <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -274,7 +311,23 @@ and plural form (<code>"{the|both|all} word"</code> to "the word" (1),
 </div><div class='output co'>#&gt; [1] "The caterpillar ate 22 delicacies"</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"The caterpillar ate"</span>, <span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"n apple"</span>, <span class='va'>mon</span>, <span class='fu'>nombre</span><span class='fu'>::</span><span class='va'><a href='https://nombre.rossellhayes.com/reference/cardinal.html'>cardinal</a></span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "The caterpillar ate one apple"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"The caterpillar ate"</span>, <span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"n delicacy"</span>, <span class='va'>later</span>, <span class='fu'>nombre</span><span class='fu'>::</span><span class='va'><a href='https://nombre.rossellhayes.com/reference/cardinal.html'>cardinal</a></span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "The caterpillar ate twenty-two delicacies"</div></pre>
+</div><div class='output co'>#&gt; [1] "The caterpillar ate twenty-two delicacies"</div><div class='input'>
+<span class='co'># Special brace strings</span>
+<span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two}"</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "one"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two}"</span>, n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "two"</div><div class='input'>
+<span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|more}"</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "one"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|more}"</span>, n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "two"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|more}"</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "more"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|more}"</span>, n <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "more"</div><div class='input'>
+<span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|three|more}"</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "one"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|three|more}"</span>, n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "two"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|three|more}"</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "three"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|three|more}"</span>, n <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "more"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|three|more}"</span>, n <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "more"</div><div class='input'><span class='fu'>plu</span><span class='fu'>::</span><span class='fu'>ral</span><span class='op'>(</span><span class='st'>"{one|two|three|more}"</span>, n <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "more"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
