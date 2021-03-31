@@ -1,5 +1,7 @@
 # plu (development version)
 
+## Patches
+
 * Modest speed improvements to `plu_ralize()`.
   * This propagates to `plu_ral()` and `plu_more()`, which use `plu_ralize()` internally.
 * `plu_ral()` now correctly handles {braced} strings that contain sentence breaks.
@@ -10,6 +12,12 @@
   * `plu_ralize("CHILD")` now returns `"CHILDs"` instead of incorrectly returning `"Children"`.
 * `is_capital(strict = TRUE)` now correctly handles non-character inputs.
   * `is_capital(1, strict = TRUE)` no returns `FALSE` instead of incorrectly returning `NA`.
+  
+## Miscellaneous
+
+* Deprecated arguments to `plu::stick()` now produce errors.
+* Removed dependencies on `rlang` and `stringi`.
+* Gained dependency on `backports`.
 
 # plu 0.2.0
 
