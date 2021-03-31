@@ -39,6 +39,12 @@ If \code{\link{NULL}}, \code{sep} is used.}
 (x, y, and z) or not (x, y and z) in lists of length three or more.
 Defaults to \code{FALSE}.
 The default can be changed by setting \code{options(plu.oxford_comma)}.}
+
+\item{syndeton}{\lifecycle{deprecated}}
+
+\item{fn}{\lifecycle{deprecated}}
+
+\item{...}{\lifecycle{deprecated}}
 }
 \value{
 A character vector of length 1.

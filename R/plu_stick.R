@@ -10,6 +10,9 @@
 #'     (x, y, and z) or not (x, y and z) in lists of length three or more.
 #'     Defaults to `FALSE`.
 #'     The default can be changed by setting `options(plu.oxford_comma)`.
+#' @param syndeton \lifecycle{deprecated}
+#' @param fn \lifecycle{deprecated}
+#' @param ... \lifecycle{deprecated}
 #'
 #' @return A character vector of length 1.
 #' @export
