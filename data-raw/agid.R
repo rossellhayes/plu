@@ -79,6 +79,7 @@ grammar_list <- tribble(
   "a",        "",
   "an",       "",
   "I",        "we",
+  "I'm",      "we're",
   "me",       "us",
   "myself",   "ourselves",
   "my",       "our",
@@ -90,8 +91,11 @@ grammar_list <- tribble(
   "thy",      "your",
   "thine",    "yours",
   "he",       "they",
+  "he's",     "they're",
   "she",      "they",
+  "she's",    "they're",
   "it",       "they",
+  "it's",     "they're",
   "him",      "them",
   "her",      "them",
   "himself",  "themselves",
@@ -106,7 +110,8 @@ grammar_list <- tribble(
   "is",       "are",
   "was",      "were",
   "isn't",    "aren't",
-  "wasn't",   "weren't"
+  "wasn't",   "weren't",
+  "does",     "do"
 )
 
 moderate_list     <- bind_rows(moderate_list, verb_list, grammar_list)
