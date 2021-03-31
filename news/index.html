@@ -126,6 +126,21 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#plu-development-version" class="anchor"></a>plu (development version)<small> Unreleased </small>
 </h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports {braced|pipe} sequences of indefinite length.
+<ul>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral("{one|two|three|more}", n = 3)</a></code> produces “three”.</li>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral("{one|two|three|more}", n = 50)</a></code> produces “more”.</li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="patches" class="section level2">
 <h2 class="hasAnchor">
 <a href="#patches" class="anchor"></a>Patches</h2>
@@ -178,9 +193,9 @@
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#plu-020" class="anchor"></a>plu 0.2.0<small> 2021-01-11 </small>
 </h1>
-<div id="new-features" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
+<a href="#new-features-1" class="anchor"></a>New features</h2>
 <ul>
 <li>
 <p><code><a href="../reference/plu_more.html">plu::more()</a></code> limits a vector to the first <code>n</code> elements with a message for remaining elements.</p>
