@@ -1,7 +1,11 @@
 # plu (development version)
 
-## Patches
+## New features
+* `plu_ral()` now supports {braced|pipe} sequences of indefinite length.
+  * `plu_ral("{one|two|three|more}", n = 3)` produces "three".
+  * `plu_ral("{one|two|three|more}", n = 50)` produces "more".
 
+## Patches
 * Modest speed improvements to `plu_ralize()`.
   * This propagates to `plu_ral()` and `plu_more()`, which use `plu_ralize()` internally.
 * `plu_ral()` now correctly handles {braced} strings that contain sentence breaks.
@@ -14,7 +18,6 @@
   * `is_capital(1, strict = TRUE)` no returns `FALSE` instead of incorrectly returning `NA`.
   
 ## Miscellaneous
-
 * Deprecated arguments to `plu::stick()` now produce errors.
 * Removed dependencies on `rlang` and `stringi`.
 * Gained dependency on `backports`.
