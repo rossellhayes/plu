@@ -73,16 +73,23 @@ plu_ral <- function(
 
   if (pl) {
     # Split strings into individual words and punctuation marks
-    sing_split <- stringi::stri_split_regex(
+    sing_split <- strsplit(
       mat,
       "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
-      simplify = TRUE
+      perl = TRUE
     )
-    sing_split <- t(sing_split)
+
+    max_ln <- max(lengths(sing_split))
+
+    sing_split <- vapply(
+      sing_split,
+      function(x) {c(x, character(max_ln - length(x)))},
+      character(max_ln)
+    )
 
     # Pluralize words that aren't wrapped in {braces}
-    braced <- stringi::stri_detect_regex(
-      sing_split, paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", ""))
+    braced <- grepl(
+      paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", "")), sing_split
     )
 
     plu_split          <- sing_split
@@ -121,27 +128,31 @@ plu_ral <- function(
       plu_split[after_removed][plu_split[after_removed] == " "] <- ""
     }
 
-    mat[] <- apply(plu_split, 2, paste, collapse = "")
+    if (is.array(plu_split)) {
+      plu_split <- apply(plu_split, 2, paste, collapse = "")
+    }
+
+    mat[] <- plu_split
   }
 
-  mat[] <- stringi::stri_replace_all_regex(
-    mat,
+  mat[] <- gsub(
     "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
-    switch(as.character(abs(n)), "1" = "$1", "2" = "$2", "$3")
+    switch(as.character(abs(n)), "1" = "\\1", "2" = "\\2", "\\3"),
+    mat
   )
 
-  mat[] <- stringi::stri_replace_all_regex(
-    mat,
+  mat[] <- gsub(
     "\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\}",
-    ifelse(abs(n) == 1, "$1", "$2")
+    ifelse(abs(n) == 1, "\\1", "\\2"),
+    mat
   )
 
   if (replace_n) {
     n_fn  <- get_fun(n_fn)
-    mat[] <- stringi::stri_replace_all_regex(mat, "\\bn\\b", n_fn(n, ...))
+    mat[] <- gsub("\\bn\\b", n_fn(n, ...), mat)
   }
 
-  mat[] <- stringi::stri_replace_all_regex(mat, "\\{([^{}]*)\\}", "$1")
+  mat[] <- gsub("\\{([^{}]*)\\}", "\\1", mat)
 
   x[] <- apply(mat, 2, paste, collapse = "")
   x
