@@ -5,6 +5,10 @@ test_that("get_fun", {
   expect_equal(get_fun("plu::ral"), plu::ral)
 })
 
+test_that("get_fun with anonymous function", {
+  expect_equal(get_fun(function(x) {x + 1}), function(x) {x + 1})
+})
+
 test_that("get_fun with NULL", {
   expect_equal(get_fun(NULL), identity)
 
