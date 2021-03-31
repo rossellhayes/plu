@@ -165,12 +165,8 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- strsplit(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             perl = TRUE)
-#&gt;         max_ln &lt;- max(lengths(sing_split))
-#&gt;         sing_split &lt;- vapply(sing_split, function(x) {
-#&gt;             c(x, character(max_ln - length(x)))
-#&gt;         }, character(max_ln))
 #&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
 #&gt;             "")), sing_split)
 #&gt;         plu_split &lt;- sing_split
@@ -191,9 +187,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;             plu_split[after_removed][plu_split[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         if (is.array(plu_split)) {
-#&gt;             plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         }
+#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;         mat[] &lt;- plu_split
 #&gt;     }
 #&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
@@ -209,7 +203,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb43f2fe1d8&gt;
+#&gt; &lt;bytecode: 0x7fcefec9c8c8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='fu'>plu</span><span class='fu'>::</span><span class='va'><a href='plu_ral.html'>ral</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -225,12 +219,8 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- strsplit(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             perl = TRUE)
-#&gt;         max_ln &lt;- max(lengths(sing_split))
-#&gt;         sing_split &lt;- vapply(sing_split, function(x) {
-#&gt;             c(x, character(max_ln - length(x)))
-#&gt;         }, character(max_ln))
 #&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
 #&gt;             "")), sing_split)
 #&gt;         plu_split &lt;- sing_split
@@ -251,9 +241,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;             plu_split[after_removed][plu_split[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         if (is.array(plu_split)) {
-#&gt;             plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         }
+#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;         mat[] &lt;- plu_split
 #&gt;     }
 #&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
@@ -269,7 +257,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb43f39b4e0&gt;
+#&gt; &lt;bytecode: 0x7fcefecf82a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu_ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -285,12 +273,8 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- strsplit(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             perl = TRUE)
-#&gt;         max_ln &lt;- max(lengths(sing_split))
-#&gt;         sing_split &lt;- vapply(sing_split, function(x) {
-#&gt;             c(x, character(max_ln - length(x)))
-#&gt;         }, character(max_ln))
 #&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
 #&gt;             "")), sing_split)
 #&gt;         plu_split &lt;- sing_split
@@ -311,9 +295,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;             plu_split[after_removed][plu_split[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         if (is.array(plu_split)) {
-#&gt;             plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         }
+#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;         mat[] &lt;- plu_split
 #&gt;     }
 #&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
@@ -329,7 +311,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb43f2fe1d8&gt;
+#&gt; &lt;bytecode: 0x7fcefec9c8c8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu::ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -345,12 +327,8 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- strsplit(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             perl = TRUE)
-#&gt;         max_ln &lt;- max(lengths(sing_split))
-#&gt;         sing_split &lt;- vapply(sing_split, function(x) {
-#&gt;             c(x, character(max_ln - length(x)))
-#&gt;         }, character(max_ln))
 #&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
 #&gt;             "")), sing_split)
 #&gt;         plu_split &lt;- sing_split
@@ -371,9 +349,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;             plu_split[after_removed][plu_split[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         if (is.array(plu_split)) {
-#&gt;             plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         }
+#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;         mat[] &lt;- plu_split
 #&gt;     }
 #&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
@@ -389,12 +365,12 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb43f39b4e0&gt;
+#&gt; &lt;bytecode: 0x7fcefecf82a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'>
 <span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x) 
 #&gt; x
-#&gt; &lt;bytecode: 0x7fb43b7a7380&gt;
+#&gt; &lt;bytecode: 0x7fcefbbbc780&gt;
 #&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span>, default <span class='op'>=</span> <span class='va'>plu_ral</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -410,12 +386,8 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
 #&gt;     if (pl) {
-#&gt;         sing_split &lt;- strsplit(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
+#&gt;         sing_split &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
 #&gt;             perl = TRUE)
-#&gt;         max_ln &lt;- max(lengths(sing_split))
-#&gt;         sing_split &lt;- vapply(sing_split, function(x) {
-#&gt;             c(x, character(max_ln - length(x)))
-#&gt;         }, character(max_ln))
 #&gt;         braced &lt;- grepl(paste0("\\{|\\}", ifelse(replace_n, "|\\bn\\b", 
 #&gt;             "")), sing_split)
 #&gt;         plu_split &lt;- sing_split
@@ -436,9 +408,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;             plu_split[after_removed][plu_split[after_removed] == 
 #&gt;                 " "] &lt;- ""
 #&gt;         }
-#&gt;         if (is.array(plu_split)) {
-#&gt;             plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
-#&gt;         }
+#&gt;         plu_split &lt;- apply(plu_split, 2, paste, collapse = "")
 #&gt;         mat[] &lt;- plu_split
 #&gt;     }
 #&gt;     mat[] &lt;- gsub("\\{([^{}\\|]*?)\\|([^{}\\|]*?)\\|([^{}\\|]*?)\\}", 
@@ -454,7 +424,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb43f2fe1d8&gt;
+#&gt; &lt;bytecode: 0x7fcefec9c8c8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
