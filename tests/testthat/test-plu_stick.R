@@ -53,36 +53,7 @@ test_that("errors", {
   expect_error(plu_stick(letters, oxford = NA))
   expect_error(plu_stick(letters, oxford = numeric(1)))
   expect_error(plu_stick(letters, oxford = logical(2)))
-})
-
-test_that("plu_stick fn works", {
-  withr::local_options(lifecycle_verbosity = "quiet")
-
-  expect_equal(
-    plu_stick(ingredients, fn = toupper), "SUGAR, SPICE and EVERYTHING NICE"
-  )
-  expect_equal(
-    plu_stick(ingredients, fn = "toupper"), "SUGAR, SPICE and EVERYTHING NICE"
-  )
-
-  lifecycle::expect_deprecated(plu_stick(ingredients, fn = toupper))
-
-  expect_error(plu_stick(letters, fn = this_is_not_a_real_function))
-})
-
-test_that("plu_stick syndeton works", {
-  withr::local_options(lifecycle_verbosity = "quiet")
-
-  expect_equal(
-    plu_stick(ingredients, syndeton = "all"),
-    "sugar and spice and everything nice"
-  )
-  expect_equal(
-    plu_stick(ingredients, syndeton = "none"), "sugar, spice, everything nice"
-  )
-
-  lifecycle::expect_deprecated(plu_stick(ingredients, syndeton = "all"))
-  lifecycle::expect_deprecated(plu_stick(ingredients, syndeton = "none"))
-
-  expect_error(plu_stick(ingredients, syndeton = "error"))
+  lifecycle::expect_defunct(plu_stick(ingredients, fn = toupper))
+  lifecycle::expect_defunct(plu_stick(ingredients, syndeton = "all"))
+  lifecycle::expect_defunct(plu_stick(ingredients, syndeton = "none"))
 })

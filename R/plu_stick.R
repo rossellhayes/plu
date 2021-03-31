@@ -10,21 +10,9 @@
 #'     (x, y, and z) or not (x, y and z) in lists of length three or more.
 #'     Defaults to `FALSE`.
 #'     The default can be changed by setting `options(plu.oxford_comma)`.
-#' @param syndeton \lifecycle{deprecated} Whether to place the conjunction
-#'     before the `"last"` list items, between `"all"` list items, or
-#'     between `"none"`.
-#'     Defaults to `"last"`.
-#'
-#' This argument is deprecated. You should set `sep` and `conj` explicitly
-#'     instead of using `syndeton`.
-#'
-#' @param fn \lifecycle{deprecated} A function to apply to all items in
-#'     the list.
-#'
-#' This argument is deprecated. You should apply a function to `x` before
-#'     passing it to `plu_stick()`.
-#'
-#' @param ... \lifecycle{deprecated} Additional arguments to `fn`.
+#' @param syndeton \lifecycle{deprecated}
+#' @param fn \lifecycle{deprecated}
+#' @param ... \lifecycle{deprecated}
 #'
 #' @return A character vector of length 1.
 #' @export
@@ -46,20 +34,22 @@ plu_stick <- function(
   assert_t_or_f(oxford)
 
   if (lifecycle::is_present(fn)) {
-    lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[1], "(fn = )"))
-
-    x <- lapply(x, get_fun(fn), ...)
+    lifecycle::deprecate_stop(
+      "1.2.0",
+      paste0(sys.call()[1], "(fn = )"),
+      details = paste0(
+        "Please apply a function to `x` before passing it to `",
+        sys.call()[1], "()`."
+      )
+    )
   }
 
   if (lifecycle::is_present(syndeton)) {
-    lifecycle::deprecate_warn("1.2.0", paste0(sys.call()[1], "(syndeton = )"))
-
-    if (!syndeton %in% c("last", "all", "none")) {
-      stop('`syndeton` must be `NULL` or one of "last", "all", or "none".')
-    }
-
-    if (syndeton == "all")              {sep  <- conj}
-    if (syndeton %in% c("all", "none")) {conj <- ""}
+    lifecycle::deprecate_stop(
+      "1.2.0",
+      paste0(sys.call()[1], "(syndeton = )"),
+      details = "Please set `sep` and `conj` explicitly."
+    )
   }
 
   phrase                       <- character(length(x) * 2 - 1)
