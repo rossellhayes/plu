@@ -158,15 +158,9 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
 #&gt;     }
-#&gt;     if (!is.character(x)) {
-#&gt;         rlang::abort("`x` must be a character vector")
-#&gt;     }
-#&gt;     if (length(replace_n) != 1) {
-#&gt;         rlang::abort("`replace_n` must be length one")
-#&gt;     }
-#&gt;     if (!is_t_or_f(replace_n)) {
-#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
-#&gt;     }
+#&gt;     assert_type(x, "character")
+#&gt;     assert_length_1(replace_n)
+#&gt;     assert_t_or_f(replace_n)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
@@ -211,7 +205,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdc957afe28&gt;
+#&gt; &lt;bytecode: 0x7fa48036c6d8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='fu'>plu</span><span class='fu'>::</span><span class='va'><a href='plu_ral.html'>ral</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -220,15 +214,9 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
 #&gt;     }
-#&gt;     if (!is.character(x)) {
-#&gt;         rlang::abort("`x` must be a character vector")
-#&gt;     }
-#&gt;     if (length(replace_n) != 1) {
-#&gt;         rlang::abort("`replace_n` must be length one")
-#&gt;     }
-#&gt;     if (!is_t_or_f(replace_n)) {
-#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
-#&gt;     }
+#&gt;     assert_type(x, "character")
+#&gt;     assert_length_1(replace_n)
+#&gt;     assert_t_or_f(replace_n)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
@@ -273,7 +261,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdc9585c038&gt;
+#&gt; &lt;bytecode: 0x7fa480414a58&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu_ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -282,15 +270,9 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
 #&gt;     }
-#&gt;     if (!is.character(x)) {
-#&gt;         rlang::abort("`x` must be a character vector")
-#&gt;     }
-#&gt;     if (length(replace_n) != 1) {
-#&gt;         rlang::abort("`replace_n` must be length one")
-#&gt;     }
-#&gt;     if (!is_t_or_f(replace_n)) {
-#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
-#&gt;     }
+#&gt;     assert_type(x, "character")
+#&gt;     assert_length_1(replace_n)
+#&gt;     assert_t_or_f(replace_n)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
@@ -335,7 +317,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdc957afe28&gt;
+#&gt; &lt;bytecode: 0x7fa48036c6d8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu::ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -344,15 +326,9 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
 #&gt;     }
-#&gt;     if (!is.character(x)) {
-#&gt;         rlang::abort("`x` must be a character vector")
-#&gt;     }
-#&gt;     if (length(replace_n) != 1) {
-#&gt;         rlang::abort("`replace_n` must be length one")
-#&gt;     }
-#&gt;     if (!is_t_or_f(replace_n)) {
-#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
-#&gt;     }
+#&gt;     assert_type(x, "character")
+#&gt;     assert_length_1(replace_n)
+#&gt;     assert_t_or_f(replace_n)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
@@ -397,12 +373,12 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdc9585c038&gt;
+#&gt; &lt;bytecode: 0x7fa480414a58&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'>
 <span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x) 
 #&gt; x
-#&gt; &lt;bytecode: 0x7fdc91e40f80&gt;
+#&gt; &lt;bytecode: 0x7fa47bab9780&gt;
 #&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span>, default <span class='op'>=</span> <span class='va'>plu_ral</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
@@ -411,15 +387,9 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
 #&gt;     }
-#&gt;     if (!is.character(x)) {
-#&gt;         rlang::abort("`x` must be a character vector")
-#&gt;     }
-#&gt;     if (length(replace_n) != 1) {
-#&gt;         rlang::abort("`replace_n` must be length one")
-#&gt;     }
-#&gt;     if (!is_t_or_f(replace_n)) {
-#&gt;         rlang::abort("`replace_n` must be TRUE or FALSE")
-#&gt;     }
+#&gt;     assert_type(x, "character")
+#&gt;     assert_length_1(replace_n)
+#&gt;     assert_t_or_f(replace_n)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
@@ -464,7 +434,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fdc957afe28&gt;
+#&gt; &lt;bytecode: 0x7fa48036c6d8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
