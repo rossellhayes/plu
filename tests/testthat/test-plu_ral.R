@@ -58,6 +58,11 @@ test_that("vector", {
   )
 
   expect_equal(
+    plu_ral(matrix(c("word", "phrase", "sentence", "paragraph"), nrow = 2)),
+    matrix(c("words", "phrases", "sentences", "paragraphs"), nrow = 2)
+  )
+
+  expect_equal(
     plu_ral(c("person ", " cactus", "attorney {general}", "", "{1|2|0}")),
     c("people ", " cacti", "attorneys general", "", "0")
   )
