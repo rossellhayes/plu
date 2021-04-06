@@ -1,4 +1,4 @@
-# plu (development version)
+# plu 0.2.1
 
 ## New features
 * `plu_ral()` now supports {braced|pipe} sequences of indefinite length.
