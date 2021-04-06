@@ -18,9 +18,9 @@ assert_length_1_or_null <- function(x, arg = NULL) {
 }
 
 assert_type <- function(x, type, arg = NULL) {
-  if (is.null(arg))         {arg  <- deparse(substitute(x))}
-  if (type == "numeric")    {type <- c("numeric", "integer")}
-  if (inherits(x, "array")) {x    <- x[1]}
+  if (is.null(arg))      {arg  <- deparse(substitute(x))}
+  if (type == "numeric") {type <- c("numeric", "integer")}
+  if (inherits(x, "array") || inherits(x, "matrix")) {x <- x[1]}
 
   if (!inherits(x, type)) {
     stop("`", arg, "` must be of type ", type[[1]], call. = FALSE)
