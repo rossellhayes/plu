@@ -10,7 +10,6 @@
 ^codecov\.yml$
 ^\.travis\.yml$
 ^appveyor\.yml$
-^examples
 ^examples$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
@@ -19,3 +18,4 @@
 ^pkgdown$
 ^\.lintr$
 ^\.covrignore$
+^revdep$
