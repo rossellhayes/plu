@@ -1,3 +1,6 @@
+## Resubmission
+* This resubmission fixes moved URLs.
+
 ## Test environments
 * Local R installation, Windows 10, R 4.0.2
 * GitHub Actions
