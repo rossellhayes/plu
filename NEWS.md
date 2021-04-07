@@ -18,6 +18,7 @@
   * `is_capital(1, strict = TRUE)` no returns `FALSE` instead of incorrectly returning `NA`.
   
 ## Miscellaneous
+* Error messages now use `crayon` if it is installed.
 * Deprecated arguments to `plu::stick()` now produce errors.
 * Removed dependencies on `rlang` and `stringi`.
 * Gained dependency on `backports`.
