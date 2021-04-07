@@ -46,10 +46,10 @@ test_that("early return", {
 })
 
 test_that("errors", {
-  expect_error(plu_stick(letters, sep    = numeric(1)),   "sep")
-  expect_error(plu_stick(letters, sep    = character(2)), "sep")
-  expect_error(plu_stick(letters, conj   = numeric(1)),   "conj")
-  expect_error(plu_stick(letters, conj   = character(2)), "conj")
+  expect_error(plu_stick(letters, sep    = numeric(1)),   "`sep`")
+  expect_error(plu_stick(letters, sep    = character(2)), "`sep`")
+  expect_error(plu_stick(letters, conj   = numeric(1)),   "`conj`")
+  expect_error(plu_stick(letters, conj   = character(2)), "`conj`")
   expect_error(plu_stick(letters, oxford = NA))
   expect_error(plu_stick(letters, oxford = numeric(1)))
   expect_error(plu_stick(letters, oxford = logical(2)))

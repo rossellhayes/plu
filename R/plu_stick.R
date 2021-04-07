@@ -73,7 +73,7 @@ stick <- plu_stick
 
 validate_sep <- function(sep) {
   if (is.null(sep)) {return("")}
-  assert_length_1(sep, deparse(substitute(sep)))
-  assert_type(sep, "character", deparse(substitute(sep)))
+  assert_length_1(sep, code(deparse(substitute(sep))))
+  assert_type(sep, "character", code(deparse(substitute(sep))))
   sep
 }
