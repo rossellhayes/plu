@@ -106,9 +106,11 @@ test_that("irregulars", {
 test_that("pipe works", {
   expect_equal(plu_ral("{single|plural} number", one), "single number")
   expect_equal(plu_ral("{single|plural} number", two), "plural numbers")
+
   expect_equal(
     plu_ral("{one|many} {single|plural} number", two), "many plural numbers"
   )
+
   expect_equal(plu_ral("{single|dual|plural} number", one), "single number")
   expect_equal(plu_ral("{single|dual|plural} number", two), "dual numbers")
   expect_equal(plu_ral("{single|dual|plural} number", fifty), "plural numbers")
@@ -120,6 +122,65 @@ test_that("pipe works", {
   expect_equal(plu_ral("number{|2}",    one),   "number")
   expect_equal(plu_ral("number{1|2}",   two),   "number2")
   expect_equal(plu_ral("number{1|2|3}", fifty), "number3")
+})
+
+test_that("alternate pipe", {
+  expect_equal(
+    plu_ral("[single|plural] number", one, open = "[", close = "]"),
+    "single number"
+  )
+  expect_equal(
+    plu_ral("[single|plural] number", two, open = "[", close = "]"),
+    "plural numbers"
+  )
+
+  expect_equal(
+    plu_ral("[one|many] [single|plural] number", two, open = "[", close = "]"),
+    "many plural numbers"
+  )
+
+  expect_equal(
+    plu_ral("[single|dual|plural] number", one, open = "[", close = "]"),
+    "single number"
+  )
+  expect_equal(
+    plu_ral("[single|dual|plural] number", two, open = "[", close = "]"),
+    "dual numbers"
+  )
+  expect_equal(
+    plu_ral("[single|dual|plural] number", fifty, open = "[", close = "]"),
+    "plural numbers"
+  )
+
+  expect_equal(
+    plu_ral("[single|plural] number", pl = FALSE, open = "[", close = "]"),
+    "single number"
+    )
+  expect_equal(
+    plu_ral("[single|plural] number", pl = TRUE, open = "[", close = "]"),
+    "plural numbers"
+    )
+
+  expect_equal(
+    plu_ral("number[1|2]",   one, open = "[", close = "]"),   "number1"
+  )
+  expect_equal(
+    plu_ral("number[|2]",    one, open = "[", close = "]"),   "number"
+  )
+  expect_equal(
+    plu_ral("number[1|2]",   two, open = "[", close = "]"),   "number2"
+  )
+  expect_equal(
+    plu_ral("number[1|2|3]", fifty, open = "[", close = "]"), "number3"
+  )
+
+  expect_error(plu_ral("word", open  = c("{", "}")))
+  expect_error(plu_ral("word", close = c("{", "}")))
+  expect_error(plu_ral("word", open  = numeric(1)))
+  expect_error(plu_ral("word", close = numeric(1)))
+  expect_error(plu_ral("word", open  = ""))
+  expect_error(plu_ral("word", close = ""))
+  expect_error(plu_ral("word", open = "{", close = "{"))
 })
 
 test_that("arbitrary length pipe", {

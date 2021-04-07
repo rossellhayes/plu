@@ -30,6 +30,8 @@
 #'     `"n"`.
 #'     See details.
 #'     Defaults to `TRUE`.
+#' @param open,close The opening and closing delimiters for special strings.
+#'     See section "Special strings". Defaults to `"{"` and `"}"`.
 #'
 #' @section Irregular plurals:
 #'
@@ -72,15 +74,16 @@
 #' number in `n`.
 #'     - This output can be modified with `n_fn`.
 #'
-#' - Strings between braces separated by a pipe will be treated as a custom
-#' plural (`"{a|some} word"` to "a word", "some words").
+#' - Strings between `open` and `close` separated by a pipe will be treated as a
+#' custom plural (`"{a|some} word"` to "a word", "some words").
 #'     - More than two strings separated by pipes will be treated as singular,
 #'     dual, trial, ... and plural forms. For example, `"{the|both|all} word"`
 #'     to "the word" (1), "both words" (2), "all words" (3+).
 #'     - See examples for more.
 #'
-#' - Any other string between braces without a pipe will be treated as
-#' invariant. For example, `"attorney {general}"` to "attorneys general" (notice
+#' - Any other string between `open` and `close` without a pipe will be treated
+#' as invariant.
+#' For example, `"attorney {general}"` to "attorneys general" (notice
 #' "general" is not pluralized).
 #'
 #' @return The character vector `x` altered to match the number of `n`
@@ -94,7 +97,7 @@
 plu_ral <- function(
   x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
-  replace_n = TRUE
+  replace_n = TRUE, open = "{", close = "}"
 ) {
   if (!length(x)) {return(character(0))}
   assert_type(x, "character")
@@ -105,16 +108,22 @@ plu_ral <- function(
   pl <- derive_pl(pl, n, vector)
   n  <- derive_n(pl, n, vector)
 
+  validate_delimeters(open, close)
+  open  <- escape(open)
+  close <- escape(close)
+
   mat <- matrix(x, nrow = 1)
 
   # Split strings into individual words and punctuation marks
-  split_in <- plu_split(
-    mat,
-    "((?=[^[:alnum:]'\\-\\{])|(?<=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})",
-    perl = TRUE
+  boundaries <- paste0(
+    "((?=[^[:alnum:]'\\-", open, "])", "|",
+    "(?<=[^[:alnum:]'\\-", open, "]))",
+    "(?![^", open, "]*", close, ")"
   )
 
-  braced <- grepl("\\{.*\\}", split_in)
+  split_in <- plu_split(mat, boundaries, perl = TRUE)
+
+  braced <- grepl(paste0(open, ".*", close), split_in)
 
   if (replace_n) {replace_n <- grepl("\\bn\\b", split_in)}
   n_fn <- get_fun(n_fn)
@@ -160,7 +169,7 @@ plu_ral <- function(
   }
 
   # Select appropriate option for words wrapped in braces
-  split_out[braced] <- pluralize_braces(split_out[braced], n)
+  split_out[braced] <- pluralize_braces(split_out[braced], n, open, close)
 
   # replace "n" with `n`
   split_out[replace_n] <- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
@@ -206,10 +215,33 @@ derive_n <- function(pl, n, vector) {
   length(vector)
 }
 
-pluralize_braces <- function(x, n) {
+validate_delimeters <- function(open, close) {
+  for (delim in list(open, close)) {
+    assert_type(delim, "character", "open` and `close")
+    assert_length_1(delim, "open` and `close")
+    assert_nchar(delim, "open` and `close")
+  }
+
+  if (open == close) {
+    stop("`open` and `close` must not be the same", call. = FALSE)
+  }
+}
+
+assert_nchar <- function(x, arg = NULL) {
+  if (is.null(arg)) {arg <- deparse(substitute(x))}
+  if (!nzchar(x)) {
+    stop("`", arg, "` must not be an empty string", .call = FALSE)
+  }
+}
+
+escape <- function(x) {
+  paste0("\\Q", x, "\\E")
+}
+
+pluralize_braces <- function(x, n, open, close) {
   brace_list <- list(
-    pre = sub("(?s)(^.*?)\\{.*$",    "\\1", x, perl = TRUE),
-    mid = sub("(?s)^.*?\\{(.*?)\\}", "\\1", x, perl = TRUE)
+    pre = sub(paste0("(?s)(^.*?)", open, ".*$"),        "\\1", x, perl = TRUE),
+    mid = sub(paste0("(?s)^.*?", open, "(.*?)", close), "\\1", x, perl = TRUE)
   )
 
   brace_list$mid <- vapply(

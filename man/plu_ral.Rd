@@ -13,7 +13,9 @@ plu_ral(
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
-  replace_n = TRUE
+  replace_n = TRUE,
+  open = "{",
+  close = "}"
 )
 
 ral(
@@ -24,7 +26,9 @@ ral(
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
-  replace_n = TRUE
+  replace_n = TRUE,
+  open = "{",
+  close = "}"
 )
 }
 \arguments{
@@ -65,6 +69,9 @@ See examples in \code{\link[=ralize]{ralize()}} for more details.}
 \code{"n"}.
 See details.
 Defaults to \code{TRUE}.}
+
+\item{open, close}{The opening and closing delimiters for special strings.
+See section "Special strings". Defaults to \code{"{"} and \code{"}"}.}
 }
 \value{
 The character vector \code{x} altered to match the number of \code{n}
@@ -114,16 +121,17 @@ number in \code{n}.
 \itemize{
 \item This output can be modified with \code{n_fn}.
 }
-\item Strings between braces separated by a pipe will be treated as a custom
-plural (\code{"{a|some} word"} to "a word", "some words").
+\item Strings between \code{open} and \code{close} separated by a pipe will be treated as a
+custom plural (\code{"{a|some} word"} to "a word", "some words").
 \itemize{
 \item More than two strings separated by pipes will be treated as singular,
 dual, trial, ... and plural forms. For example, \code{"{the|both|all} word"}
 to "the word" (1), "both words" (2), "all words" (3+).
 \item See examples for more.
 }
-\item Any other string between braces without a pipe will be treated as
-invariant. For example, \code{"attorney {general}"} to "attorneys general" (notice
+\item Any other string between \code{open} and \code{close} without a pipe will be treated
+as invariant.
+For example, \code{"attorney {general}"} to "attorneys general" (notice
 "general" is not pluralized).
 }
 }
