@@ -174,13 +174,38 @@ test_that("alternate pipe", {
     plu_ral("number[1|2|3]", fifty, open = "[", close = "]"), "number3"
   )
 
-  expect_error(plu_ral("word", open  = c("{", "}")))
-  expect_error(plu_ral("word", close = c("{", "}")))
-  expect_error(plu_ral("word", open  = numeric(1)))
-  expect_error(plu_ral("word", close = numeric(1)))
-  expect_error(plu_ral("word", open  = ""))
-  expect_error(plu_ral("word", close = ""))
-  expect_error(plu_ral("word", open = "{", close = "{"))
+  expect_error(
+    plu_ral("word", open  = c("{", "}")),
+    "`open` and `close` must be length one"
+  )
+  expect_error(
+    plu_ral("word", close = c("{", "}")),
+    "`open` and `close` must be length one"
+  )
+
+  expect_error(
+    plu_ral("word", open  = numeric(1)),
+    '`open` and `close` must be of type "character"'
+  )
+  expect_error(
+    plu_ral("word", close = numeric(1)),
+    '`open` and `close` must be of type "character"'
+  )
+
+  expect_error(
+    plu_ral("word", open  = ""),
+    "`open` and `close` must not be an empty string"
+  )
+  expect_error(
+    plu_ral("word", close = ""),
+    "`open` and `close` must not be an empty string"
+  )
+  expect_error(assert_nchar(""), '`""` must not be an empty string')
+
+  expect_error(
+    plu_ral("word", open = "{", close = "{"),
+    "`open` and `close` must not be the same"
+  )
 })
 
 test_that("arbitrary length pipe", {
