@@ -238,13 +238,14 @@ test_that("early return", {
 })
 
 test_that("errors", {
-  expect_error(plu_ral(integer(1)), "`x` must be of type character")
+  expect_error(plu_ral(integer(1)), '`x` must be of type "character"')
 
   expect_error(
-    plu_ral("word", n = character(1)), "`n` must be of type numeric"
+    plu_ral("word", n = character(1)), '`n` must be of type "numeric"'
   )
   expect_error(
-    plu_ral("word", pl = TRUE, n = character(1)), "`n` must be of type numeric"
+    plu_ral("word", pl = TRUE, n = character(1)),
+    '`n` must be of type "numeric"'
   )
   expect_error(plu_ral("word", n = numeric(2)), "`n` must be length one")
 
@@ -253,11 +254,10 @@ test_that("errors", {
   expect_error(plu_ral("word", pl = logical(2)), "`pl` must be length one")
 
   expect_error(
-    plu_ral("word", replace_n = NA), "`replace_n` must be TRUE or FALSE"
+    plu_ral("word", replace_n = NA),         "`replace_n` must be TRUE or FALSE"
   )
   expect_error(
-    plu_ral("word", replace_n = numeric(1)),
-    "`replace_n` must be TRUE or FALSE"
+    plu_ral("word", replace_n = numeric(1)), "`replace_n` must be TRUE or FALSE"
   )
   expect_error(
     plu_ral("word", replace_n = logical(2)), "`replace_n` must be length one"

@@ -39,9 +39,7 @@ get_fun <- function(fn, default = identity) {
 
   tryCatch(
     suppressWarnings(get(fn, envir = env, mode = "function")),
-    error = function(e) {
-      stop("Could not find the function `", fn_input, "`", call. = FALSE)
-    }
+    error = function(e) {error("Could not find the function ", code(fn_input))}
   )
 }
 

@@ -216,22 +216,20 @@ derive_n <- function(pl, n, vector) {
 }
 
 validate_delimeters <- function(open, close) {
+  arg <- paste(code("open"), "and", code("close"))
+
   for (delim in list(open, close)) {
-    assert_type(delim, "character", "open` and `close")
-    assert_length_1(delim, "open` and `close")
-    assert_nchar(delim, "open` and `close")
+    assert_type(delim, "character", arg)
+    assert_length_1(delim, arg)
+    assert_nchar(delim, arg)
   }
 
-  if (open == close) {
-    stop("`open` and `close` must not be the same", call. = FALSE)
-  }
+  if (open == close) {error(arg, " must not be the same")}
 }
 
 assert_nchar <- function(x, arg = NULL) {
-  if (is.null(arg)) {arg <- deparse(substitute(x))}
-  if (!nzchar(x)) {
-    stop("`", arg, "` must not be an empty string", .call = FALSE)
-  }
+  if (is.null(arg)) {arg <- code(deparse(substitute(x)))}
+  if (!nzchar(x))   {error(arg, " must not be an empty string")}
 }
 
 escape <- function(x) {

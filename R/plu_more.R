@@ -67,5 +67,5 @@ format_type <- function(type, x) {
     return("element")
   }
 
-  stop("`type` must be a character string, a logical, or NULL", call. = FALSE)
+  error(code(type), " must be a character string, a logical, or NULL")
 }
