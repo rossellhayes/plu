@@ -131,12 +131,20 @@
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports arbitrary delimteters for special sequences.
+<ul>
+<li>
+<code><a href="../reference/plu_ral.html">plu_ral("attorney [general]", open = "[", close = "]")</a></code> produces “attorneys general”.</li>
+</ul>
+</li>
+<li>
 <code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports {braced|pipe} sequences of indefinite length.
 <ul>
 <li>
 <code><a href="../reference/plu_ral.html">plu_ral("{one|two|three|more}", n = 3)</a></code> produces “three”.</li>
 <li>
 <code><a href="../reference/plu_ral.html">plu_ral("{one|two|three|more}", n = 50)</a></code> produces “more”.</li>
+<li>The delimters of these sequences can be changed with <code>open</code> and <code>close</code>.</li>
 </ul>
 </li>
 </ul>
