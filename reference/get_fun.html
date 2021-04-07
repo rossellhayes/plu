@@ -153,7 +153,7 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
     <pre class="examples"><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='va'>plu_ral</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
-#&gt;     replace_n = TRUE) 
+#&gt;     replace_n = TRUE, open = "{", close = "}") 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -163,10 +163,15 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_t_or_f(replace_n)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     validate_delimeters(open, close)
+#&gt;     open &lt;- escape(open)
+#&gt;     close &lt;- escape(close)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
-#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;         perl = TRUE)
-#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     boundaries &lt;- paste0("((?=[^[:alnum:]'\\-", open, "])", "|", 
+#&gt;         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", 
+#&gt;         close, ")")
+#&gt;     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)
+#&gt;     braced &lt;- grepl(paste0(open, ".*", close), split_in)
 #&gt;     if (replace_n) {
 #&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
 #&gt;     }
@@ -192,17 +197,17 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;         }
 #&gt;     }
 #&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
-#&gt;         n)
+#&gt;         n, open, close)
 #&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
 #&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb7b1051078&gt;
+#&gt; &lt;bytecode: 0x7fb2804cd6a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='fu'>plu</span><span class='fu'>::</span><span class='va'><a href='plu_ral.html'>ral</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
-#&gt;     replace_n = TRUE) 
+#&gt;     replace_n = TRUE, open = "{", close = "}") 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -212,10 +217,15 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_t_or_f(replace_n)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     validate_delimeters(open, close)
+#&gt;     open &lt;- escape(open)
+#&gt;     close &lt;- escape(close)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
-#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;         perl = TRUE)
-#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     boundaries &lt;- paste0("((?=[^[:alnum:]'\\-", open, "])", "|", 
+#&gt;         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", 
+#&gt;         close, ")")
+#&gt;     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)
+#&gt;     braced &lt;- grepl(paste0(open, ".*", close), split_in)
 #&gt;     if (replace_n) {
 #&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
 #&gt;     }
@@ -241,17 +251,17 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;         }
 #&gt;     }
 #&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
-#&gt;         n)
+#&gt;         n, open, close)
 #&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
 #&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb7b10ad6d0&gt;
+#&gt; &lt;bytecode: 0x7fb27f161020&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu_ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
-#&gt;     replace_n = TRUE) 
+#&gt;     replace_n = TRUE, open = "{", close = "}") 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -261,10 +271,15 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_t_or_f(replace_n)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     validate_delimeters(open, close)
+#&gt;     open &lt;- escape(open)
+#&gt;     close &lt;- escape(close)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
-#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;         perl = TRUE)
-#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     boundaries &lt;- paste0("((?=[^[:alnum:]'\\-", open, "])", "|", 
+#&gt;         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", 
+#&gt;         close, ")")
+#&gt;     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)
+#&gt;     braced &lt;- grepl(paste0(open, ".*", close), split_in)
 #&gt;     if (replace_n) {
 #&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
 #&gt;     }
@@ -290,17 +305,17 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;         }
 #&gt;     }
 #&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
-#&gt;         n)
+#&gt;         n, open, close)
 #&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
 #&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb7b1051078&gt;
+#&gt; &lt;bytecode: 0x7fb2804cd6a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='st'>"plu::ral"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
-#&gt;     replace_n = TRUE) 
+#&gt;     replace_n = TRUE, open = "{", close = "}") 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -310,10 +325,15 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_t_or_f(replace_n)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     validate_delimeters(open, close)
+#&gt;     open &lt;- escape(open)
+#&gt;     close &lt;- escape(close)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
-#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;         perl = TRUE)
-#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     boundaries &lt;- paste0("((?=[^[:alnum:]'\\-", open, "])", "|", 
+#&gt;         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", 
+#&gt;         close, ")")
+#&gt;     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)
+#&gt;     braced &lt;- grepl(paste0(open, ".*", close), split_in)
 #&gt;     if (replace_n) {
 #&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
 #&gt;     }
@@ -339,22 +359,22 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;         }
 #&gt;     }
 #&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
-#&gt;         n)
+#&gt;         n, open, close)
 #&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
 #&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb7b10ad6d0&gt;
+#&gt; &lt;bytecode: 0x7fb27f161020&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div><div class='input'>
 <span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x) 
 #&gt; x
-#&gt; &lt;bytecode: 0x7fb7abfef780&gt;
+#&gt; &lt;bytecode: 0x7fb27ac65180&gt;
 #&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'>get_fun</span><span class='op'>(</span><span class='cn'>NULL</span>, default <span class='op'>=</span> <span class='va'>plu_ral</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, 
 #&gt;     irregulars = c("moderate", "conservative", "liberal", "none"), 
-#&gt;     replace_n = TRUE) 
+#&gt;     replace_n = TRUE, open = "{", close = "}") 
 #&gt; {
 #&gt;     if (!length(x)) {
 #&gt;         return(character(0))
@@ -364,10 +384,15 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;     assert_t_or_f(replace_n)
 #&gt;     pl &lt;- derive_pl(pl, n, vector)
 #&gt;     n &lt;- derive_n(pl, n, vector)
+#&gt;     validate_delimeters(open, close)
+#&gt;     open &lt;- escape(open)
+#&gt;     close &lt;- escape(close)
 #&gt;     mat &lt;- matrix(x, nrow = 1)
-#&gt;     split_in &lt;- plu_split(mat, "((?=[^[:alnum:]'\\-\\{])|(?&lt;=[^[:alnum:]'\\-\\{]))(?![^\\{]*\\})", 
-#&gt;         perl = TRUE)
-#&gt;     braced &lt;- grepl("\\{.*\\}", split_in)
+#&gt;     boundaries &lt;- paste0("((?=[^[:alnum:]'\\-", open, "])", "|", 
+#&gt;         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", 
+#&gt;         close, ")")
+#&gt;     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)
+#&gt;     braced &lt;- grepl(paste0(open, ".*", close), split_in)
 #&gt;     if (replace_n) {
 #&gt;         replace_n &lt;- grepl("\\bn\\b", split_in)
 #&gt;     }
@@ -393,13 +418,13 @@ Defaults to <code><a href='https://rdrr.io/r/base/identity.html'>identity()</a><
 #&gt;         }
 #&gt;     }
 #&gt;     split_out[braced] &lt;- pluralize_braces(split_out[braced], 
-#&gt;         n)
+#&gt;         n, open, close)
 #&gt;     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
 #&gt;     mat[] &lt;- apply(split_out, 2, paste, collapse = "")
 #&gt;     x[] &lt;- apply(mat, 2, paste, collapse = "")
 #&gt;     x
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb7b1051078&gt;
+#&gt; &lt;bytecode: 0x7fb2804cd6a8&gt;
 #&gt; &lt;environment: namespace:plu&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

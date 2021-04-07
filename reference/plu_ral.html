@@ -136,7 +136,9 @@
   n <span class='op'>=</span> <span class='cn'>NULL</span>,
   pl <span class='op'>=</span> <span class='cn'>NULL</span>,
   irregulars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"moderate"</span>, <span class='st'>"conservative"</span>, <span class='st'>"liberal"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
-  replace_n <span class='op'>=</span> <span class='cn'>TRUE</span>
+  replace_n <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  open <span class='op'>=</span> <span class='st'>"{"</span>,
+  close <span class='op'>=</span> <span class='st'>"}"</span>
 <span class='op'>)</span>
 
 <span class='fu'>ral</span><span class='op'>(</span>
@@ -147,7 +149,9 @@
   n <span class='op'>=</span> <span class='cn'>NULL</span>,
   pl <span class='op'>=</span> <span class='cn'>NULL</span>,
   irregulars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"moderate"</span>, <span class='st'>"conservative"</span>, <span class='st'>"liberal"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
-  replace_n <span class='op'>=</span> <span class='cn'>TRUE</span>
+  replace_n <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  open <span class='op'>=</span> <span class='st'>"{"</span>,
+  close <span class='op'>=</span> <span class='st'>"}"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,6 +211,11 @@ See examples in <code><a href='plu_ralize.html'>ralize()</a></code> for more det
 See details.
 Defaults to <code>TRUE</code>.</p></td>
     </tr>
+    <tr>
+      <th>open, close</th>
+      <td><p>The opening and closing delimiters for special strings.
+See section "Special strings". Defaults to <code>"{"</code> and <code>"}"</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -254,15 +263,16 @@ is not a common English word.</p></li>
 number in <code>n</code>.</p><ul>
 <li><p>This output can be modified with <code>n_fn</code>.</p></li>
 </ul></li>
-<li><p>Strings between braces separated by a pipe will be treated as a custom
-plural (<code>"{a|some} word"</code> to "a word", "some words").</p><ul>
+<li><p>Strings between <code>open</code> and <code>close</code> separated by a pipe will be treated as a
+custom plural (<code>"{a|some} word"</code> to "a word", "some words").</p><ul>
 <li><p>More than two strings separated by pipes will be treated as singular,
 dual, trial, ... and plural forms. For example, <code>"{the|both|all} word"</code>
 to "the word" (1), "both words" (2), "all words" (3+).</p></li>
 <li><p>See examples for more.</p></li>
 </ul></li>
-<li><p>Any other string between braces without a pipe will be treated as
-invariant. For example, <code>"attorney {general}"</code> to "attorneys general" (notice
+<li><p>Any other string between <code>open</code> and <code>close</code> without a pipe will be treated
+as invariant.
+For example, <code>"attorney {general}"</code> to "attorneys general" (notice
 "general" is not pluralized).</p></li>
 </ul>
 
