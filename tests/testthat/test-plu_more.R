@@ -119,13 +119,6 @@ test_that("cardinal", {
   )
 })
 
-test_that("plu_more in plu_stick", {
-  expect_equal(
-    plu_stick(plu_more(letters, fn = nombre::cardinal)),
-    "a, b, c, d, e and twenty-one more characters"
-  )
-})
-
 test_that("errors", {
   expect_error(plu_more(letters, max = c(1, 2)))
   expect_error(plu_more(letters, max = "1"))
