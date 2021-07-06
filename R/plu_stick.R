@@ -25,6 +25,13 @@ plu_stick <- function(
   syndeton = lifecycle::deprecated(),
   fn = lifecycle::deprecated(), ...
 ) {
+  lifecycle::deprecate_warn(
+    "0.2.2",
+    paste0(sys.call()[1], "()"),
+    details =
+      "Please use `knitr::combine_words()` or `glue::glue_collapse()` instead."
+  )
+
   if (!length(x)) {return(character(0))}
 
   sep  <- validate_sep(sep)
@@ -35,7 +42,7 @@ plu_stick <- function(
 
   if (lifecycle::is_present(fn)) {
     lifecycle::deprecate_stop(
-      "1.2.0",
+      "0.2.0",
       paste0(sys.call()[1], "(fn = )"),
       details = paste0(
         "Please apply a function to `x` before passing it to `",
@@ -46,7 +53,7 @@ plu_stick <- function(
 
   if (lifecycle::is_present(syndeton)) {
     lifecycle::deprecate_stop(
-      "1.2.0",
+      "0.2.0",
       paste0(sys.call()[1], "(syndeton = )"),
       details = "Please set `sep` and `conj` explicitly."
     )

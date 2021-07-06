@@ -1,5 +1,7 @@
 # plu (development version)
 
+* Deprecate `plu_stick()` in favor of `knitr::combine_words()` or `glue::glue_collapse()`.
+
 # plu 0.2.1
 
 ## New features
