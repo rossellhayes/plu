@@ -22,7 +22,3 @@ str_replace_all <- function(string, pattern, replacement) {
 
   gsub(pattern = pattern, replacement = replacement, x = string, perl = TRUE)
 }
-
-str_to_sentence <- function(string) {
-  sub("^(.*?)(\\p{L})(.*)$", "\\1\\U\\2\\E\\3", string, perl = TRUE)
-}
