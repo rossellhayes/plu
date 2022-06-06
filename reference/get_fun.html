@@ -93,9 +93,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         close, ")")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- grepl(paste0(open, ".*", close), split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- str_detect(split_in, paste0(open, ".*", close))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (replace_n) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- grepl("\\bn\\b", split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- str_detect(split_in, "\\bn\\b")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n_fn &lt;- get_fun(n_fn)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
@@ -108,8 +108,8 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- which(is_capitalized(split_in))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- caps[caps %in% removed]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             after_caps &lt;- vapply(caps, function(i) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(str_detect(split_out[seq(i, (i%/%nrow(split_out) + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   1) * nrow(split_out))], "[[:alpha:]]"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 idx[1] + i - 1L</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             }, integer(1))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             split_out[after_caps] &lt;- capitalize(split_out[after_caps])</span>
@@ -120,12 +120,13 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- str_replace_all(split_out[replace_n], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         "\\bn\\b", n_fn(n, ...))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55779daca990&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a1cabeb8e8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="va"><a href="plu_ral.html">ral</a></span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
@@ -148,9 +149,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         close, ")")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- grepl(paste0(open, ".*", close), split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- str_detect(split_in, paste0(open, ".*", close))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (replace_n) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- grepl("\\bn\\b", split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- str_detect(split_in, "\\bn\\b")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n_fn &lt;- get_fun(n_fn)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
@@ -163,8 +164,8 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- which(is_capitalized(split_in))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- caps[caps %in% removed]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             after_caps &lt;- vapply(caps, function(i) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(str_detect(split_out[seq(i, (i%/%nrow(split_out) + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   1) * nrow(split_out))], "[[:alpha:]]"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 idx[1] + i - 1L</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             }, integer(1))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             split_out[after_caps] &lt;- capitalize(split_out[after_caps])</span>
@@ -175,12 +176,13 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- str_replace_all(split_out[replace_n], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         "\\bn\\b", n_fn(n, ...))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55779c310c68&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a1c942fbc0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu_ral"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
@@ -203,9 +205,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         close, ")")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- grepl(paste0(open, ".*", close), split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- str_detect(split_in, paste0(open, ".*", close))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (replace_n) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- grepl("\\bn\\b", split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- str_detect(split_in, "\\bn\\b")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n_fn &lt;- get_fun(n_fn)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
@@ -218,8 +220,8 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- which(is_capitalized(split_in))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- caps[caps %in% removed]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             after_caps &lt;- vapply(caps, function(i) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(str_detect(split_out[seq(i, (i%/%nrow(split_out) + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   1) * nrow(split_out))], "[[:alpha:]]"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 idx[1] + i - 1L</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             }, integer(1))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             split_out[after_caps] &lt;- capitalize(split_out[after_caps])</span>
@@ -230,12 +232,13 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- str_replace_all(split_out[replace_n], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         "\\bn\\b", n_fn(n, ...))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55779daca990&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a1cabeb8e8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu::ral"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
@@ -258,9 +261,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         close, ")")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- grepl(paste0(open, ".*", close), split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- str_detect(split_in, paste0(open, ".*", close))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (replace_n) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- grepl("\\bn\\b", split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- str_detect(split_in, "\\bn\\b")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n_fn &lt;- get_fun(n_fn)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
@@ -273,8 +276,8 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- which(is_capitalized(split_in))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- caps[caps %in% removed]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             after_caps &lt;- vapply(caps, function(i) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(str_detect(split_out[seq(i, (i%/%nrow(split_out) + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   1) * nrow(split_out))], "[[:alpha:]]"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 idx[1] + i - 1L</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             }, integer(1))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             split_out[after_caps] &lt;- capitalize(split_out[after_caps])</span>
@@ -285,18 +288,19 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- str_replace_all(split_out[replace_n], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         "\\bn\\b", n_fn(n, ...))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55779c310c68&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a1c942fbc0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55779c61e770&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a1c9741770&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span>, default <span class="op">=</span> <span class="va">plu_ral</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
@@ -319,9 +323,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         "(?&lt;=[^[:alnum:]'\\-", open, "]))", "(?![^", open, "]*", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         close, ")")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_in &lt;- plu_split(mat, boundaries, perl = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- grepl(paste0(open, ".*", close), split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     braced &lt;- str_detect(split_in, paste0(open, ".*", close))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (replace_n) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- grepl("\\bn\\b", split_in)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         replace_n &lt;- str_detect(split_in, "\\bn\\b")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     n_fn &lt;- get_fun(n_fn)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
@@ -334,8 +338,8 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- which(is_capitalized(split_in))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             caps &lt;- caps[caps %in% removed]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             after_caps &lt;- vapply(caps, function(i) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(grepl("[[:alpha:]]", split_out[seq(i, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   (i%/%nrow(split_out) + 1) * nrow(split_out))]))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 idx &lt;- which(str_detect(split_out[seq(i, (i%/%nrow(split_out) + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   1) * nrow(split_out))], "[[:alpha:]]"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 idx[1] + i - 1L</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             }, integer(1))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             split_out[after_caps] &lt;- capitalize(split_out[after_caps])</span>
@@ -346,12 +350,13 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[replace_n] &lt;- str_replace_all(split_out[replace_n], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         "\\bn\\b", n_fn(n, ...))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55779daca990&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a1cabeb8e8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 </code></pre></div>
     </div>
