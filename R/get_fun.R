@@ -19,9 +19,9 @@ get_fun <- function(fn, default = identity) {
   if (try_true(is.character(fn))) {
     fn_input <- fn
 
-    if (grepl("::", fn_input)) {
-      fn       <- gsub("^.*::", "", fn_input)
-      package  <- gsub("::.*$", "", fn_input)
+    if (str_detect(fn_input, "::")) {
+      fn       <- str_replace(fn_input, "^.*::", "")
+      package  <- str_replace(fn_input, "::.*$", "")
       env      <- getNamespace(package)
     }
   } else {

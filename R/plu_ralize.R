@@ -38,31 +38,21 @@ plu_ralize <- function(
     none         = data.frame(singular = character(0), plural = character(0))
   )
 
-  todo <- grepl("[A-Za-z0-9]$", x)
+  result <- x[NA]
+  result[!str_detect(x, "[A-Za-z0-9]$")] <- x[!str_detect(x, "[A-Za-z0-9]$")]
 
-  irreg              <- match(x[todo], dict$singular)
-  irreg_na           <- is.na(irreg)
-  x[todo][!irreg_na] <- dict$plural[irreg[!irreg_na]]
-  todo[todo]         <- irreg_na
+  irreg <- match(x[is.na(result)], dict$singular)
+  result[is.na(result)] <- dict$plural[irreg]
 
-  upper              <- tosentence(x[todo]) == x[todo]
-  irreg              <- upper[NA]
-  irreg[upper]       <- match(tolower(x[todo][upper]), dict$singular)
-  irreg_na           <- is.na(irreg)
-  x[todo][!irreg_na] <- tosentence(dict$plural[irreg[!irreg_na]])
-  todo[todo]         <- irreg_na
+  result[is.na(result)] <- paste0(
+    str_replace_all(x[is.na(result)], c(
+      "(?<=[^AaEeIiOoUu]|[Qq][Uu])y$" = "ie",
+      "(?<=[JjSsXxZz]|[CScs][Hh])$" = "e"
+    )),
+    "s"
+  )
 
-  xy          <- grepl("([^AaEeIiOoUu]|[Qq][Uu])y$", x[todo])
-  x[todo][xy] <- gsub("y$", "ies", x[todo][xy])
-  todo[todo]  <- !xy
-
-  xs          <- grepl("([JSXZjsxz]|[CScs][Hh])$", x[todo])
-  x[todo][xs] <- paste0(x[todo][xs], "es")
-  todo[todo]  <- !xs
-
-  x[todo] <- paste0(x[todo], "s")
-
-  x
+  result
 }
 
 #' @rdname plu_ralize

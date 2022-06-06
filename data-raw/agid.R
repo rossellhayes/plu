@@ -7,20 +7,22 @@ library(usethis)
 list <- read_lines("data-raw/infl.txt") %>%
   enframe(name = NULL, value = "line") %>%
   mutate(
-    singular = str_extract(line, "[A-Za-z]+"),
-    line     = str_squish(str_replace(line, singular, "")),
-    part     = str_extract(str_extract(line, ".+:"), "[A-Z]")
+    singular = stringr::str_extract(line, "[A-Za-z]+"),
+    line     = stringr::str_squish(stringr::str_replace(line, singular, "")),
+    part     = stringr::str_extract(stringr::str_extract(line, ".+:"), "[A-Z]")
   ) %>%
   filter(part == "N") %>%
   mutate(
-    line = str_squish(
-      str_replace_all(line, c("\\{.*?\\}" = "", ".*?:" = "", "[^A-Za-z ]" = ""))
+    line = stringr::str_squish(
+      stringr::str_replace_all(
+        line, c("\\{.*?\\}" = "", ".*?:" = "", "[^A-Za-z ]" = "")
+      )
     ),
     guessed_plural = plu::ralize(singular, irregulars = "none")
   ) %>%
   rowwise() %>%
   mutate(
-    line = list(as.character(str_split(line, " ", simplify = TRUE)))
+    line = list(as.character(stringr::str_split(line, " ", simplify = TRUE)))
   ) %>%
   select(-part) %>%
   bind_rows(
@@ -57,18 +59,19 @@ liberal_list <- list %>%
   ungroup() %>%
   select(singular, plural)
 
-
 verb_list <- read_lines("data-raw/infl.txt") %>%
   enframe(name = NULL, value = "line") %>%
   mutate(
-    plural = str_extract(line, "[A-Za-z]+"),
-    line   = str_squish(str_replace(line, plural, "")),
-    part   = str_extract(str_extract(line, ".+:"), "[A-Z]")
+    plural = stringr::str_extract(line, "[A-Za-z]+"),
+    line   = stringr::str_squish(stringr::str_replace(line, plural, "")),
+    part   = stringr::str_extract(stringr::str_extract(line, ".+:"), "[A-Z]")
   ) %>%
   filter(part == "V", !plural %in% c("be", "wit")) %>%
   mutate(
-    line     = str_squish(str_replace_all(line, ".*:|\\{.*?\\}|[^A-Za-z ]", "")),
-    singular = str_extract(line, "[A-Za-z]+$")
+    line = stringr::str_squish(
+      stringr::str_replace_all(line, ".*:|\\{.*?\\}|[^A-Za-z ]", "")
+    ),
+    singular = stringr::str_extract(line, "[A-Za-z]+$")
   ) %>%
   filter(!singular %in% list$singular) %>%
   group_by(plural) %>%
@@ -118,6 +121,43 @@ grammar_list <- tribble(
 moderate_list     <- bind_rows(moderate_list, verb_list, grammar_list)
 conservative_list <- bind_rows(conservative_list, verb_list, grammar_list)
 liberal_list      <- bind_rows(liberal_list, verb_list, grammar_list)
+
+str_to_sentence <- function(string) {
+  sub("^(.*?)(\\p{L})(.*)$", "\\1\\U\\2\\E\\3", string, perl = TRUE)
+}
+
+moderate_list <- moderate_list %>%
+  bind_rows(
+    mutate(
+      moderate_list,
+      singular = str_to_sentence(singular),
+      plural = str_to_sentence(plural)
+    )
+  ) %>%
+  arrange(singular) %>%
+  distinct()
+
+conservative_list <- conservative_list %>%
+  bind_rows(
+    mutate(
+      conservative_list,
+      singular = str_to_sentence(singular),
+      plural = str_to_sentence(plural)
+    )
+  ) %>%
+  arrange(singular) %>%
+  distinct()
+
+liberal_list <- liberal_list %>%
+  bind_rows(
+    mutate(
+      liberal_list,
+      singular = str_to_sentence(singular),
+      plural = str_to_sentence(plural)
+    )
+  ) %>%
+  arrange(singular) %>%
+  distinct()
 
 usethis::use_data(
   moderate_list, conservative_list, liberal_list,
