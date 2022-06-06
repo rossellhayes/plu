@@ -29,6 +29,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -41,18 +43,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -62,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rossellhayes/plu/">
+  <a href="https://github.com/rossellhayes/plu/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -79,40 +75,38 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="plu-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#plu-" class="anchor"></a>plu <img src="reference/figures/logo.png?raw=TRUE" align="right" height="138">
+<div class="section level1">
+<div class="page-header"><h1 id="plu-">plu <img src="reference/figures/logo.png?raw=TRUE" align="right" height="138"><a class="anchor" aria-label="anchor" href="#plu-"></a>
 </h1></div>
 <!-- badges: start -->
-
 <p>Pluralize phrases in R</p>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p><strong>plu</strong> provides a simplified way to dynamically generate plain-language messages in R when we can’t know beforehand whether a message will be singular or plural.</p>
 <p>Pluralizes English phrases based on the length of an associated vector. Contains helper functions to create natural language lists from vectors and to include the length of a vector in natural language.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the stable release of <strong>plu</strong> from <a href="https://cran.r-project.org/package=plu">CRAN</a> with:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the stable release of <strong>plu</strong> from <a href="https://cran.r-project.org/package=plu" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"plu"</span><span class="op">)</span></code></pre></div>
-<p>You can install the development version of <strong>plu</strong> from <a href="https://github.com/rossellhayes/plu">GitHub</a> with:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"plu"</span><span class="op">)</span></code></pre></div>
+<p>You can install the development version of <strong>plu</strong> from <a href="https://github.com/rossellhayes/plu" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"rossellhayes/plu"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rossellhayes/plu"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">formulas1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%in%</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op">%in%</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span><span class="op">)</span>
-<span class="va">formulas2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%in%</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op">%in%</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span>, <span class="st">"high"</span><span class="op">)</span>
-<span class="va">problems1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_formula.html">is_formula</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">formulas1</span><span class="op">)</span>
-<span class="va">problems2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_formula.html">is_formula</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">formulas2</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">formulas1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span><span class="op">)</span>
+<span class="va">formulas2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">~</span> <span class="st">"low"</span>, <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span> <span class="op">~</span> <span class="st">"medium"</span>, <span class="st">"x %in% 7:9"</span>, <span class="st">"high"</span><span class="op">)</span>
+<span class="va">problems1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_formula.html" class="external-link">is_formula</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">formulas1</span><span class="op">)</span>
+<span class="va">problems2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_formula.html" class="external-link">is_formula</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">formulas2</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span>
   <span class="st">"All arguments must be formulas."</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"Argument"</span>, <span class="va">problems1</span><span class="op">)</span>, 
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span><span class="va">problems1</span><span class="op">)</span>,
@@ -120,91 +114,101 @@
 <span class="op">)</span>
 <span class="co">#&gt; [1] "All arguments must be formulas. Argument x %in% 7:9 isn't a formula."</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span>
   <span class="st">"All arguments must be formulas."</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"Argument"</span>, <span class="va">problems2</span><span class="op">)</span>, 
-  <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">problems2</span>, <span class="va">encodeString</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">problems2</span>, <span class="va">encodeString</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"isn't a formula."</span>, <span class="va">problems2</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."</span>
 
-<span class="va">ints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+<span class="va">ints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span>
   <span class="st">"All inputs must be non-negative."</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_stick.html">stick</a></span><span class="op">(</span>
     <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_more.html">more</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ints</span><span class="op">[</span><span class="va">ints</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span>, <span class="va">encodeString</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"integer"</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">ints</span><span class="op">[</span><span class="va">ints</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span>, <span class="va">encodeString</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"integer"</span>
     <span class="op">)</span>
   <span class="op">)</span>,
   <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="reference/plu_ral.html">ral</a></span><span class="op">(</span><span class="st">"is {negative}."</span>, <span class="va">ints</span><span class="op">[</span><span class="va">ints</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; [1] "All inputs must be non-negative. `-6`, `-2`, `-5`, `-1`, `-2` and 6 more integers are negative."</span></code></pre></div>
 </div>
-<div id="credits" class="section level2">
-<h2 class="hasAnchor">
-<a href="#credits" class="anchor"></a>Credits</h2>
-<p>Hex sticker font is <a href="https://github.com/indestructible-type/Bodoni">Bodoni*</a> by <a href="https://indestructibletype.com/Home.html">indestructible type*</a>.</p>
-<p>Image adapted from icon made by <a href="https://www.freepik.com">Freepik</a> from <a href="https://www.flaticon.com/free-icon/umbrella_2357382">flaticon.com</a>.</p>
+<div class="section level2">
+<h2 id="credits">Credits<a class="anchor" aria-label="anchor" href="#credits"></a>
+</h2>
+<p>Hex sticker font is <a href="https://github.com/indestructible-type/Bodoni" class="external-link">Bodoni*</a> by <a href="https://indestructibletype.com/Home.html" class="external-link">indestructible type*</a>.</p>
+<p>Image adapted from icon made by <a href="https://www.freepik.com" class="external-link">Freepik</a> from <a href="https://www.flaticon.com/free-icon/umbrella_2357382" class="external-link">flaticon.com</a>.</p>
 <hr>
-<p>Please note that the <strong>plu</strong> project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the <strong>plu</strong> project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=plu">https://​cloud.r-project.org/​package=plu</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/rossellhayes/plu/">https://​github.com/​rossellhayes/​plu/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/rossellhayes/plu/issues">https://​github.com/​rossellhayes/​plu/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=plu" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/rossellhayes/plu/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/rossellhayes/plu/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Alexander Rossell Hayes <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0001-9412-0457" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing plu</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=plu"><img src="https://www.r-pkg.org/badges/version/plu?color=brightgreen"></a></li>
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg"></a></li>
-<li><a href="https://cran.r-project.org/web/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blueviolet.svg" alt="License: MIT"></a></li>
-<li><a href="https://github.com/rossellhayes/plu/actions"><img src="https://github.com/rossellhayes/plu/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/rossellhayes/plu"><img src="https://codecov.io/gh/rossellhayes/plu/branch/main/graph/badge.svg"></a></li>
-<li><a href="https://cran.r-project.org/package=plu"><img src="https://tinyverse.netlify.com/badge/plu" alt="Dependencies"></a></li>
-<li><a href="https://www.codefactor.io/repository/github/rossellhayes/plu"><img src="https://www.codefactor.io/repository/github/rossellhayes/plu/badge" alt="CodeFactor"></a></li>
+<li>Alexander Rossell Hayes <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0001-9412-0457" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=plu" class="external-link"><img src="https://www.r-pkg.org/badges/version/plu?color=brightgreen"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg"></a></li>
+<li><a href="https://cran.r-project.org/web/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/license-MIT-blueviolet.svg" alt="License: MIT"></a></li>
+<li><a href="https://github.com/rossellhayes/plu/actions" class="external-link"><img src="https://github.com/rossellhayes/plu/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/rossellhayes/plu" class="external-link"><img src="https://codecov.io/gh/rossellhayes/plu/branch/main/graph/badge.svg"></a></li>
+<li><a href="https://cran.r-project.org/package=plu" class="external-link"><img src="https://tinyverse.netlify.com/badge/plu" alt="Dependencies"></a></li>
+<li><a href="https://www.codefactor.io/repository/github/rossellhayes/plu" class="external-link"><img src="https://www.codefactor.io/repository/github/rossellhayes/plu/badge" alt="CodeFactor"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexander Rossell Hayes.</p>
+  <p></p>
+<p>Developed by Alexander Rossell Hayes.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -212,6 +216,8 @@
 
   
 
+
+  
 
   </body>
 </html>
