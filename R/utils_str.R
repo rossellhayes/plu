@@ -2,6 +2,10 @@ str_detect <- function(string, pattern) {
   grepl(pattern = paste0("(?s)", pattern), x = string, perl = TRUE)
 }
 
+str_replace <- function(string, pattern, replacement) {
+  sub(pattern = pattern, replacement = replacement, x = string, perl = TRUE)
+}
+
 str_replace_all <- function(string, pattern, replacement) {
   if (!is.null(names(pattern))) {
     for (i in seq_along(pattern)) {

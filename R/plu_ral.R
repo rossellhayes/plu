@@ -172,7 +172,9 @@ plu_ral <- function(
   split_out[braced] <- pluralize_braces(split_out[braced], n, open, close)
 
   # replace "n" with `n`
-  split_out[replace_n] <- gsub("\\bn\\b", n_fn(n, ...), split_out[replace_n])
+  split_out[replace_n] <- str_replace_all(
+    split_out[replace_n], "\\bn\\b", n_fn(n, ...)
+  )
 
   mat[] <- apply(split_out, 2, paste, collapse = "")
 

@@ -28,7 +28,7 @@
 #' @example examples/is_capital.R
 
 capitalize <- function(x) {
-  gsub("^(.*?)(\\p{L})(.*)$", "\\1\\U\\2\\E\\3", x, perl = TRUE)
+  str_replace(x, "^(.*?)(\\p{L})(.*)$", "\\1\\U\\2\\E\\3")
 }
 
 #' @rdname capitalize
@@ -77,7 +77,7 @@ is_capital <- function(x, strict = FALSE) {
 #' @export
 
 is_capitalized <- function(x, strict = FALSE) {
-  first_letter <- gsub("^.*?(\\p{L}).*$", "\\1", x, perl = TRUE)
+  first_letter <- str_replace(x, "^.*?(\\p{L}).*$", "\\1")
   is_capital(first_letter, strict = strict)
 }
 

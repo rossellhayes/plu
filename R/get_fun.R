@@ -20,8 +20,8 @@ get_fun <- function(fn, default = identity) {
     fn_input <- fn
 
     if (str_detect(fn_input, "::")) {
-      fn       <- gsub("^.*::", "", fn_input)
-      package  <- gsub("::.*$", "", fn_input)
+      fn       <- str_replace(fn_input, "^.*::", "")
+      package  <- str_replace(fn_input, "::.*$", "")
       env      <- getNamespace(package)
     }
   } else {
