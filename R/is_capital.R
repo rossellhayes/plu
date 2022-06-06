@@ -82,7 +82,7 @@ is_capitalized <- function(x, strict = FALSE) {
 }
 
 lgl_collapse <- function(x) {
-  if (anyNA(x)) {return(NA)}
+  if (any(is.na(x))) {return(NA)}
   if (all(x))   {return(TRUE)}
   if (all(!x))  {return(FALSE)}
   NA
