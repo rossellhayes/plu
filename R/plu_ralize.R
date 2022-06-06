@@ -39,7 +39,7 @@ plu_ralize <- function(
   )
 
   result <- x[NA]
-  result[!grepl("[A-Za-z0-9]$", x)] <- x[!grepl("[A-Za-z0-9]$", x)]
+  result[!str_detect(x, "[A-Za-z0-9]$")] <- x[!str_detect(x, "[A-Za-z0-9]$")]
 
   irreg <- match(x[is.na(result)], dict$singular)
   result[is.na(result)] <- dict$plural[irreg]

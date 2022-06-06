@@ -123,9 +123,9 @@ plu_ral <- function(
 
   split_in <- plu_split(mat, boundaries, perl = TRUE)
 
-  braced <- grepl(paste0(open, ".*", close), split_in)
+  braced <- str_detect(split_in, paste0(open, ".*", close))
 
-  if (replace_n) {replace_n <- grepl("\\bn\\b", split_in)}
+  if (replace_n) {replace_n <- str_detect(split_in, "\\bn\\b")}
   n_fn <- get_fun(n_fn)
 
   split_out <- split_in
@@ -150,9 +150,9 @@ plu_ral <- function(
         caps,
         function(i) {
           idx <- which(
-            grepl(
-              "[[:alpha:]]",
-              split_out[seq(i, (i %/% nrow(split_out) + 1) * nrow(split_out))]
+            str_detect(
+              split_out[seq(i, (i %/% nrow(split_out) + 1) * nrow(split_out))],
+              "[[:alpha:]]"
             )
           )
           idx[1] + i - 1L
