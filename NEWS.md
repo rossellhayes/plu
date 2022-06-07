@@ -1,4 +1,4 @@
-# plu (development version)
+# plu 0.2.2
 
 * Modest speed improvements to `plu_ralize()`.
   * This propagates to `plu_ral()` and `plu_more()`, which use `plu_ralize()` internally.
