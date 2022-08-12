@@ -69,6 +69,6 @@ plu::stick(letters[1:3], oxford = TRUE)
 plu::stick(letters[1:2], oxford = TRUE)
 
 # Oxford commas are optional for English, but should be FALSE for most languages
-ingredientes <- c("azÃºcar", "flores", "muchos colores")
+ingredientes <- c("azúcar", "flores", "muchos colores")
 plu::stick(ingredientes, conj = " y ", oxford = FALSE)
 }

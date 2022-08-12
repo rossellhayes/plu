@@ -6,12 +6,9 @@
 \alias{plu-package}
 \title{plu: Dynamically Pluralize Phrases}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Converts English phrases to singular or plural form based on
-    the length of an associated vector.  Contains helper functions to
-    create natural language lists from vectors and to include the length
-    of a vector in natural language.
+Converts English phrases to singular or plural form based on the length of an associated vector. Contains helper functions to create natural language lists from vectors and to include the length of a vector in natural language.
 }
 \section{Copyright}{
 \strong{plu} uses data from the
