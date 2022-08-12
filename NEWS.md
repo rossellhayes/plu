@@ -1,4 +1,4 @@
-# plu (development version)
+# plu 0.2.3
 
 * Added staticexport of `plu_ralize()`.
   * This allows you to include `plu_ralize()` in your package without depending on `plu`, using the [`staticimports`](https://github.com/wch/staticimports) package.
