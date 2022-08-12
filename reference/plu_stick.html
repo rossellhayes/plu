@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2.9000</span>
       </span>
     </div>
 
@@ -53,82 +53,97 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plu_stick</span><span class="op">(</span>
-  <span class="va">x</span>,
-  sep <span class="op">=</span> <span class="st">", "</span>,
-  conj <span class="op">=</span> <span class="st">" and "</span>,
-  oxford <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.oxford_comma"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  syndeton <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
-  fn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">stick</span><span class="op">(</span>
-  <span class="va">x</span>,
-  sep <span class="op">=</span> <span class="st">", "</span>,
-  conj <span class="op">=</span> <span class="st">" and "</span>,
-  oxford <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.oxford_comma"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  syndeton <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
-  fn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plu_stick</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">", "</span>,</span>
+<span>  conj <span class="op">=</span> <span class="st">" and "</span>,</span>
+<span>  oxford <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.oxford_comma"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  syndeton <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  fn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">stick</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">", "</span>,</span>
+<span>  conj <span class="op">=</span> <span class="st">" and "</span>,</span>
+<span>  oxford <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.oxford_comma"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  syndeton <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  fn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector (or a vector coercible to character).</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to place between list items. Defaults to <code>", "</code></p></dd>
+
+
 <dt>conj</dt>
 <dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to place between the penultimate and last
 list items.
 Defaults to <code>" and "</code>.
 If <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a></code>, <code>sep</code> is used.</p></dd>
+
+
 <dt>oxford</dt>
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> indicating whether to place <code>sep</code> before <code>conj</code>
 (x, y, and z) or not (x, y and z) in lists of length three or more.
 Defaults to <code>FALSE</code>.
 The default can be changed by setting <code>options(plu.oxford_comma)</code>.</p></dd>
+
+
 <dt>syndeton</dt>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
+
+
 <dt>fn</dt>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
+
+
 <dt>...</dt>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A character vector of length 1.</p>
+    
+
+<p>A character vector of length 1.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ingredients</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sugar"</span>, <span class="st">"spice"</span>, <span class="st">"everything nice"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ingredients</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sugar"</span>, <span class="st">"spice"</span>, <span class="st">"everything nice"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sugar, spice and everything nice"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span>, conj <span class="op">=</span> <span class="st">" or "</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span>, conj <span class="op">=</span> <span class="st">" or "</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sugar, spice or everything nice"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># When `conj` is `NULL`, `sep` is used between all elements</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span>, sep <span class="op">=</span> <span class="st">" and "</span>, conj <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># When `conj` is `NULL`, `sep` is used between all elements</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span>, sep <span class="op">=</span> <span class="st">" and "</span>, conj <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sugar and spice and everything nice"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span>, sep <span class="op">=</span> <span class="st">"/"</span>,     conj <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredients</span>, sep <span class="op">=</span> <span class="st">"/"</span>,     conj <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sugar/spice/everything nice"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">creed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"snow"</span>, <span class="st">"rain"</span>, <span class="st">"heat"</span>, <span class="st">"gloom of night"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">creed</span>, sep <span class="op">=</span> <span class="st">" nor "</span>, conj <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">creed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"snow"</span>, <span class="st">"rain"</span>, <span class="st">"heat"</span>, <span class="st">"gloom of night"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">creed</span>, sep <span class="op">=</span> <span class="st">" nor "</span>, conj <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "snow nor rain nor heat nor gloom of night"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Oxford commas are only added when there are three or more elements</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, oxford <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Oxford commas are only added when there are three or more elements</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, oxford <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a, b, and c"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, oxford <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, oxford <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a and b"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Oxford commas are optional for English, but should be FALSE for most languages</span></span>
-<span class="r-in"><span class="va">ingredientes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"azÃºcar"</span>, <span class="st">"flores"</span>, <span class="st">"muchos colores"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredientes</span>, conj <span class="op">=</span> <span class="st">" y "</span>, oxford <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Oxford commas are optional for English, but should be FALSE for most languages</span></span></span>
+<span class="r-in"><span><span class="va">ingredientes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"azÃºcar"</span>, <span class="st">"flores"</span>, <span class="st">"muchos colores"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">stick</span><span class="op">(</span><span class="va">ingredientes</span>, conj <span class="op">=</span> <span class="st">" y "</span>, oxford <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "azÃºcar, flores y muchos colores"</span>
 </code></pre></div>
     </div>
@@ -144,7 +159,7 @@ The default can be changed by setting <code>options(plu.oxford_comma)</code>.</p
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

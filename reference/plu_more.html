@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2.9000</span>
       </span>
     </div>
 
@@ -53,21 +53,25 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plu_more</span><span class="op">(</span><span class="va">x</span>, max <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="cn">TRUE</span>, fn <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, det <span class="op">=</span> <span class="st">"more"</span><span class="op">)</span>
-
-<span class="fu">more</span><span class="op">(</span><span class="va">x</span>, max <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="cn">TRUE</span>, fn <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, det <span class="op">=</span> <span class="st">"more"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plu_more</span><span class="op">(</span><span class="va">x</span>, max <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="cn">TRUE</span>, fn <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, det <span class="op">=</span> <span class="st">"more"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">more</span><span class="op">(</span><span class="va">x</span>, max <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="cn">TRUE</span>, fn <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, det <span class="op">=</span> <span class="st">"more"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A vector or list.</p></dd>
+
+
 <dt>max</dt>
 <dd><p>The maximum number of items to list.
 Additional arguments are replaced with "n more".
 Defaults to <code>5</code>.
 If <code>max</code> if <code><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">Inf</a></code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a></code>, <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a></code>, or <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA</a></code>, all elements are
 preserved.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> or <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>.</p><ul><li><p>If a character, <code>type</code> is passed to <code><a href="plu_ral.html">ral()</a></code> and pasted after the
 number of elements.</p></li>
@@ -76,61 +80,70 @@ in place of a class name.</p></li>
 </ul></li>
 <li><p>If <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a></code> or <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA</a></code>, nothing is pasted after the number of elements.</p></li>
 </ul></dd>
+
+
 <dt>fn</dt>
 <dd><p>A function to apply to the number of additional elements.
 Default to <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a></code>, which applies no function.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to <code>fn</code>.</p></dd>
+
+
 <dt>det</dt>
 <dd><p>A determiner to place before the number of additional elements.
 Defaults to "more".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>x</code> is a vector, a character vector with a length of <code>max</code> + 1
+    
+
+<p>If <code>x</code> is a vector, a character vector with a length of <code>max</code> + 1
 or less.
 If <code>x</code> is a list, a list with <code>max + 1</code> or fewer elements.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"                  "b"                  "c"                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "d"                  "e"                  "21 more characters"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Setting `max`</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Setting `max`</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "a"                  "b"                  "c"                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "d"                  "e"                  "f"                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "g"                  "h"                  "i"                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "j"                  "16 more characters"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="fl">27</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="fl">27</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [20] "t" "u" "v" "w" "x" "y" "z"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If `max` is Inf or NULL, all elements will be preserved</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If `max` is Inf or NULL, all elements will be preserved</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [20] "t" "u" "v" "w" "x" "y" "z"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If `max` is less than one, no elements will be preserved</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If `max` is less than one, no elements will be preserved</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, max <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "26 characters"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Setting element type</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, type <span class="op">=</span> <span class="st">"letter"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Setting element type</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, type <span class="op">=</span> <span class="st">"letter"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"               "b"               "c"               "d"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "e"               "21 more letters"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If `type` is FALSE or NULL, no type will be included</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, type <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If `type` is FALSE or NULL, no type will be included</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, type <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"       "b"       "c"       "d"       "e"       "21 more"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Automatically generating type</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Automatically generating type</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1"                "2"                "3"                "4"               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "5"                "95 more integers"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -149,7 +162,7 @@ If <code>x</code> is a list, a list with <code>max + 1</code> or fewer elements.
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[6]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "95 more integers"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -168,73 +181,73 @@ If <code>x</code> is a list, a list with <code>max + 1</code> or fewer elements.
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[6]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "23 more elements"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu">fracture</span><span class="fu">::</span><span class="fu"><a href="https://fracture.rossellhayes.com/reference/fracture.html" class="external-link">fracture</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">9</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu">fracture</span><span class="fu">::</span><span class="fu"><a href="https://fracture.rossellhayes.com/reference/fracture.html" class="external-link">fracture</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">9</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1/9"               "1/4"               "3/7"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "2/3"               "1/1"               "4 more characters"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Setting a determiner other than "more"</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, det <span class="op">=</span> <span class="st">"other"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Setting a determiner other than "more"</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, det <span class="op">=</span> <span class="st">"other"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"                   "b"                   "c"                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "d"                   "e"                   "21 other characters"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use plu::stick() to get a nicely formatted message</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="plu_stick.html">stick</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use plu::stick() to get a nicely formatted message</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="plu_stick.html">stick</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`stick()` was deprecated in plu 0.2.2.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `knitr::combine_words()` or `glue::glue_collapse()` instead.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a, b, c, d, e and 21 more characters"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Applying a function to the number</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, fn <span class="op">=</span> <span class="fu">nombre</span><span class="fu">::</span><span class="va"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Applying a function to the number</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">letters</span>, fn <span class="op">=</span> <span class="fu">nombre</span><span class="fu">::</span><span class="va"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"                          "b"                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3] "c"                          "d"                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "e"                          "twenty-one more characters"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="plu_stick.html">stick</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">letters</span>, <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">blue</a></span><span class="op">)</span>, fn <span class="op">=</span> <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">blue</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="plu_stick.html">stick</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">letters</span>, <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">blue</a></span><span class="op">)</span>, fn <span class="op">=</span> <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">blue</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">a</span>, <span style="color: #0000BB;">b</span>, <span style="color: #0000BB;">c</span>, <span style="color: #0000BB;">d</span>, <span style="color: #0000BB;">e</span> and <span style="color: #0000BB;">21</span> more characters</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Automatic pluralization of type</span></span>
-<span class="r-in"><span class="va">fish</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sea bass"</span>, <span class="st">"crucian carp"</span>, <span class="st">"dace"</span>, <span class="st">"coelecanth"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">fish</span>, max <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"fish"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Automatic pluralization of type</span></span></span>
+<span class="r-in"><span><span class="va">fish</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sea bass"</span>, <span class="st">"crucian carp"</span>, <span class="st">"dace"</span>, <span class="st">"coelecanth"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">fish</span>, max <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"fish"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sea bass"     "crucian carp" "dace"         "1 more fish" </span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">fish</span>, max <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"fish"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">fish</span>, max <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"fish"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sea bass"     "crucian carp" "2 more fish" </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">teeth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"incisor"</span>, <span class="st">"canine"</span>, <span class="st">"molar"</span>, <span class="st">"wisdom tooth"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">teeth</span>, max <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"tooth"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">teeth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"incisor"</span>, <span class="st">"canine"</span>, <span class="st">"molar"</span>, <span class="st">"wisdom tooth"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">teeth</span>, max <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"tooth"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "incisor"      "canine"       "molar"        "1 more tooth"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">teeth</span>, max <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"tooth"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">teeth</span>, max <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"tooth"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "incisor"      "canine"       "2 more teeth"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">cacti</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"saguaro"</span>, <span class="st">"prickly pear"</span>, <span class="st">"barrel"</span>, <span class="st">"star"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">cacti</span>, max <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"cactus"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">cacti</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"saguaro"</span>, <span class="st">"prickly pear"</span>, <span class="st">"barrel"</span>, <span class="st">"star"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">cacti</span>, max <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"cactus"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "saguaro"       "prickly pear"  "barrel"        "1 more cactus"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">cacti</span>, max <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"cactus"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">cacti</span>, max <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"cactus"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "saguaro"      "prickly pear" "2 more cacti"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using plu_more() within a function</span></span>
-<span class="r-in"><span class="va">verbose_sqrt</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="va">problems</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span></span>
-<span class="r-in">    <span class="va">prob_msg</span> <span class="op">&lt;-</span> <span class="fu">crayon</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">silver</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/encodeString.html" class="external-link">encodeString</a></span><span class="op">(</span><span class="va">problems</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="st">"Square root is undefined for "</span>,</span>
-<span class="r-in">      <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="plu_stick.html">stick</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">prob_msg</span>, fn <span class="op">=</span> <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">silver</a></span>, type <span class="op">=</span> <span class="st">"input."</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">      call. <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">verbose_sqrt</span><span class="op">(</span><span class="va">ints</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Square root is undefined for <span style="color: #555555;">`-7`</span>, <span style="color: #555555;">`-7`</span>, <span style="color: #555555;">`-3`</span> and <span style="color: #555555;">`-1`</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using plu_more() within a function</span></span></span>
+<span class="r-in"><span><span class="va">verbose_sqrt</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">problems</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span></span></span>
+<span class="r-in"><span>    <span class="va">prob_msg</span> <span class="op">&lt;-</span> <span class="fu">crayon</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">silver</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/encodeString.html" class="external-link">encodeString</a></span><span class="op">(</span><span class="va">problems</span>, quote <span class="op">=</span> <span class="st">"`"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Square root is undefined for "</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">plu</span><span class="fu">::</span><span class="fu"><a href="plu_stick.html">stick</a></span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="fu">more</span><span class="op">(</span><span class="va">prob_msg</span>, fn <span class="op">=</span> <span class="fu">crayon</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/crayon/man/crayon.html" class="external-link">silver</a></span>, type <span class="op">=</span> <span class="st">"input."</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      call. <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">verbose_sqrt</span><span class="op">(</span><span class="va">ints</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Square root is undefined for <span style="color: #555555;">`-2`</span>, <span style="color: #555555;">`-2`</span>, <span style="color: #555555;">`-6`</span>, <span style="color: #555555;">`-3`</span>, <span style="color: #555555;">`-8`</span> and <span style="color: #555555;">4</span> more inputs.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NaNs produced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]      NaN      NaN 2.449490      NaN 0.000000 3.162278 3.162278 1.732051</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 1.000000      NaN 2.449490 0.000000 2.236068 2.236068 1.000000 2.236068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] 1.414214 2.236068 2.449490 3.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.732051      NaN      NaN 3.000000 1.414214 1.000000 1.414214      NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9]      NaN 2.000000      NaN 0.000000 1.414214      NaN 0.000000 2.645751</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17]      NaN      NaN 3.000000      NaN</span>
 </code></pre></div>
     </div>
   </div>
@@ -249,7 +262,7 @@ If <code>x</code> is a list, a list with <code>max + 1</code> or fewer elements.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

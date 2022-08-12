@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2.9000</span>
       </span>
     </div>
 
@@ -53,31 +53,31 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plu_ral</span><span class="op">(</span>
-  <span class="va">x</span>,
-  vector <span class="op">=</span> <span class="cn">NULL</span>,
-  n_fn <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  n <span class="op">=</span> <span class="cn">NULL</span>,
-  pl <span class="op">=</span> <span class="cn">NULL</span>,
-  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  replace_n <span class="op">=</span> <span class="cn">TRUE</span>,
-  open <span class="op">=</span> <span class="st">"{"</span>,
-  close <span class="op">=</span> <span class="st">"}"</span>
-<span class="op">)</span>
-
-<span class="fu">ral</span><span class="op">(</span>
-  <span class="va">x</span>,
-  vector <span class="op">=</span> <span class="cn">NULL</span>,
-  n_fn <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  n <span class="op">=</span> <span class="cn">NULL</span>,
-  pl <span class="op">=</span> <span class="cn">NULL</span>,
-  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  replace_n <span class="op">=</span> <span class="cn">TRUE</span>,
-  open <span class="op">=</span> <span class="st">"{"</span>,
-  close <span class="op">=</span> <span class="st">"}"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plu_ral</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  replace_n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open <span class="op">=</span> <span class="st">"{"</span>,</span>
+<span>  close <span class="op">=</span> <span class="st">"}"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ral</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  vector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  replace_n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open <span class="op">=</span> <span class="st">"{"</span>,</span>
+<span>  close <span class="op">=</span> <span class="st">"}"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,24 +85,36 @@
     <dl><dt>x</dt>
 <dd><p>An character vector of English words or phrase to be pluralized.
 See details for special sequences which are handled differently.</p></dd>
+
+
 <dt>vector</dt>
 <dd><p>A vector whose length determines <code>n</code>. Defaults to <code>NULL</code>.</p></dd>
+
+
 <dt>n_fn</dt>
 <dd><p>A function to apply to the output of the special sequence
 <code>"n"</code>. See examples.
 Defaults to <code>identity</code>, which returns <code>n</code> unchanged.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to the function <code>n_fn</code>.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>The number which will determine the plurality of <code>x</code>.
 Defaults to <code>length(vector)</code>.
 If specified, overrides <code>vector</code>.</p></dd>
+
+
 <dt>pl</dt>
 <dd><p>A logical value indicating whether to use the plural form (if
 <code>TRUE</code>) or the singular form (if <code>FALSE</code>) of <code>x</code>.
 Defaults to <code>FALSE</code> when <code>n</code> is <code>1</code> or <code>-1</code> and <code>TRUE</code> for all other
 values.
 If specified, overrides <code>n</code>.</p></dd>
+
+
 <dt>irregulars</dt>
 <dd><p>What level of irregularity to use in pluralization.
 <code>"moderate"</code> uses the most common pluralization.
@@ -115,18 +127,27 @@ See section "Irregular plurals" for more details.
 Defaults to <code>"moderate"</code>.
 The default can be changed by setting <code>options(plu.irregulars)</code>.
 See examples in <code><a href="plu_ralize.html">ralize()</a></code> for more details.</p></dd>
+
+
 <dt>replace_n</dt>
 <dd><p>A logical indicating whether to use special handling for
 <code>"n"</code>.
 See details.
 Defaults to <code>TRUE</code>.</p></dd>
+
+
 <dt>open, close</dt>
 <dd><p>The opening and closing delimiters for special strings.
 See section "Special strings". Defaults to <code>"{"</code> and <code>"}"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The character vector <code>x</code> altered to match the number of <code>n</code></p>
+    
+
+<p>The character vector <code>x</code> altered to match the number of <code>n</code></p>
+
+
     </div>
     <div id="irregular-plurals">
     <h2>Irregular plurals</h2>
@@ -185,94 +206,94 @@ plural form.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, pl <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, pl <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apple"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, pl <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, pl <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apples"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apple"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apples"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apples"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apple"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, n <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apples"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"apple"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pear"</span>, <span class="st">"pear"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, <span class="va">mon</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"apple"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pear"</span>, <span class="st">"pear"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"apple"</span>, <span class="va">mon</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apple"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"pear"</span>, <span class="va">tue</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"pear"</span>, <span class="va">tue</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pears"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Monday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"an apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Monday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"an apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Monday, the caterpillar ate an apple"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Tuesday, the caterpillar ate pears"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Monday, the caterpillar visited"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"an {apple} tree"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Monday, the caterpillar visited"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"an {apple} tree"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Monday, the caterpillar visited an apple tree"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar visited"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {pear} tree"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar visited"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {pear} tree"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Tuesday, the caterpillar visited pear trees"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Monday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {single|multiple} apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Monday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {single|multiple} apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Monday, the caterpillar ate a single apple"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {single|multiple} pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {single|multiple} pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Tuesday, the caterpillar ate multiple pears"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">later</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"plum"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"strawberry"</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="st">"chocolate cake"</span>, <span class="st">"ice-cream cone"</span>, <span class="st">"pickle"</span>, <span class="st">"Swiss cheese"</span>, <span class="st">"salami"</span>,</span>
-<span class="r-in">  <span class="st">"lollipop"</span>, <span class="st">"cherry pie"</span>, <span class="st">"sausage"</span>, <span class="st">"cupcake"</span>, <span class="st">"watermelon"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">later</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"plum"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"strawberry"</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"chocolate cake"</span>, <span class="st">"ice-cream cone"</span>, <span class="st">"pickle"</span>, <span class="st">"Swiss cheese"</span>, <span class="st">"salami"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"lollipop"</span>, <span class="st">"cherry pie"</span>, <span class="st">"sausage"</span>, <span class="st">"cupcake"</span>, <span class="st">"watermelon"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate the apple"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate both pears"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} delicacy"</span>, <span class="va">later</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} delicacy"</span>, <span class="va">later</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate all of the delicacies"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate 1 apple"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n delicacy"</span>, <span class="va">later</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n delicacy"</span>, <span class="va">later</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate 22 delicacies"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n apple"</span>, <span class="va">mon</span>, <span class="fu">nombre</span><span class="fu">::</span><span class="va"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n apple"</span>, <span class="va">mon</span>, <span class="fu">nombre</span><span class="fu">::</span><span class="va"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate one apple"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n delicacy"</span>, <span class="va">later</span>, <span class="fu">nombre</span><span class="fu">::</span><span class="va"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n delicacy"</span>, <span class="va">later</span>, <span class="fu">nombre</span><span class="fu">::</span><span class="va"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate twenty-two delicacies"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Special brace strings</span></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Special brace strings</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two}"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two}"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "two"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "two"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "more"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|more}"</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "more"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "two"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "three"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "more"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "more"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two|three|more}"</span>, n <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "more"</span>
 </code></pre></div>
     </div>
@@ -288,7 +309,7 @@ plural form.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2.9000</span>
       </span>
     </div>
 
@@ -53,17 +53,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plu_ralize</span><span class="op">(</span>
-  <span class="va">x</span>,
-  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.irregulars"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>,
-    <span class="st">"none"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">ralize</span><span class="op">(</span>
-  <span class="va">x</span>,
-  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.irregulars"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>,
-    <span class="st">"none"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plu_ralize</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.irregulars"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>,</span>
+<span>    <span class="st">"none"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ralize</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"plu.irregulars"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>,</span>
+<span>    <span class="st">"none"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="source">
@@ -76,6 +76,8 @@ Inflection Database (AGID).</p>
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A character vector of English words to be pluralized</p></dd>
+
+
 <dt>irregulars</dt>
 <dd><p>What level of irregularity to use in pluralization.
 <code>"moderate"</code> uses the most common pluralization.
@@ -88,10 +90,13 @@ See section "Irregular plurals" for more details.
 Defaults to <code>"moderate"</code>.
 The default can be changed by setting <code>options(plu.irregulars)</code>.
 See examples in <code>ralize()</code> for more details.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The character vector <code>x</code> pluralized</p>
+    
+
+<p>The character vector <code>x</code> pluralized</p>
     </div>
     <div id="irregular-plurals">
     <h2>Irregular plurals</h2>
@@ -128,18 +133,18 @@ is not a common English word.</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="st">"word"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="st">"word"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "words"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"word"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"word"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "groups" "words" </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"conservative"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"conservative"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "formulae" "people"   "children"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"moderate"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"moderate"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "formulas" "people"   "children"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"liberal"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"liberal"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "formulas" "persons"  "children"</span>
-<span class="r-in"><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ralize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"person"</span>, <span class="st">"child"</span><span class="op">)</span>, irregulars <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "formulas" "persons"  "childs"  </span>
 </code></pre></div>
     </div>
@@ -155,7 +160,7 @@ is not a common English word.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

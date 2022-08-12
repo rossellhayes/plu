@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2.9000</span>
       </span>
     </div>
 
@@ -53,7 +53,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_fun</span><span class="op">(</span><span class="va">fn</span>, default <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_fun</span><span class="op">(</span><span class="va">fn</span>, default <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -61,18 +61,23 @@
     <dl><dt>fn</dt>
 <dd><p>A function name, either a character string or an unquoted
 function name, with or without colons.</p></dd>
+
+
 <dt>default</dt>
 <dd><p>If <code>fn</code> is <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a></code>, the <code>default</code> function is returned.
 Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A function</p>
+    
+
+<p>A function</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="va">plu_ral</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="va">plu_ral</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     irregulars = c("moderate", "conservative", "liberal", "none"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     replace_n = TRUE, open = "{", close = "}") </span>
@@ -126,9 +131,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bf18f5a860&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5652c2828b70&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
-<span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="va"><a href="plu_ral.html">ral</a></span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="va"><a href="plu_ral.html">ral</a></span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     irregulars = c("moderate", "conservative", "liberal", "none"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     replace_n = TRUE, open = "{", close = "}") </span>
@@ -182,9 +187,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bf1779ef18&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5652c253e5c0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
-<span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu_ral"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu_ral"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     irregulars = c("moderate", "conservative", "liberal", "none"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     replace_n = TRUE, open = "{", close = "}") </span>
@@ -238,9 +243,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bf18f5a860&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5652c2828b70&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
-<span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu::ral"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu::ral"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     irregulars = c("moderate", "conservative", "liberal", "none"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     replace_n = TRUE, open = "{", close = "}") </span>
@@ -294,15 +299,15 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bf1779ef18&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5652c253e5c0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bf17aafb10&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5652c0a5e228&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
-<span class="r-in"><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span>, default <span class="op">=</span> <span class="va">plu_ral</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span>, default <span class="op">=</span> <span class="va">plu_ral</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n_fn = NULL, ..., n = NULL, pl = NULL, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     irregulars = c("moderate", "conservative", "liberal", "none"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     replace_n = TRUE, open = "{", close = "}") </span>
@@ -356,7 +361,7 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bf18f5a860&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5652c2828b70&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 </code></pre></div>
     </div>
@@ -372,7 +377,7 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
