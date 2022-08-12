@@ -29,7 +29,7 @@ plu_stick <- function(
     "0.2.2",
     paste0(sys.call()[1], "()"),
     details =
-      "Please use `knitr::combine_words()` or `glue::glue_collapse()` instead."
+      "Please use `and::and()`, knitr::combine_words()` or `glue::glue_collapse()` instead."
   )
 
   if (!length(x)) {return(character(0))}
