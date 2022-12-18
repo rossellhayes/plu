@@ -1,5 +1,7 @@
 # plu (development version)
 
+* Fixed an error where the plural forms of "octopus" and "platypus" were mixed up.
+
 # plu 0.2.3
 
 * Added staticexport of `plu_ralize()`.
@@ -15,12 +17,12 @@
 # plu 0.2.1
 
 ## New features
-* `plu_ral()` now supports arbitrary delimteters for special sequences.
+* `plu_ral()` now supports arbitrary delimiters for special sequences.
   * `plu_ral("attorney [general]", open = "[", close = "]")` produces "attorneys general".
 * `plu_ral()` now supports {braced|pipe} sequences of indefinite length.
   * `plu_ral("{one|two|three|more}", n = 3)` produces "three".
   * `plu_ral("{one|two|three|more}", n = 50)` produces "more".
-  * The delimters of these sequences can be changed with `open` and `close`.
+  * The delimiters of these sequences can be changed with `open` and `close`.
 
 ## Patches
 * Modest speed improvements to `plu_ralize()`.

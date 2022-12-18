@@ -28,11 +28,11 @@ list <- read_lines("data-raw/infl.txt") %>%
   bind_rows(
     tribble(
       ~singular, ~line,
-      "emoji",   c("emojis",     "emoji"),
-      "ghoti",   c("ghoti",      "ghotis"),
-      "lasagna", c("lasagnas",   "lasagne"),
-      "octopus", c("octopuses",  "octopodes"),
-      "octopus", c("platypuses", "platypodes")
+      "emoji", c("emojis", "emoji"),
+      "ghoti", c("ghoti", "ghotis"),
+      "lasagna", c("lasagnas", "lasagne"),
+      "octopus", c("octopuses", "octopodes"),
+      "platypus", c("platypuses", "platypodes")
     ) %>%
       mutate(guessed_plural = plu::ralize(singular, irregulars = "none"))
   ) %>%

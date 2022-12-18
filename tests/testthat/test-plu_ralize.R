@@ -11,11 +11,11 @@ test_that("character vector pluralization", {
   )
 })
 
-irregs              <- c("formula", "person", "child")
-irregs_none         <- c("formulas", "persons", "childs")
-irregs_liberal      <- c("formulas", "persons", "children")
-irregs_moderate     <- c("formulas", "people", "children")
-irregs_conservative <- c("formulae", "people", "children")
+irregs              <- c("formula", "person", "child", "octopus", "platypus")
+irregs_none         <- c("formulas", "persons", "childs", "octopuses", "platypuses")
+irregs_liberal      <- c("formulas", "persons", "children", "octopuses", "platypuses")
+irregs_moderate     <- c("formulas", "people", "children", "octopuses", "platypuses")
+irregs_conservative <- c("formulae", "people", "children", "octopodes", "platypodes")
 
 test_that("default irregular pluralization", {
   withr::local_options(plu.irregulars = NULL)
