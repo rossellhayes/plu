@@ -3,10 +3,7 @@ Package: plu
 Title: Dynamically Pluralize Phrases
 Version: 0.2.3.9000
 Authors@R: 
-    person(given = "Alexander",
-           family = "Rossell Hayes",
-           role = c("aut", "cre", "cph"),
-           email = "alexander@rossellhayes.com",
+    person("Alexander", "Rossell Hayes", , "alexander@rossellhayes.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-9412-0457"))
 Description: Converts English phrases to singular or plural form based on
     the length of an associated vector.  Contains helper functions to
@@ -20,9 +17,12 @@ Depends:
 Imports: 
     lifecycle
 Suggests: 
+    and,
     covr,
     crayon,
     fracture,
+    glue,
+    knitr,
     nombre,
     testthat (>= 3.0.0),
     withr
@@ -32,4 +32,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3

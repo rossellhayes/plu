@@ -1,6 +1,7 @@
 # plu (development version)
 
 * Fixed an error where the plural forms of "octopus" and "platypus" were mixed up.
+* `plu_stick()` is now defunct.
 
 # plu 0.2.3
 

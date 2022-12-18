@@ -50,7 +50,8 @@ The default can be changed by setting \code{options(plu.oxford_comma)}.}
 A character vector of length 1.
 }
 \description{
-Collapse a vector into a natural language string
+\lifecycle{deprecated} This function has been deprecated in favor of
+\code{\link[and:and]{and::and()}}, \code{\link[knitr:combine_words]{knitr::combine_words()}} or \code{\link[glue:glue_collapse]{glue::glue_collapse()}}.
 }
 \examples{
 ingredients <- c("sugar", "spice", "everything nice")
