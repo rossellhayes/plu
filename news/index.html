@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plu</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.3.9000</span>
       </span>
     </div>
 
@@ -48,13 +48,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.3" id="plu-023">plu 0.2.3<a class="anchor" aria-label="anchor" href="#plu-023"></a></h2>
-<ul><li>Added staticexport of <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.<ul><li>This allows you to include <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> in your package without depending on <code>plu</code>, using the <a href="https://github.com/wch/staticimports" class="external-link"><code>staticimports</code></a> package.</li></ul></li>
+<h2 class="page-header" data-toc-text="development version" id="plu-development-version">plu (development version)<a class="anchor" aria-label="anchor" href="#plu-development-version"></a></h2>
+<ul><li>Fixed an error where the plural forms of “octopus” and “platypus” were mixed up.</li>
+<li>
+<code><a href="../reference/plu_stick.html">plu_stick()</a></code> is now defunct.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.3" id="plu-023">plu 0.2.3<small>2022-08-12</small><a class="anchor" aria-label="anchor" href="#plu-023"></a></h2>
+<ul><li>Added staticexport of <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.
+<ul><li>This allows you to include <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> in your package without depending on <code>plu</code>, using the <a href="https://github.com/wch/staticimports" class="external-link"><code>staticimports</code></a> package.</li>
+</ul></li>
 <li>Update Roxygen version to avoid CRAN NOTE.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.2" id="plu-022">plu 0.2.2<small>2022-06-07</small><a class="anchor" aria-label="anchor" href="#plu-022"></a></h2>
-<ul><li>Modest speed improvements to <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.<ul><li>This propagates to <code><a href="../reference/plu_ral.html">plu_ral()</a></code> and <code><a href="../reference/plu_more.html">plu_more()</a></code>, which use <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> internally.</li></ul></li>
+<ul><li>Modest speed improvements to <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.
+<ul><li>This propagates to <code><a href="../reference/plu_ral.html">plu_ral()</a></code> and <code><a href="../reference/plu_more.html">plu_more()</a></code>, which use <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> internally.</li>
+</ul></li>
 <li>Deprecated <code><a href="../reference/plu_stick.html">plu_stick()</a></code> in favor of <code><a href="https://rdrr.io/pkg/knitr/man/combine_words.html" class="external-link">knitr::combine_words()</a></code> or <code><a href="https://glue.tidyverse.org/reference/glue_collapse.html" class="external-link">glue::glue_collapse()</a></code>.</li>
 </ul></div>
     <div class="section level2">
@@ -62,30 +72,43 @@
 <div class="section level3">
 <h3 id="new-features-0-2-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-1"></a></h3>
 <ul><li>
-<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports arbitrary delimteters for special sequences.<ul><li>
-<code>plu_ral("attorney [general]", open = "[", close = "]")</code> produces “attorneys general”.</li></ul></li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports arbitrary delimiters for special sequences.
+<ul><li>
+<code>plu_ral("attorney [general]", open = "[", close = "]")</code> produces “attorneys general”.</li>
+</ul></li>
 <li>
-<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports {braced|pipe} sequences of indefinite length.<ul><li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now supports {braced|pipe} sequences of indefinite length.
+<ul><li>
 <code>plu_ral("{one|two|three|more}", n = 3)</code> produces “three”.</li>
 <li>
 <code>plu_ral("{one|two|three|more}", n = 50)</code> produces “more”.</li>
-<li>The delimters of these sequences can be changed with <code>open</code> and <code>close</code>.</li>
+<li>The delimiters of these sequences can be changed with <code>open</code> and <code>close</code>.</li>
 </ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="patches-0-2-1">Patches<a class="anchor" aria-label="anchor" href="#patches-0-2-1"></a></h3>
-<ul><li>Modest speed improvements to <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.<ul><li>This propagates to <code><a href="../reference/plu_ral.html">plu_ral()</a></code> and <code><a href="../reference/plu_more.html">plu_more()</a></code>, which use <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> internally.</li></ul></li>
+<ul><li>Modest speed improvements to <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code>.
+<ul><li>This propagates to <code><a href="../reference/plu_ral.html">plu_ral()</a></code> and <code><a href="../reference/plu_more.html">plu_more()</a></code>, which use <code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> internally.</li>
+</ul></li>
 <li>
-<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles {braced} strings that contain sentence breaks.<ul><li>Previously, sentence breaks would break the {braced} string and apply normal pluralization to its contents.</li></ul></li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles {braced} strings that contain sentence breaks.
+<ul><li>Previously, sentence breaks would break the {braced} string and apply normal pluralization to its contents.</li>
+</ul></li>
 <li>
-<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles {braced|pipe} sequences when <code>pl</code> is set to <code>FALSE</code>.<ul><li>
-<code>plu_ral("{singular|plural}", pl = FALSE)</code> now returns <code>"singular"</code> instead of incorrectly returning <code>"plural"</code>.</li></ul></li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now correctly handles {braced|pipe} sequences when <code>pl</code> is set to <code>FALSE</code>.
+<ul><li>
+<code>plu_ral("{singular|plural}", pl = FALSE)</code> now returns <code>"singular"</code> instead of incorrectly returning <code>"plural"</code>.</li>
+</ul></li>
 <li>
-<code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> now correctly handles ALL-CAPS words where their lowercase equivalent has an irregular plural.<ul><li>
-<code>plu_ralize("CHILD")</code> now returns <code>"CHILDs"</code> instead of incorrectly returning <code>"Children"</code>.</li></ul></li>
+<code><a href="../reference/plu_ralize.html">plu_ralize()</a></code> now correctly handles ALL-CAPS words where their lowercase equivalent has an irregular plural.
+<ul><li>
+<code>plu_ralize("CHILD")</code> now returns <code>"CHILDs"</code> instead of incorrectly returning <code>"Children"</code>.</li>
+</ul></li>
 <li>
-<code>is_capital(strict = TRUE)</code> now correctly handles non-character inputs.<ul><li>
-<code>is_capital(1, strict = TRUE)</code> no returns <code>FALSE</code> instead of incorrectly returning <code>NA</code>.</li></ul></li>
+<code>is_capital(strict = TRUE)</code> now correctly handles non-character inputs.
+<ul><li>
+<code>is_capital(1, strict = TRUE)</code> no returns <code>FALSE</code> instead of incorrectly returning <code>NA</code>.</li>
+</ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="miscellaneous-0-2-1">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-2-1"></a></h3>
@@ -109,7 +132,8 @@
 <li>
 <p><code><a href="../reference/plu_ral.html">plu::ral()</a></code> now ensures that the capitalization of a phrase stays the same after pluralizing.</p>
 <ul><li>
-<code>plu::ral("A sentence.")</code> now results in “Sentences.” rather than “sentences.”</li></ul></li>
+<code>plu::ral("A sentence.")</code> now results in “Sentences.” rather than “sentences.”</li>
+</ul></li>
 <li>
 <p>Convenience functions around capitalization have been added:</p>
 <ul><li>
@@ -117,13 +141,16 @@
 <li>
 <code><a href="../reference/capitalize.html">is_capitalized()</a></code> tests if the first alphabetic character in a string is capital.</li>
 <li>
-<code><a href="../reference/capitalize.html">capitalize()</a></code> converts the first alphabetic character in a string to capital.<ul><li>Unlike <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code> or <code><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">stringr::str_to_sentence()</a></code>, this does not change the capitalization of any subsequent characters.</li></ul></li>
+<code><a href="../reference/capitalize.html">capitalize()</a></code> converts the first alphabetic character in a string to capital.
+<ul><li>Unlike <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code> or <code><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">stringr::str_to_sentence()</a></code>, this does not change the capitalization of any subsequent characters.</li>
+</ul></li>
 </ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="patches-0-2-0">Patches<a class="anchor" aria-label="anchor" href="#patches-0-2-0"></a></h3>
 <ul><li>
-<code><a href="../reference/plu_stick.html">plu::stick()</a></code>’s <code>oxford</code> now defaults to <code>FALSE</code> rather than depending on the user’s environment.</li></ul></div>
+<code><a href="../reference/plu_stick.html">plu::stick()</a></code>’s <code>oxford</code> now defaults to <code>FALSE</code> rather than depending on the user’s environment.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="deprecations-0-2-0">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-2-0"></a></h3>
 <ul><li>
@@ -139,7 +166,8 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.1" id="plu-011">plu 0.1.1<small>2020-09-03</small><a class="anchor" aria-label="anchor" href="#plu-011"></a></h2>
-<ul><li>Allow braces to be used within words.<ul><li>“cact{us|i}” -&gt; “cactus”, “cacti”</li>
+<ul><li>Allow braces to be used within words.
+<ul><li>“cact{us|i}” -&gt; “cactus”, “cacti”</li>
 <li>“antenna{|e}” -&gt; “antenna”, “antennae”</li>
 </ul></li>
 <li>Remove cross-reference to <strong>glue</strong> to avoid CRAN NOTE.</li>
@@ -149,7 +177,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0" id="plu-010">plu 0.1.0<small>2020-06-09</small><a class="anchor" aria-label="anchor" href="#plu-010"></a></h2>
-<ul><li>Initial release.</li></ul></div>
+<ul><li>Initial release.</li>
+</ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -164,7 +193,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
