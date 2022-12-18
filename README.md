@@ -47,39 +47,51 @@ remotes::install_github("rossellhayes/plu")
 
 ## Usage
 
+**plu** can be particularly useful when constructing error messages. For
+example, you may want to create a message that is gramatically correct
+regardless of whether the user’s code had one problem or multiple
+problems.
+
+With one problem, **plu** constructs a message in the singular:
+
 ``` r
-formulas1 <- c(x %in% 1:3 ~ "low", x %in% 4:6 ~ "medium", "x %in% 7:9")
-formulas2 <- c(x %in% 1:3 ~ "low", x %in% 4:6 ~ "medium", "x %in% 7:9", "high")
-problems1 <- Filter(function(x) !rlang::is_formula(x), formulas1)
-problems2 <- Filter(function(x) !rlang::is_formula(x), formulas2)
+arguments <- c(1, 2, 3, 3.5)
 
 paste(
-  "All arguments must be formulas.",
-  plu::ral("Argument", problems1), 
-  plu::stick(problems1),
-  plu::ral("isn't a formula.", problems1)
+  "All arguments must be integers.",
+  plu::ral("Argument", arguments[arguments %% 1 != 0]), 
+  and::and(encodeString(arguments[arguments %% 1 != 0], quote = "`")),
+  plu::ral("isn't an integer.", arguments[arguments %% 1 != 0])
 )
-#> [1] "All arguments must be formulas. Argument x %in% 7:9 isn't a formula."
+#> [1] "All arguments must be integers. Argument `3.5` isn't an integer."
+```
+
+But with two problems, the same code will construct a message in the
+plural:
+
+``` r
+arguments <- c(1, 2, 3, 3.5, 3.75)
 
 paste(
-  "All arguments must be formulas.",
-  plu::ral("Argument", problems2), 
-  plu::stick(sapply(problems2, encodeString, quote = "`")),
-  plu::ral("isn't a formula.", problems2)
+  "All arguments must be integers.",
+  plu::ral("Argument", arguments[arguments %% 1 != 0]), 
+  and::and(encodeString(arguments[arguments %% 1 != 0], quote = "`")),
+  plu::ral("isn't an integer.", arguments[arguments %% 1 != 0])
 )
-#> [1] "All arguments must be formulas. Arguments `x %in% 7:9` and `high` aren't formulas."
+#> [1] "All arguments must be integers. Arguments `3.5` and `3.75` aren't integers."
+```
 
+If you expect a lot of problems, you can use `plu::more()` to limit the
+number of displayed issues:
+
+``` r
 ints <- as.integer(runif(20, -10, 10))
 paste(
   "All inputs must be non-negative.",
-  plu::stick(
-    plu::more(
-      sapply(ints[ints < 0], encodeString, quote = "`"), type = "integer"
-    )
-  ),
-  plu::ral("is {negative}.", ints[ints < 0])
+  and::and(plu::more(encodeString(ints[ints < 0], quote = "`"), type = "integer")),
+  plu::ral("is", ints[ints < 0]), "negative."
 )
-#> [1] "All inputs must be non-negative. `-3`, `-2`, `-5`, `-6`, `-9` and 6 more integers are negative."
+#> [1] "All inputs must be non-negative. `-3`, `-2`, `-3`, `-5`, `-7`, and 6 more integers are negative."
 ```
 
 ## Credits
