@@ -1,6 +1,7 @@
 #' Pluralize a phrase based on the length of a vector
 #'
-#' @param x An character vector of English words or phrase to be pluralized.
+#' @param x A character vector (or vector that can be coerced to character)
+#'     of English words or phrase to be pluralized.
 #'     See details for special sequences which are handled differently.
 #' @param vector A vector whose length determines `n`. Defaults to `NULL`.
 #' @param n The number which will determine the plurality of `x`.
@@ -97,8 +98,8 @@ plu_ral <- function(
   n_fn = lifecycle::deprecated(),
   ...
 ) {
-  if (!length(x)) {return(character(0))}
-  assert_type(x, "character")
+  if (length(x) == 0) {return(character(0))}
+  mode(x) <- "character"
 
   if (lifecycle::is_present(replace_n)) {
     lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")
