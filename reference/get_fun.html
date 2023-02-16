@@ -90,8 +90,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (lifecycle::is_present(replace_n)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derive_pl(pl, n, vector)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derive_n(pl, n, vector)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     derived_plurality &lt;- derive_plurality(x, vector, n, pl)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derived_plurality$pl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derived_plurality$n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_delimeters(open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     open &lt;- escape(open)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     close &lt;- escape(close)</span>
@@ -105,8 +106,10 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (pl) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[!braced] &lt;- plu_ralize(split_in[!braced], irregulars = irregulars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (any(pl)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         pl &lt;- rep(pl, each = nrow(split_out))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[pl &amp; !braced] &lt;- plu_ralize(split_in[pl &amp; !braced], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             irregulars = irregulars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- which(split_out == "" &amp; split_in != "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- removed[removed%%nrow(split_out) != 0]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (any(removed)) {</span>
@@ -123,13 +126,14 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 " "] &lt;- ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- rep(n, each = nrow(split_out))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         n[braced], open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55e4e0f560d0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55970f96fea0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="fu">plu</span><span class="fu">::</span><span class="va"><a href="plu_ral.html">ral</a></span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n = NULL, pl = NULL, irregulars = c("moderate", </span>
@@ -144,8 +148,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (lifecycle::is_present(replace_n)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derive_pl(pl, n, vector)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derive_n(pl, n, vector)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     derived_plurality &lt;- derive_plurality(x, vector, n, pl)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derived_plurality$pl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derived_plurality$n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_delimeters(open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     open &lt;- escape(open)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     close &lt;- escape(close)</span>
@@ -159,8 +164,10 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (pl) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[!braced] &lt;- plu_ralize(split_in[!braced], irregulars = irregulars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (any(pl)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         pl &lt;- rep(pl, each = nrow(split_out))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[pl &amp; !braced] &lt;- plu_ralize(split_in[pl &amp; !braced], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             irregulars = irregulars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- which(split_out == "" &amp; split_in != "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- removed[removed%%nrow(split_out) != 0]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (any(removed)) {</span>
@@ -177,13 +184,14 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 " "] &lt;- ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- rep(n, each = nrow(split_out))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         n[braced], open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55e4e0a6f198&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55970f4f4008&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu_ral"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n = NULL, pl = NULL, irregulars = c("moderate", </span>
@@ -198,8 +206,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (lifecycle::is_present(replace_n)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derive_pl(pl, n, vector)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derive_n(pl, n, vector)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     derived_plurality &lt;- derive_plurality(x, vector, n, pl)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derived_plurality$pl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derived_plurality$n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_delimeters(open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     open &lt;- escape(open)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     close &lt;- escape(close)</span>
@@ -213,8 +222,10 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (pl) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[!braced] &lt;- plu_ralize(split_in[!braced], irregulars = irregulars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (any(pl)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         pl &lt;- rep(pl, each = nrow(split_out))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[pl &amp; !braced] &lt;- plu_ralize(split_in[pl &amp; !braced], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             irregulars = irregulars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- which(split_out == "" &amp; split_in != "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- removed[removed%%nrow(split_out) != 0]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (any(removed)) {</span>
@@ -231,13 +242,14 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 " "] &lt;- ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- rep(n, each = nrow(split_out))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         n[braced], open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55e4e0f560d0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55970f96fea0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="st">"plu::ral"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n = NULL, pl = NULL, irregulars = c("moderate", </span>
@@ -252,8 +264,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (lifecycle::is_present(replace_n)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derive_pl(pl, n, vector)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derive_n(pl, n, vector)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     derived_plurality &lt;- derive_plurality(x, vector, n, pl)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derived_plurality$pl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derived_plurality$n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_delimeters(open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     open &lt;- escape(open)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     close &lt;- escape(close)</span>
@@ -267,8 +280,10 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (pl) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[!braced] &lt;- plu_ralize(split_in[!braced], irregulars = irregulars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (any(pl)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         pl &lt;- rep(pl, each = nrow(split_out))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[pl &amp; !braced] &lt;- plu_ralize(split_in[pl &amp; !braced], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             irregulars = irregulars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- which(split_out == "" &amp; split_in != "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- removed[removed%%nrow(split_out) != 0]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (any(removed)) {</span>
@@ -285,19 +300,20 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 " "] &lt;- ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- rep(n, each = nrow(split_out))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         n[braced], open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55e4e0a6f198&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55970f4f4008&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55e4e0b94588&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55970f5ae588&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-in"><span><span class="fu">get_fun</span><span class="op">(</span><span class="cn">NULL</span>, default <span class="op">=</span> <span class="va">plu_ral</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, vector = NULL, n = NULL, pl = NULL, irregulars = c("moderate", </span>
@@ -312,8 +328,9 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (lifecycle::is_present(replace_n)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derive_pl(pl, n, vector)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derive_n(pl, n, vector)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     derived_plurality &lt;- derive_plurality(x, vector, n, pl)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pl &lt;- derived_plurality$pl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- derived_plurality$n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_delimeters(open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     open &lt;- escape(open)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     close &lt;- escape(close)</span>
@@ -327,8 +344,10 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out &lt;- split_in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (pl) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[!braced] &lt;- plu_ralize(split_in[!braced], irregulars = irregulars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (any(pl)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         pl &lt;- rep(pl, each = nrow(split_out))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         split_out[pl &amp; !braced] &lt;- plu_ralize(split_in[pl &amp; !braced], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             irregulars = irregulars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- which(split_out == "" &amp; split_in != "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         removed &lt;- removed[removed%%nrow(split_out) != 0]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (any(removed)) {</span>
@@ -345,13 +364,14 @@ Defaults to <code><a href="https://rdrr.io/r/base/identity.html" class="external
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 " "] &lt;- ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n &lt;- rep(n, each = nrow(split_out))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     split_out[braced] &lt;- pluralize_braces(split_out[braced], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n, open, close)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         n[braced], open, close)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mat[] &lt;- apply(split_out, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x[] &lt;- apply(mat, 2, paste, collapse = "")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55e4e0f560d0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55970f96fea0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:plu&gt;</span>
 </code></pre></div>
     </div>

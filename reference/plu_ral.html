@@ -93,13 +93,13 @@ See details for special sequences which are handled differently.</p></dd>
 
 
 <dt>n</dt>
-<dd><p>The number which will determine the plurality of <code>x</code>.
+<dd><p>A numeric vector which will determine the plurality of <code>x</code>.
 Defaults to <code>length(vector)</code>.
 If specified, overrides <code>vector</code>.</p></dd>
 
 
 <dt>pl</dt>
-<dd><p>A logical value indicating whether to use the plural form (if
+<dd><p>A logical vector indicating whether to use the plural form (if
 <code>TRUE</code>) or the singular form (if <code>FALSE</code>) of <code>x</code>.
 Defaults to <code>FALSE</code> when <code>n</code> is <code>1</code> or <code>-1</code> and <code>TRUE</code> for all other
 values.
@@ -238,17 +238,23 @@ plural form.</p></div>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Tuesday, the caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"a {single|multiple} pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Tuesday, the caterpillar ate multiple pears"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">later</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"plum"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"strawberry"</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"chocolate cake"</span>, <span class="st">"ice-cream cone"</span>, <span class="st">"pickle"</span>, <span class="st">"Swiss cheese"</span>, <span class="st">"salami"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"lollipop"</span>, <span class="st">"cherry pie"</span>, <span class="st">"sausage"</span>, <span class="st">"cupcake"</span>, <span class="st">"watermelon"</span></span></span>
+<span class="r-in"><span><span class="co"># Vectorized `n`</span></span></span>
+<span class="r-in"><span><span class="va">foods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"pear"</span>, <span class="st">"plum"</span>, <span class="st">"strawberry"</span>, <span class="st">"orange"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">quantities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="va">foods</span>, n <span class="op">=</span> <span class="va">quantities</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "apple"        "pears"        "plums"        "strawberries" "oranges"     </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"The caterpillar ate"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">and</span><span class="fu">::</span><span class="fu"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu">nombre</span><span class="fu">::</span><span class="fu"><a href="https://nombre.rossellhayes.com/reference/cardinal.html" class="external-link">cardinal</a></span><span class="op">(</span><span class="va">quantities</span><span class="op">)</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="va">foods</span>, n <span class="op">=</span> <span class="va">quantities</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate one apple, two pears, three plums, four strawberries and five oranges"</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Some words have a dual form, a specific form for quantities of two</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate the apple"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} pear"</span>, <span class="va">tue</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate both pears"</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} delicacy"</span>, <span class="va">later</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} delicacy"</span>, <span class="va">foods</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate all of the delicacies"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Special brace strings</span></span></span>

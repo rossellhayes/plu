@@ -49,7 +49,11 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="plu-development-version">plu (development version)<a class="anchor" aria-label="anchor" href="#plu-development-version"></a></h2>
-<ul><li>Fixed an error where the plural forms of “octopus” and “platypus” were mixed up.</li>
+<ul><li>
+<code><a href="../reference/plu_ral.html">plu_ral()</a></code> now accepts vectors for arguments <code>n</code> and <code>pl</code>.
+<ul><li>e.g. <code>plu_ral(c("word", "phrase"), n = c(1, 2))</code> returns <code>c("word", "phrases")</code>.</li>
+</ul></li>
+<li>Fixed an error where the plural forms of “octopus” and “platypus” were mixed up.</li>
 <li>
 <code><a href="../reference/plu_ral.html">plu_ral()</a></code> no longer attempts to replace the sequence <code>"n"</code>.
 <ul><li>The arguments <code>replace_n</code> and <code>n_fn</code> are now deprecated.</li>
