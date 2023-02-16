@@ -38,11 +38,11 @@ See details for special sequences which are handled differently.}
 
 \item{vector}{A vector whose length determines \code{n}. Defaults to \code{NULL}.}
 
-\item{n}{The number which will determine the plurality of \code{x}.
+\item{n}{A numeric vector which will determine the plurality of \code{x}.
 Defaults to \code{length(vector)}.
 If specified, overrides \code{vector}.}
 
-\item{pl}{A logical value indicating whether to use the plural form (if
+\item{pl}{A logical vector indicating whether to use the plural form (if
 \code{TRUE}) or the singular form (if \code{FALSE}) of \code{x}.
 Defaults to \code{FALSE} when \code{n} is \code{1} or \code{-1} and \code{TRUE} for all other
 values.
@@ -152,15 +152,19 @@ paste("Tuesday, the caterpillar visited", plu::ral("a {pear} tree", tue))
 paste("Monday, the caterpillar ate", plu::ral("a {single|multiple} apple", mon))
 paste("Tuesday, the caterpillar ate", plu::ral("a {single|multiple} pear", tue))
 
-later <- c(
-  rep("plum", 3), rep("strawberry", 4), rep("orange", 5),
-  "chocolate cake", "ice-cream cone", "pickle", "Swiss cheese", "salami",
-  "lollipop", "cherry pie", "sausage", "cupcake", "watermelon"
+# Vectorized `n`
+foods <- c("apple", "pear", "plum", "strawberry", "orange")
+quantities <- c(1, 2, 3, 4, 5)
+plu::ral(foods, n = quantities)
+paste(
+  "The caterpillar ate",
+  and::and(paste(nombre::cardinal(quantities), plu::ral(foods, n = quantities)))
 )
 
+# Some words have a dual form, a specific form for quantities of two
 paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
-paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", later))
+paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", foods))
 
 # Special brace strings
 plu::ral("{one|two}", n = 1)
