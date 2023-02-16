@@ -233,18 +233,6 @@ test_that("arbitrary length pipe", {
   expect_equal(plu_ral(x, n = 0.5), c("one", "two", "more"))
 })
 
-test_that("number", {
-  expect_equal(plu_ral("n number", one), "1 number")
-  expect_equal(plu_ral("n number", fifty), "50 numbers")
-  expect_equal(plu_ral("n number", one, replace_n = FALSE), "n number")
-  expect_equal(plu_ral("n number", fifty, replace_n = FALSE), "ns numbers")
-  expect_equal(
-    plu_ral("n number", integer(10000), n_fn = format, big.mark = ","),
-    "10,000 numbers"
-  )
-  expect_equal(plu_ral("{the|both|all n} number", fifty), "all 50 numbers")
-})
-
 test_that("capitalization", {
   expect_equal(plu_ral("A word"), "Words")
   expect_equal(plu_ral("! A word"), "! Words")
@@ -263,8 +251,6 @@ test_that("early return", {
 })
 
 test_that("errors", {
-  expect_error(plu_ral(integer(1)), '`x` must be of type "character"')
-
   expect_error(
     plu_ral("word", n = character(1)), '`n` must be of type "numeric"'
   )
@@ -273,23 +259,13 @@ test_that("errors", {
     '`n` must be of type "numeric"'
   )
   expect_error(plu_ral("word", n = numeric(2)), "`n` must be length one")
+  expect_error(plu_ral("word", n = "a"), '`n` must be of type "numeric"')
+  expect_error(plu_ral("word", n = matrix("a")), '`n` must be of type "numeric"')
 
   expect_error(plu_ral("word", pl = NA),         "`pl` must be TRUE or FALSE")
   expect_error(plu_ral("word", pl = numeric(1)), "`pl` must be TRUE or FALSE")
   expect_error(plu_ral("word", pl = logical(2)), "`pl` must be length one")
 
-  expect_error(
-    plu_ral("word", replace_n = NA),         "`replace_n` must be TRUE or FALSE"
-  )
-  expect_error(
-    plu_ral("word", replace_n = numeric(1)), "`replace_n` must be TRUE or FALSE"
-  )
-  expect_error(
-    plu_ral("word", replace_n = logical(2)), "`replace_n` must be length one"
-  )
-
-  expect_error(plu_ral("word", n_fn = plu_not_real_fun),    "plu_not_real_fun")
-  expect_error(plu_ral("word", n_fn = "plu_not_real_fun"),  "plu_not_real_fun")
-  expect_error(plu_ral("word", n_fn = plu::not_real_fun),   "plu::not_real_fun")
-  expect_error(plu_ral("word", n_fn = "plu::not_real_fun"), "plu::not_real_fun")
+  lifecycle::expect_deprecated(plu_ral("word", replace_n = TRUE))
+  lifecycle::expect_deprecated(plu_ral("word", n_fn = identity))
 })
