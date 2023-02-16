@@ -105,7 +105,7 @@ plu_ral <- function(
     lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")
   }
 
-  derived_plurality <- derive_plurality(pl, n, vector)
+  derived_plurality <- derive_plurality(x, vector, n, pl)
   pl <- derived_plurality$pl
   n  <- derived_plurality$n
 
@@ -132,9 +132,13 @@ plu_ral <- function(
 
   split_out <- split_in
 
-  if (pl) {
+  if (any(pl)) {
+    pl <- rep(pl, each = nrow(split_out))
+
     # Pluralize words that aren't wrapped in {braces}
-    split_out[!braced] <- plu_ralize(split_in[!braced], irregulars = irregulars)
+    split_out[pl & !braced] <- plu_ralize(
+      split_in[pl & !braced], irregulars = irregulars
+    )
 
     # Find where "a" or "an" have been removed
     removed <- which(split_out == "" & split_in != "")
@@ -169,7 +173,10 @@ plu_ral <- function(
   }
 
   # Select appropriate option for words wrapped in braces
-  split_out[braced] <- pluralize_braces(split_out[braced], n, open, close)
+  n <- rep(n, each = nrow(split_out))
+  split_out[braced] <- pluralize_braces(
+    split_out[braced], n[braced], open, close
+  )
 
   mat[] <- apply(split_out, 2, paste, collapse = "")
 
@@ -185,25 +192,38 @@ ral <- plu_ral
 # @staticimports pkg:staticimports
 #   %||%
 
-derive_plurality <- function(pl, n, vector) {
+derive_plurality <- function(x, vector, n, pl) {
   if (is.null(n)) {
     n <- n %||% length(vector)
   }
 
-  assert_length(n)
   assert_type(n, "numeric")
 
   if (is.null(pl)) {
     pl <- pl %||% (abs(n) != 1)
   }
 
-  assert_length(pl)
   assert_t_or_f(pl)
+
+  n <- recycle(n, along = x)
+  pl <- recycle(pl, along = x)
 
   n[pl & abs(n) == 1] <- 0
   n[!pl & abs(n) != 1] <- 1
 
   list(pl = pl, n = n)
+}
+
+recycle <- function(x, along) {
+  x_name <- code(deparse(substitute(x)))
+  along_name <- code(deparse(substitute(along)))
+
+  if (length(x) == length(along)) return(x)
+  if (length(x) == 1) return(rep(x, length(along)))
+  error(
+    "Cannot recycle ", x_name, " (length ", length(x), ") ",
+    "to match ", along_name, " (length ", length(along), ")."
+  )
 }
 
 validate_delimeters <- function(open, close) {
@@ -233,13 +253,13 @@ pluralize_braces <- function(x, n, open, close) {
     mid = sub(paste0("(?s)^.*?", open, "(.*?)", close), "\\1", x, perl = TRUE)
   )
 
-  brace_list$mid <- vapply(
-    strsplit(brace_list$mid, "\\|"),
-    function(x) {
+  brace_list$mid <- Map(
+    function(x, n) {
       if (abs(n) %in% seq_along(x)) {return(x[abs(n)])}
       x[length(x)]
     },
-    character(1)
+    x = strsplit(brace_list$mid, "\\|"),
+    n = n
   )
 
   paste0(brace_list$pre, brace_list$mid)

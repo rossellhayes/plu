@@ -22,11 +22,6 @@ assert_t_or_f <- function(x, arg = NULL) {
   if (!is_t_or_f(x)) {error(arg, " must be TRUE or FALSE")}
 }
 
-assert_length <- function(x, arg = NULL) {
-  if (is.null(arg))   {arg <- code(deparse(substitute(x)))}
-  if (length(x) == 0) {error(arg, " must not be length 0")}
-}
-
 assert_length_1 <- function(x, arg = NULL) {
   if (is.null(arg))   {arg <- code(deparse(substitute(x)))}
   if (length(x) != 1) {error(arg, " must be length 1")}
