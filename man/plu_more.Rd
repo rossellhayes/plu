@@ -74,12 +74,8 @@ plu::more(fracture::fracture((1:9) / (9:1)))
 # Setting a determiner other than "more"
 plu::more(letters, det = "other")
 
-# Use plu::stick() to get a nicely formatted message
-plu::stick(plu::more(letters))
-
 # Applying a function to the number
 plu::more(letters, fn = nombre::cardinal)
-message(plu::stick(plu::more(sapply(letters, crayon::blue), fn = crayon::blue)))
 
 # Automatic pluralization of type
 fish <- c("sea bass", "crucian carp", "dace", "coelecanth")
@@ -102,7 +98,7 @@ verbose_sqrt <- function(x) {
 
     warning(
       "Square root is undefined for ",
-      plu::stick(plu::more(prob_msg, fn = crayon::silver, type = "input.")),
+      and::and(plu::more(prob_msg, fn = crayon::silver, type = "input.")),
       call. = FALSE
     )
   }

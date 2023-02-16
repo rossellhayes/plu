@@ -8,40 +8,35 @@
 plu_ral(
   x,
   vector = NULL,
-  n_fn = NULL,
-  ...,
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
-  replace_n = TRUE,
   open = "{",
-  close = "}"
+  close = "}",
+  replace_n = lifecycle::deprecated(),
+  n_fn = lifecycle::deprecated(),
+  ...
 )
 
 ral(
   x,
   vector = NULL,
-  n_fn = NULL,
-  ...,
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
-  replace_n = TRUE,
   open = "{",
-  close = "}"
+  close = "}",
+  replace_n = lifecycle::deprecated(),
+  n_fn = lifecycle::deprecated(),
+  ...
 )
 }
 \arguments{
-\item{x}{An character vector of English words or phrase to be pluralized.
+\item{x}{A character vector (or vector that can be coerced to character)
+of English words or phrase to be pluralized.
 See details for special sequences which are handled differently.}
 
 \item{vector}{A vector whose length determines \code{n}. Defaults to \code{NULL}.}
-
-\item{n_fn}{A function to apply to the output of the special sequence
-\code{"n"}. See examples.
-Defaults to \code{identity}, which returns \code{n} unchanged.}
-
-\item{...}{Additional arguments passed to the function \code{n_fn}.}
 
 \item{n}{The number which will determine the plurality of \code{x}.
 Defaults to \code{length(vector)}.
@@ -65,13 +60,14 @@ Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
 See examples in \code{\link[=ralize]{ralize()}} for more details.}
 
-\item{replace_n}{A logical indicating whether to use special handling for
-\code{"n"}.
-See details.
-Defaults to \code{TRUE}.}
-
 \item{open, close}{The opening and closing delimiters for special strings.
 See section "Special strings". Defaults to \code{"{"} and \code{"}"}.}
+
+\item{replace_n}{\lifecycle{deprecated}}
+
+\item{n_fn}{\lifecycle{deprecated}}
+
+\item{...}{\lifecycle{deprecated}}
 }
 \value{
 The character vector \code{x} altered to match the number of \code{n}
@@ -116,11 +112,6 @@ Certain strings in \code{x} receive special treatment.
 \itemize{
 \item By default, \code{"a"} and \code{"an"} are deleted in the plural
 ("a word" to "words").
-\item The string \code{"n"} will be replaced with the length of \code{vector} or the
-number in \code{n}.
-\itemize{
-\item This output can be modified with \code{n_fn}.
-}
 \item Strings between \code{open} and \code{close} separated by a pipe will be treated as a
 custom plural (\code{"{a|some} word"} to "a word", "some words").
 \itemize{
@@ -170,12 +161,6 @@ later <- c(
 paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", later))
-
-paste("The caterpillar ate", plu::ral("n apple", mon))
-paste("The caterpillar ate", plu::ral("n delicacy", later))
-
-paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
-paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
 
 # Special brace strings
 plu::ral("{one|two}", n = 1)

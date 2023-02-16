@@ -32,12 +32,6 @@ paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", later))
 
-paste("The caterpillar ate", plu::ral("n apple", mon))
-paste("The caterpillar ate", plu::ral("n delicacy", later))
-
-paste("The caterpillar ate", plu::ral("n apple", mon, nombre::cardinal))
-paste("The caterpillar ate", plu::ral("n delicacy", later, nombre::cardinal))
-
 # Special brace strings
 plu::ral("{one|two}", n = 1)
 plu::ral("{one|two}", n = 2)
