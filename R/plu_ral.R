@@ -4,10 +4,10 @@
 #'     of English words or phrase to be pluralized.
 #'     See details for special sequences which are handled differently.
 #' @param vector A vector whose length determines `n`. Defaults to `NULL`.
-#' @param n The number which will determine the plurality of `x`.
+#' @param n A numeric vector which will determine the plurality of `x`.
 #'     Defaults to `length(vector)`.
 #'     If specified, overrides `vector`.
-#' @param pl A logical value indicating whether to use the plural form (if
+#' @param pl A logical vector indicating whether to use the plural form (if
 #'     `TRUE`) or the singular form (if `FALSE`) of `x`.
 #'     Defaults to `FALSE` when `n` is `1` or `-1` and `TRUE` for all other
 #'     values.
@@ -105,8 +105,9 @@ plu_ral <- function(
     lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")
   }
 
-  pl <- derive_pl(pl, n, vector)
-  n  <- derive_n(pl, n, vector)
+  derived_plurality <- derive_plurality(pl, n, vector)
+  pl <- derived_plurality$pl
+  n  <- derived_plurality$n
 
   validate_delimeters(open, close)
   open  <- escape(open)
@@ -181,34 +182,28 @@ plu_ral <- function(
 
 ral <- plu_ral
 
-derive_pl <- function(pl, n, vector) {
-  if (!is.null(pl)) {
-    assert_length_1(pl)
-    assert_t_or_f(pl)
-    return(pl)
+# @staticimports pkg:staticimports
+#   %||%
+
+derive_plurality <- function(pl, n, vector) {
+  if (is.null(n)) {
+    n <- n %||% length(vector)
   }
 
-  if (!is.null(n)) {
-    assert_length_1(n)
-    assert_type(n, "numeric")
-    return(abs(n) != 1)
+  assert_length(n)
+  assert_type(n, "numeric")
+
+  if (is.null(pl)) {
+    pl <- pl %||% (abs(n) != 1)
   }
 
-  abs(length(vector)) != 1
-}
+  assert_length(pl)
+  assert_t_or_f(pl)
 
-derive_n <- function(pl, n, vector) {
-  if (!is.null(n)) {
-    assert_length_1(n)
-    assert_type(n, "numeric")
-    if (pl  && abs(n) == 1) {return(2)}
-    if (!pl && abs(n) != 1) {return(1)}
-    return(n)
-  }
+  n[pl & abs(n) == 1] <- 0
+  n[!pl & abs(n) != 1] <- 1
 
-  if (pl  && abs(length(vector)) == 1) {return(2)}
-  if (!pl && abs(length(vector)) != 1) {return(1)}
-  length(vector)
+  list(pl = pl, n = n)
 }
 
 validate_delimeters <- function(open, close) {
