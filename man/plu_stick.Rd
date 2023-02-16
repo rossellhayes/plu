@@ -3,73 +3,19 @@
 \name{plu_stick}
 \alias{plu_stick}
 \alias{stick}
-\title{Collapse a vector into a natural language string}
+\title{Deprecated functions}
 \usage{
-plu_stick(
-  x,
-  sep = ", ",
-  conj = " and ",
-  oxford = getOption("plu.oxford_comma", FALSE),
-  syndeton = lifecycle::deprecated(),
-  fn = lifecycle::deprecated(),
-  ...
-)
+plu_stick(...)
 
-stick(
-  x,
-  sep = ", ",
-  conj = " and ",
-  oxford = getOption("plu.oxford_comma", FALSE),
-  syndeton = lifecycle::deprecated(),
-  fn = lifecycle::deprecated(),
-  ...
-)
+stick(...)
 }
 \arguments{
-\item{x}{A \link{character} vector (or a vector coercible to character).}
-
-\item{sep}{A \link{character} to place between list items. Defaults to \code{", "}}
-
-\item{conj}{A \link{character} to place between the penultimate and last
-list items.
-Defaults to \code{" and "}.
-If \code{\link{NULL}}, \code{sep} is used.}
-
-\item{oxford}{A \link{logical} indicating whether to place \code{sep} before \code{conj}
-(x, y, and z) or not (x, y and z) in lists of length three or more.
-Defaults to \code{FALSE}.
-The default can be changed by setting \code{options(plu.oxford_comma)}.}
-
-\item{syndeton}{\lifecycle{deprecated}}
-
-\item{fn}{\lifecycle{deprecated}}
-
 \item{...}{\lifecycle{deprecated}}
 }
 \value{
-A character vector of length 1.
+A \link[lifecycle:deprecate_soft]{deprecation error}.
 }
 \description{
 \lifecycle{deprecated} This function has been deprecated in favor of
 \code{\link[and:and]{and::and()}}, \code{\link[knitr:combine_words]{knitr::combine_words()}} or \code{\link[glue:glue_collapse]{glue::glue_collapse()}}.
-}
-\examples{
-ingredients <- c("sugar", "spice", "everything nice")
-plu::stick(ingredients)
-plu::stick(ingredients, conj = " or ")
-
-# When `conj` is `NULL`, `sep` is used between all elements
-plu::stick(ingredients, sep = " and ", conj = NULL)
-plu::stick(ingredients, sep = "/",     conj = NULL)
-
-creed <- c("snow", "rain", "heat", "gloom of night")
-plu::stick(creed, sep = " nor ", conj = NULL)
-
-# Oxford commas are only added when there are three or more elements
-plu::stick(letters[1:3], oxford = TRUE)
-plu::stick(letters[1:2], oxford = TRUE)
-
-# Oxford commas are optional for English, but should be FALSE for most languages
-ingredientes <- c("azúcar", "flores", "muchos colores")
-plu::stick(ingredientes, conj = " y ", oxford = FALSE)
 }
