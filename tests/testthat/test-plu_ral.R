@@ -51,7 +51,7 @@ test_that("spaces", {
   expect_equal(plu_ral(" a word "), " words ")
 })
 
-test_that("vector", {
+test_that("vector x", {
   expect_equal(
     plu_ral(c("word", "phrase", "sentence")),
     c("words", "phrases", "sentences")
@@ -77,6 +77,94 @@ test_that("vector", {
   expect_equal(
     plu_ral(c(w = "word", p = "phrase", "sentence")),
     c(w = "words", p = "phrases", "sentences")
+  )
+})
+
+test_that("vector n", {
+  expect_equal(
+    plu_ral(c("word", "phrase", "sentence"), n = 1:3),
+    c("word", "phrases", "sentences")
+  )
+
+  expect_equal(
+    plu_ral(
+      matrix(c("word", "phrase", "sentence", "paragraph"), nrow = 2),
+      n = 1:4
+    ),
+    matrix(c("word", "phrases", "sentences", "paragraphs"), nrow = 2)
+  )
+
+  expect_equal(
+    plu_ral(
+      c("person ", " cactus", "attorney {general}", "", "{1|2|3|4|5} test"),
+      n = 1:5
+    ),
+    c("person ", " cacti", "attorneys general", "", "5 tests")
+  )
+
+  expect_equal(
+    plu_ral(
+      c(
+        "th{1|2|3}s {1|2|3}s a test",
+        "thi{1|2|3} i{1|2|3} a te{1|2|3}t",
+        "this is a t{1|2|3}st"
+      ),
+      n = 1:3
+    ),
+    c("th1s 1s a test", "thi2 i2 te2ts", "these are t3sts")
+  )
+
+  expect_equal(
+    plu_ral(
+      c("A sentence.", "A sentence? A sentence. A sentence!"),
+      n = 1:2
+    ),
+    c("A sentence.", "Sentences? Sentences. Sentences!")
+  )
+
+  expect_equal(plu_ral(c("", ""), n = 1:2), c("", ""))
+
+  expect_equal(
+    plu_ral(c(w = "word", p = "phrase", "sentence"), n = 1:3),
+    c(w = "word", p = "phrases", "sentences")
+  )
+})
+
+test_that("vector pl", {
+  expect_equal(
+    plu_ral(c("word", "phrase", "sentence"), pl = c(TRUE, FALSE, TRUE)),
+    c("words", "phrase", "sentences")
+  )
+
+  expect_equal(
+    plu_ral(
+      matrix(c("word", "phrase", "sentence", "paragraph"), nrow = 2),
+      pl = c(TRUE, FALSE, TRUE, FALSE)
+    ),
+    matrix(c("words", "phrase", "sentences", "paragraph"), nrow = 2)
+  )
+
+  expect_equal(
+    plu_ral(
+      c("person ", " cactus", "attorney {general}", "", "{1|2|several} test"),
+      pl = c(TRUE, FALSE, TRUE, FALSE, TRUE)
+    ),
+    c("people ", " cactus", "attorneys general", "", "several tests")
+  )
+
+  expect_equal(
+    plu_ral(
+      c("A sentence.", "A sentence? A sentence. A sentence!"),
+      pl = c(TRUE, FALSE)
+    ),
+    c("Sentences.", "A sentence? A sentence. A sentence!")
+  )
+
+  expect_equal(plu_ral(c("", ""), pl = c(TRUE, FALSE)), c("", ""))
+
+  expect_equal(
+    plu_ral(c(w = "word", p = "phrase", "sentence"), pl = c(TRUE, FALSE, TRUE)),
+    c(w = "words", p = "phrase", "sentences")
   )
 })
 
@@ -176,11 +264,11 @@ test_that("alternate pipe", {
 
   expect_error(
     plu_ral("word", open  = c("{", "}")),
-    "`open` and `close` must be length one"
+    "`open` and `close` must be length 1"
   )
   expect_error(
     plu_ral("word", close = c("{", "}")),
-    "`open` and `close` must be length one"
+    "`open` and `close` must be length 1"
   )
 
   expect_error(
@@ -258,13 +346,13 @@ test_that("errors", {
     plu_ral("word", pl = TRUE, n = character(1)),
     '`n` must be of type "numeric"'
   )
-  expect_error(plu_ral("word", n = numeric(2)), "`n` must be length one")
+  expect_error(plu_ral("word", n = numeric(2)), "Cannot recycle `n`")
   expect_error(plu_ral("word", n = "a"), '`n` must be of type "numeric"')
   expect_error(plu_ral("word", n = matrix("a")), '`n` must be of type "numeric"')
 
   expect_error(plu_ral("word", pl = NA),         "`pl` must be TRUE or FALSE")
   expect_error(plu_ral("word", pl = numeric(1)), "`pl` must be TRUE or FALSE")
-  expect_error(plu_ral("word", pl = logical(2)), "`pl` must be length one")
+  expect_error(plu_ral("word", pl = logical(2)), "Cannot recycle `pl`")
 
   lifecycle::expect_deprecated(plu_ral("word", replace_n = TRUE))
   lifecycle::expect_deprecated(plu_ral("word", n_fn = identity))

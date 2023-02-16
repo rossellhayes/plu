@@ -13,7 +13,9 @@ style <- function(x, quote, color) {
 code  <- function(x) {style(x, "`", "silver")}
 value <- function(x) {style(x, '"', "blue")}
 
-is_t_or_f <- function(x) {is.logical(x) && !is.na(x)}
+is_t_or_f <- function(x) {
+  is.logical(x) && !any(is.na(x))
+}
 
 assert_t_or_f <- function(x, arg = NULL) {
   if (is.null(arg))  {arg <- code(deparse(substitute(x)))}
@@ -22,7 +24,7 @@ assert_t_or_f <- function(x, arg = NULL) {
 
 assert_length_1 <- function(x, arg = NULL) {
   if (is.null(arg))   {arg <- code(deparse(substitute(x)))}
-  if (length(x) != 1) {error(arg, " must be length one")}
+  if (length(x) != 1) {error(arg, " must be length 1")}
 }
 
 assert_length_1_or_null <- function(x, arg = NULL) {
