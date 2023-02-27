@@ -11,9 +11,9 @@ plu_ral(
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
+  replace_n = TRUE,
   open = "{",
   close = "}",
-  replace_n = lifecycle::deprecated(),
   n_fn = lifecycle::deprecated(),
   ...
 )
@@ -24,9 +24,9 @@ ral(
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
+  replace_n = TRUE,
   open = "{",
   close = "}",
-  replace_n = lifecycle::deprecated(),
   n_fn = lifecycle::deprecated(),
   ...
 )
@@ -60,10 +60,12 @@ Defaults to \code{"moderate"}.
 The default can be changed by setting \code{options(plu.irregulars)}.
 See examples in \code{\link[=ralize]{ralize()}} for more details.}
 
+\item{replace_n}{A logical indicating whether to use special handling for \code{"n"}.
+See details.
+Defaults to \code{TRUE}.}
+
 \item{open, close}{The opening and closing delimiters for special strings.
 See section "Special strings". Defaults to \code{"{"} and \code{"}"}.}
-
-\item{replace_n}{\lifecycle{deprecated}}
 
 \item{n_fn}{\lifecycle{deprecated}}
 
@@ -112,6 +114,8 @@ Certain strings in \code{x} receive special treatment.
 \itemize{
 \item By default, \code{"a"} and \code{"an"} are deleted in the plural
 ("a word" to "words").
+\item The string \code{"n"} will be replaced with the length of \code{vector} or the
+number in \code{n}.
 \item Strings between \code{open} and \code{close} separated by a pipe will be treated as a
 custom plural (\code{"{a|some} word"} to "a word", "some words").
 \itemize{
@@ -165,6 +169,10 @@ paste(
 paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", foods))
+
+# The string "n" will be replaced by the number used for pluralization
+paste("The caterpillar ate", plu::ral("n apple", mon))
+paste("The caterpillar ate", plu::ral("n delicacy", foods))
 
 # Special brace strings
 plu::ral("{one|two}", n = 1)
