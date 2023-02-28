@@ -189,7 +189,11 @@ plu_ral <- function(
   )
 
   # replace "n" with `n`
-  split_out[replace_n] <- str_replace_all(split_out[replace_n], "\\bn\\b", n)
+  split_out[replace_n] <- str_replace_all(
+    split_out[replace_n],
+    pattern = "\\bn\\b",
+    replacement = n[replace_n]
+  )
 
   mat[] <- apply(split_out, 2, paste, collapse = "")
 

@@ -31,9 +31,13 @@ str_detect <- function(string, pattern, negate = FALSE) {
 
 str_replace <- function(string, pattern, replacement) {
 	is_fixed <- inherits(pattern, "stringr_fixed")
-	Vectorize(sub, c("pattern", "replacement", "x"), USE.NAMES = FALSE)(
+
+	string <- Vectorize(sub, c("pattern", "replacement", "x"), USE.NAMES = FALSE)(
 		pattern, replacement, x = string, perl = !is_fixed, fixed = is_fixed
 	)
+
+	mode(string) <- "character"
+	string
 }
 
 str_replace_all <- function(string, pattern, replacement) {
@@ -49,13 +53,15 @@ str_replace_all <- function(string, pattern, replacement) {
 				fixed = is_fixed
 			)
 		}
-
 		return(string)
 	}
 
-	Vectorize(gsub, c("pattern", "replacement", "x"), USE.NAMES = FALSE)(
+	string <- Vectorize(gsub, c("pattern", "replacement", "x"), USE.NAMES = FALSE)(
 		pattern, replacement, x = string, perl = !is_fixed, fixed = is_fixed
 	)
+
+	mode(string) <- "character"
+	string
 }
 
 str_squish <- function(string) {
