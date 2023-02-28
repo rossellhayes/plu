@@ -111,7 +111,10 @@ plu_ral <- function(
 
   derived_plurality <- derive_plurality(x, vector, n, pl)
   pl <- derived_plurality$pl
-  n  <- derived_plurality$n
+  n <- derived_plurality$n
+
+  # In case `x` is length 1 and `n` is length > 1
+  x <- recycle(x, n)
 
   validate_delimeters(open, close)
   open  <- escape(open)
@@ -235,6 +238,7 @@ recycle <- function(x, along) {
   x_name <- code(deparse(substitute(x)))
   along_name <- code(deparse(substitute(along)))
 
+  if (length(along) == 1) return(x)
   if (length(x) == length(along)) return(x)
   if (length(x) == 1) return(rep(x, length(along)))
   error(
