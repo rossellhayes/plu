@@ -1,3 +1,6 @@
+# @staticimports pkg:stringstatic
+#   str_detect str_replace
+
 #' Find a function
 #'
 #' @param fn A function name, either a character string or an unquoted

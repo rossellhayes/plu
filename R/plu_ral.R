@@ -1,3 +1,6 @@
+# @staticimports pkg:stringstatic
+#   str_detect str_replace_all
+
 #' Pluralize a phrase based on the length of a vector
 #'
 #' @param x A character vector (or vector that can be coerced to character)
@@ -106,9 +109,6 @@ plu_ral <- function(
   if (length(x) == 0) {return(character(0))}
   mode(x) <- "character"
 
-  assert_length_1(replace_n)
-  assert_t_or_f(replace_n)
-
   derived_plurality <- derive_plurality(x, vector, n, pl)
   pl <- derived_plurality$pl
   n  <- derived_plurality$n
@@ -129,6 +129,12 @@ plu_ral <- function(
   split_in <- plu_split(mat, boundaries, perl = TRUE)
 
   braced <- str_detect(split_in, paste0(open, ".*", close))
+
+  assert_length_1(replace_n)
+  assert_t_or_f(replace_n)
+  if (replace_n) {
+    replace_n <- str_detect(split_in, "\\bn\\b")
+  }
 
   if (lifecycle::is_present(n_fn)) {
     lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")

@@ -1,3 +1,6 @@
+# @staticimports pkg:stringstatic
+#   str_replace
+
 #' Capitalization
 #'
 #' `capitalize()` returns a character vector `x` with the first
@@ -72,6 +75,9 @@ is_capital <- function(x, strict = FALSE) {
   result[x == ""] <- strict_na
   result
 }
+
+# @staticimports pkg:stringstatic
+#   str_replace
 
 #' @rdname capitalize
 #' @export
