@@ -1,5 +1,5 @@
 # @staticimports pkg:stringstatic
-#   str_detect str_replace_all
+#   regex str_detect str_replace_all
 
 #' Pluralize a phrase based on the length of a vector
 #'
@@ -131,7 +131,10 @@ plu_ral <- function(
 
   split_in <- plu_split(mat, boundaries, perl = TRUE)
 
-  braced <- str_detect(split_in, paste0(open, ".*", close))
+  braced <- str_detect(
+    split_in,
+    regex(paste0(open, ".*", close), multiline = TRUE, dotall = TRUE)
+  )
 
   assert_length_1(replace_n)
   assert_t_or_f(replace_n)

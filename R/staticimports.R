@@ -11,6 +11,32 @@
 # Imported from pkg:stringstatic
 # ======================================================================
 
+regex <- function(
+	pattern,
+	ignore_case = FALSE,
+	multiline = FALSE,
+	comments = FALSE,
+	dotall = FALSE
+) {
+	options <- paste(
+		if (isTRUE(ignore_case)) "i",
+		if (isTRUE(multiline)) "m",
+		if (isTRUE(dotall)) "s",
+		if (isTRUE(comments)) "x",
+		sep = ""
+	)
+
+	if (nzchar(options)) {
+		if (!is.null(names(pattern))) {
+			names(pattern) <- paste0("(?", options, ")", names(pattern))
+		} else {
+			pattern <- paste0("(?", options, ")", pattern)
+		}
+	}
+
+	structure(pattern, class = c("stringr_regex", "stringr_pattern", "character"))
+}
+
 str_detect <- function(string, pattern, negate = FALSE) {
 	if (length(string) == 0 || length(pattern) == 0) return(logical(0))
 
