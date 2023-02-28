@@ -358,33 +358,35 @@ test_that("early return", {
 })
 
 test_that("errors", {
-  expect_error(plu_ral(integer(1)), '`x` must be of type "character"')
-
   expect_error(
-    plu_ral("word", n = character(1)), '`n` must be of type "numeric"'
+    plu_ral("word", n = character(1)),
+    '`n` must be of type "numeric"'
   )
   expect_error(
     plu_ral("word", pl = TRUE, n = character(1)),
     '`n` must be of type "numeric"'
   )
 
-  expect_error(plu_ral("word", n = numeric(2)), "Cannot recycle `n`")
+  expect_error(plu_ral(letters[1:3], n = numeric(2)), "Cannot recycle `n`")
   expect_error(plu_ral("word", n = "a"), '`n` must be of type "numeric"')
   expect_error(plu_ral("word", n = matrix("a")), '`n` must be of type "numeric"')
 
-  expect_error(plu_ral("word", pl = NA),         "`pl` must be TRUE or FALSE")
+  expect_error(plu_ral("word", pl = NA), "`pl` must be TRUE or FALSE")
   expect_error(plu_ral("word", pl = numeric(1)), "`pl` must be TRUE or FALSE")
-  expect_error(plu_ral("word", pl = logical(2)), "Cannot recycle `pl`")
+  expect_error(plu_ral(letters[1:3], pl = logical(2)), "Cannot recycle `pl`")
 
   lifecycle::expect_deprecated(plu_ral("word", n_fn = identity))
 
   expect_error(
-    plu_ral("word", replace_n = NA),         "`replace_n` must be TRUE or FALSE"
+    plu_ral("word", replace_n = NA),
+    "`replace_n` must be TRUE or FALSE"
   )
   expect_error(
-    plu_ral("word", replace_n = numeric(1)), "`replace_n` must be TRUE or FALSE"
+    plu_ral("word", replace_n = numeric(1)),
+    "`replace_n` must be TRUE or FALSE"
   )
   expect_error(
-    plu_ral("word", replace_n = logical(2)), "`replace_n` must be length one"
+    plu_ral("word", replace_n = logical(2)),
+    "`replace_n` must be length 1"
   )
 })
