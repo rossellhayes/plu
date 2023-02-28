@@ -1,3 +1,6 @@
+# @staticimports pkg:stringstatic
+#   str_squish
+
 #' Informatively display a maximum number of elements
 #'
 #' @param x A vector or list.
@@ -36,14 +39,14 @@ plu_more <- function(x, max = 5, type = TRUE, fn = NULL, ..., det = "more") {
   fn   <- get_fun(fn)
 
   if (max < 1 || n < 1) {
-    return(plu_nge(paste(fn(n, ...), plu_ral(type, n = n)), ends = TRUE))
+    return(str_squish(paste(fn(n, ...), plu_ral(type, n = n))))
   }
 
   n <- min(ceiling(n - max), n)
 
   if (n <= 0) {return(x)}
 
-  n_more <- plu_nge(paste(fn(n, ...), det, plu_ral(type, n = n)), ends = TRUE)
+  n_more <- str_squish(paste(fn(n, ...), det, plu_ral(type, n = n)))
 
   c(x[seq_len(max)], n_more)
 }

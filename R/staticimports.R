@@ -57,3 +57,9 @@ str_replace_all <- function(string, pattern, replacement) {
 		pattern, replacement, x = string, perl = !is_fixed, fixed = is_fixed
 	)
 }
+
+str_squish <- function(string) {
+	string <- sub("^\\s+", "", string, perl = TRUE)
+	string <- sub("\\s+$", "", string, perl = TRUE)
+	gsub("\\s+", " ", string, perl = TRUE)
+}
