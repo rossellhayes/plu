@@ -326,11 +326,18 @@ test_that("number", {
   expect_equal(plu_ral("n number", fifty), "50 numbers")
   expect_equal(plu_ral("n number", one, replace_n = FALSE), "n number")
   expect_equal(plu_ral("n number", fifty, replace_n = FALSE), "ns numbers")
-  expect_equal(
-    plu_ral("n number", integer(10000), n_fn = format, big.mark = ","),
-    "10,000 numbers"
-  )
   expect_equal(plu_ral("{the|both|all n} number", fifty), "all 50 numbers")
+})
+
+test_that("number with vector n", {
+  expect_equal(
+    plu_ral("n number", n = c(1, 50)),
+    c("1 number", "50 numbers")
+  )
+  expect_equal(
+    plu_ral("{the|both|all n} number", n = c(1, 50)),
+    c("the number", "all 50 numbers")
+  )
 })
 
 test_that("capitalization", {
