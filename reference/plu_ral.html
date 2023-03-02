@@ -59,9 +59,9 @@
 <span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pl <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  replace_n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  open <span class="op">=</span> <span class="st">"{"</span>,</span>
 <span>  close <span class="op">=</span> <span class="st">"}"</span>,</span>
-<span>  replace_n <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  n_fn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -72,9 +72,9 @@
 <span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pl <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  irregulars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moderate"</span>, <span class="st">"conservative"</span>, <span class="st">"liberal"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  replace_n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  open <span class="op">=</span> <span class="st">"{"</span>,</span>
 <span>  close <span class="op">=</span> <span class="st">"}"</span>,</span>
-<span>  replace_n <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  n_fn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -120,13 +120,15 @@ The default can be changed by setting <code>options(plu.irregulars)</code>.
 See examples in <code><a href="plu_ralize.html">ralize()</a></code> for more details.</p></dd>
 
 
+<dt>replace_n</dt>
+<dd><p>A logical indicating whether to use special handling for <code>"n"</code>.
+See details.
+Defaults to <code>TRUE</code>.</p></dd>
+
+
 <dt>open, close</dt>
 <dd><p>The opening and closing delimiters for special strings.
 See section "Special strings". Defaults to <code>"{"</code> and <code>"}"</code>.</p></dd>
-
-
-<dt>replace_n</dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 
 <dt>n_fn</dt>
@@ -180,6 +182,8 @@ is not a common English word.</p></li>
 
 <p>Certain strings in <code>x</code> receive special treatment.</p><ul><li><p>By default, <code>"a"</code> and <code>"an"</code> are deleted in the plural
 ("a word" to "words").</p></li>
+<li><p>The string <code>"n"</code> will be replaced with the length of <code>vector</code> or the
+number in <code>n</code>.</p></li>
 <li><p>Strings between <code>open</code> and <code>close</code> separated by a pipe will be treated as a
 custom plural (<code>"{a|some} word"</code> to "a word", "some words").</p><ul><li><p>More than two strings separated by pipes will be treated as singular,
 dual, trial, ... and plural forms. For example, <code>"{the|both|all} word"</code>
@@ -256,6 +260,12 @@ plural form.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate both pears"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{the|both|all of the} delicacy"</span>, <span class="va">foods</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate all of the delicacies"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The string "n" will be replaced by the number used for pluralization</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n apple"</span>, <span class="va">mon</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate 1 apple"</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"The caterpillar ate"</span>, <span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"n delicacy"</span>, <span class="va">foods</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The caterpillar ate 5 delicacies"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Special brace strings</span></span></span>
 <span class="r-in"><span><span class="fu">plu</span><span class="fu">::</span><span class="fu">ral</span><span class="op">(</span><span class="st">"{one|two}"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
