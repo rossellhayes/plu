@@ -3,8 +3,7 @@
 * `plu_ral()` now accepts vectors for arguments `n` and `pl`.
   * e.g. `plu_ral(c("word", "phrase"), n = c(1, 2))` returns `c("word", "phrases")`.
 * Fixed an error where the plural forms of "octopus" and "platypus" were mixed up.
-* `plu_ral()` no longer attempts to replace the sequence `"n"`.
-  * The arguments `replace_n` and `n_fn` are now deprecated.
+* The `plu_ral()` argument `n_fn` is now deprecated.
 * `plu_stick()` is now defunct.
 
 # plu 0.2.3

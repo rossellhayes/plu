@@ -36,6 +36,10 @@ paste("The caterpillar ate", plu::ral("{the|both|all of the} apple", mon))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} pear", tue))
 paste("The caterpillar ate", plu::ral("{the|both|all of the} delicacy", foods))
 
+# The string "n" will be replaced by the number used for pluralization
+paste("The caterpillar ate", plu::ral("n apple", mon))
+paste("The caterpillar ate", plu::ral("n delicacy", foods))
+
 # Special brace strings
 plu::ral("{one|two}", n = 1)
 plu::ral("{one|two}", n = 2)

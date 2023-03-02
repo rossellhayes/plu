@@ -1,3 +1,6 @@
+# @staticimports pkg:stringstatic
+#   str_detect str_replace_all
+
 #' Pluralize a word
 #'
 #' @param x A character vector of English words to be pluralized

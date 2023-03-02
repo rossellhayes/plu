@@ -1,3 +1,6 @@
+# @staticimports pkg:stringstatic
+#   regex str_detect str_replace_all
+
 #' Pluralize a phrase based on the length of a vector
 #'
 #' @param x A character vector (or vector that can be coerced to character)
@@ -23,9 +26,11 @@
 #'     Defaults to `"moderate"`.
 #'     The default can be changed by setting `options(plu.irregulars)`.
 #'     See examples in [plu::ralize()] for more details.
+#' @param replace_n A logical indicating whether to use special handling for `"n"`.
+#'     See details.
+#'     Defaults to `TRUE`.
 #' @param open,close The opening and closing delimiters for special strings.
 #'     See section "Special strings". Defaults to `"{"` and `"}"`.
-#' @param replace_n \lifecycle{deprecated}
 #' @param n_fn \lifecycle{deprecated}
 #' @param ... \lifecycle{deprecated}
 #'
@@ -66,6 +71,9 @@
 #' - By default, `"a"` and `"an"` are deleted in the plural
 #' ("a word" to "words").
 #'
+#' - The string `"n"` will be replaced with the length of `vector` or the
+#' number in `n`.
+#'
 #' - Strings between `open` and `close` separated by a pipe will be treated as a
 #' custom plural (`"{a|some} word"` to "a word", "some words").
 #'     - More than two strings separated by pipes will be treated as singular,
@@ -92,22 +100,21 @@ plu_ral <- function(
   n = NULL,
   pl = NULL,
   irregulars = c("moderate", "conservative", "liberal", "none"),
+  replace_n = TRUE,
   open = "{",
   close = "}",
-  replace_n = lifecycle::deprecated(),
   n_fn = lifecycle::deprecated(),
   ...
 ) {
   if (length(x) == 0) {return(character(0))}
   mode(x) <- "character"
 
-  if (lifecycle::is_present(replace_n)) {
-    lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(replace_n)")
-  }
-
   derived_plurality <- derive_plurality(x, vector, n, pl)
   pl <- derived_plurality$pl
-  n  <- derived_plurality$n
+  n <- derived_plurality$n
+
+  # In case `x` is length 1 and `n` is length > 1
+  x <- recycle(x, n)
 
   validate_delimeters(open, close)
   open  <- escape(open)
@@ -124,7 +131,16 @@ plu_ral <- function(
 
   split_in <- plu_split(mat, boundaries, perl = TRUE)
 
-  braced <- str_detect(split_in, paste0(open, ".*", close))
+  braced <- str_detect(
+    split_in,
+    regex(paste0(open, ".*", close), multiline = TRUE, dotall = TRUE)
+  )
+
+  assert_length_1(replace_n)
+  assert_t_or_f(replace_n)
+  if (replace_n) {
+    replace_n <- str_detect(split_in, "\\bn\\b")
+  }
 
   if (lifecycle::is_present(n_fn)) {
     lifecycle::deprecate_warn(when = "0.2.4", what = "plu_ral(n_fn)")
@@ -136,8 +152,8 @@ plu_ral <- function(
     pl <- rep(pl, each = nrow(split_out))
 
     # Pluralize words that aren't wrapped in {braces}
-    split_out[pl & !braced] <- plu_ralize(
-      split_in[pl & !braced], irregulars = irregulars
+    split_out[pl & !braced & !replace_n] <- plu_ralize(
+      split_in[pl & !braced & !replace_n], irregulars = irregulars
     )
 
     # Find where "a" or "an" have been removed
@@ -176,6 +192,13 @@ plu_ral <- function(
   n <- rep(n, each = nrow(split_out))
   split_out[braced] <- pluralize_braces(
     split_out[braced], n[braced], open, close
+  )
+
+  # replace "n" with `n`
+  split_out[replace_n] <- str_replace_all(
+    split_out[replace_n],
+    pattern = "\\bn\\b",
+    replacement = n[replace_n]
   )
 
   mat[] <- apply(split_out, 2, paste, collapse = "")
@@ -218,6 +241,7 @@ recycle <- function(x, along) {
   x_name <- code(deparse(substitute(x)))
   along_name <- code(deparse(substitute(along)))
 
+  if (length(along) == 1) return(x)
   if (length(x) == length(along)) return(x)
   if (length(x) == 1) return(rep(x, length(along)))
   error(

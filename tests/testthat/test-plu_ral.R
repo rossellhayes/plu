@@ -321,6 +321,25 @@ test_that("arbitrary length pipe", {
   expect_equal(plu_ral(x, n = 0.5), c("one", "two", "more"))
 })
 
+test_that("number", {
+  expect_equal(plu_ral("n number", one), "1 number")
+  expect_equal(plu_ral("n number", fifty), "50 numbers")
+  expect_equal(plu_ral("n number", one, replace_n = FALSE), "n number")
+  expect_equal(plu_ral("n number", fifty, replace_n = FALSE), "ns numbers")
+  expect_equal(plu_ral("{the|both|all n} number", fifty), "all 50 numbers")
+})
+
+test_that("number with vector n", {
+  expect_equal(
+    plu_ral("n number", n = c(1, 50)),
+    c("1 number", "50 numbers")
+  )
+  expect_equal(
+    plu_ral("{the|both|all n} number", n = c(1, 50)),
+    c("the number", "all 50 numbers")
+  )
+})
+
 test_that("capitalization", {
   expect_equal(plu_ral("A word"), "Words")
   expect_equal(plu_ral("! A word"), "! Words")
@@ -340,20 +359,34 @@ test_that("early return", {
 
 test_that("errors", {
   expect_error(
-    plu_ral("word", n = character(1)), '`n` must be of type "numeric"'
+    plu_ral("word", n = character(1)),
+    '`n` must be of type "numeric"'
   )
   expect_error(
     plu_ral("word", pl = TRUE, n = character(1)),
     '`n` must be of type "numeric"'
   )
-  expect_error(plu_ral("word", n = numeric(2)), "Cannot recycle `n`")
+
+  expect_error(plu_ral(letters[1:3], n = numeric(2)), "Cannot recycle `n`")
   expect_error(plu_ral("word", n = "a"), '`n` must be of type "numeric"')
   expect_error(plu_ral("word", n = matrix("a")), '`n` must be of type "numeric"')
 
-  expect_error(plu_ral("word", pl = NA),         "`pl` must be TRUE or FALSE")
+  expect_error(plu_ral("word", pl = NA), "`pl` must be TRUE or FALSE")
   expect_error(plu_ral("word", pl = numeric(1)), "`pl` must be TRUE or FALSE")
-  expect_error(plu_ral("word", pl = logical(2)), "Cannot recycle `pl`")
+  expect_error(plu_ral(letters[1:3], pl = logical(2)), "Cannot recycle `pl`")
 
-  lifecycle::expect_deprecated(plu_ral("word", replace_n = TRUE))
   lifecycle::expect_deprecated(plu_ral("word", n_fn = identity))
+
+  expect_error(
+    plu_ral("word", replace_n = NA),
+    "`replace_n` must be TRUE or FALSE"
+  )
+  expect_error(
+    plu_ral("word", replace_n = numeric(1)),
+    "`replace_n` must be TRUE or FALSE"
+  )
+  expect_error(
+    plu_ral("word", replace_n = logical(2)),
+    "`replace_n` must be length 1"
+  )
 })
