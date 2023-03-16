@@ -1,4 +1,4 @@
-# plu (development version)
+# plu 0.3.0
 
 * `plu_ral()` now accepts vectors for arguments `n` and `pl`.
   * e.g. `plu_ral(c("word", "phrase"), n = c(1, 2))` returns `c("word", "phrases")`.
