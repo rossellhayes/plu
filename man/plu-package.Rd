@@ -162,7 +162,7 @@ found in the file "extra-words"
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://plu.rossellhayes.com}
+  \item \url{https://pkg.rossellhayes.com/plu/}
   \item \url{https://github.com/rossellhayes/plu}
   \item Report bugs at \url{https://github.com/rossellhayes/plu/issues}
 }

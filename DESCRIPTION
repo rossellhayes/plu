@@ -10,7 +10,7 @@ Description: Converts English phrases to singular or plural form based on
     create natural language lists from vectors and to include the length
     of a vector in natural language.
 License: MIT + file LICENSE
-URL: https://plu.rossellhayes.com, https://github.com/rossellhayes/plu
+URL: https://pkg.rossellhayes.com/plu/, https://github.com/rossellhayes/plu
 BugReports: https://github.com/rossellhayes/plu/issues
 Depends:
     R (>= 2.10)
